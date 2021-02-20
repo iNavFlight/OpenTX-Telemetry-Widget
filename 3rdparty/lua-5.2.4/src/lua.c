@@ -246,7 +246,7 @@ static const char *get_prompt (lua_State *L, int firstline) {
 
 static int incomplete (lua_State *L, int status) {
   if (status == LUA_ERRSYNTAX) {
-    size_t lmsg;
+    uint32_t lmsg;
     const char *msg = lua_tolstring(L, -1, &lmsg);
     if (lmsg >= marklen && strcmp(msg + lmsg - marklen, EOFMARK) == 0) {
       lua_pop(L, 1);
@@ -260,7 +260,7 @@ static int incomplete (lua_State *L, int status) {
 static int pushline (lua_State *L, int firstline) {
   char buffer[LUA_MAXINPUT];
   char *b = buffer;
-  size_t l;
+  uint32_t l;
   const char *prmt = get_prompt(L, firstline);
   int readstatus = lua_readline(L, b, prmt);
   lua_pop(L, 1);  /* remove result from 'get_prompt' */
@@ -284,7 +284,7 @@ static int loadline (lua_State *L) {
   if (!pushline(L, 1))
     return -1;  /* no input */
   for (;;) {  /* repeat until gets a complete line */
-    size_t l;
+    uint32_t l;
     const char *line = lua_tolstring(L, 1, &l);
     status = luaL_loadbuffer(L, line, l, "=stdin");
     if (!incomplete(L, status)) break;  /* cannot try to add lines? */

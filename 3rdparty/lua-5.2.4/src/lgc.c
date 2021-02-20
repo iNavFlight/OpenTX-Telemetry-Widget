@@ -91,7 +91,7 @@ static void reallymarkobject (global_State *g, GCObject *o);
 /*
 ** one after last element in a hash array
 */
-#define gnodelast(h)	gnode(h, cast(size_t, sizenode(h)))
+#define gnodelast(h)	gnode(h, cast(uint32_t, sizenode(h)))
 
 
 /*
@@ -209,7 +209,7 @@ void luaC_checkupvalcolor (global_State *g, UpVal *uv) {
 ** it to '*list'. 'offset' tells how many bytes to allocate before the
 ** object itself (used only by states).
 */
-GCObject *luaC_newobj (lua_State *L, int tt, size_t sz, GCObject **list,
+GCObject *luaC_newobj (lua_State *L, int tt, uint32_t sz, GCObject **list,
                        int offset) {
   global_State *g = G(L);
   char *raw = cast(char *, luaM_newobject(L, novariant(tt), sz));
@@ -450,7 +450,7 @@ static lu_mem traversetable (global_State *g, Table *h) {
   else  /* not weak */
     traversestrongtable(g, h);
   return sizeof(Table) + sizeof(TValue) * h->sizearray +
-                         sizeof(Node) * cast(size_t, sizenode(h));
+                         sizeof(Node) * cast(uint32_t, sizenode(h));
 }
 
 

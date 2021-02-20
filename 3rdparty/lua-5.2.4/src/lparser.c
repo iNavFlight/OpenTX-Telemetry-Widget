@@ -187,7 +187,7 @@ static void new_localvar (LexState *ls, TString *name) {
 }
 
 
-static void new_localvarliteral_ (LexState *ls, const char *name, size_t sz) {
+static void new_localvarliteral_ (LexState *ls, const char *name, uint32_t sz) {
   new_localvar(ls, luaX_newstring(ls, name, sz));
 }
 

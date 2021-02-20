@@ -23,7 +23,7 @@
 */
 #define luaM_reallocv(L,b,on,n,e) \
   (cast(void, \
-     (cast(size_t, (n)+1) > MAX_SIZET/(e)) ? (luaM_toobig(L), 0) : 0), \
+     (cast(uint32_t, (n)+1) > MAX_SIZET/(e)) ? (luaM_toobig(L), 0) : 0), \
    luaM_realloc_(L, (b), (on)*(e), (n)*(e)))
 
 #define luaM_freemem(L, b, s)	luaM_realloc_(L, (b), (s), 0)
@@ -47,10 +47,10 @@
 LUAI_FUNC l_noret luaM_toobig (lua_State *L);
 
 /* not to be called directly */
-LUAI_FUNC void *luaM_realloc_ (lua_State *L, void *block, size_t oldsize,
-                                                          size_t size);
+LUAI_FUNC void *luaM_realloc_ (lua_State *L, void *block, uint32_t oldsize,
+                                                          uint32_t size);
 LUAI_FUNC void *luaM_growaux_ (lua_State *L, void *block, int *size,
-                               size_t size_elem, int limit,
+                               uint32_t size_elem, int limit,
                                const char *what);
 
 #endif

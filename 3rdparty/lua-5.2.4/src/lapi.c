@@ -386,7 +386,7 @@ LUA_API int lua_toboolean (lua_State *L, int idx) {
 }
 
 
-LUA_API const char *lua_tolstring (lua_State *L, int idx, size_t *len) {
+LUA_API const char *lua_tolstring (lua_State *L, int idx, uint32_t *len) {
   StkId o = index2addr(L, idx);
   if (!ttisstring(o)) {
     lua_lock(L);  /* `luaV_tostring' may create a new string */
@@ -404,7 +404,7 @@ LUA_API const char *lua_tolstring (lua_State *L, int idx, size_t *len) {
 }
 
 
-LUA_API size_t lua_rawlen (lua_State *L, int idx) {
+LUA_API uint32_t lua_rawlen (lua_State *L, int idx) {
   StkId o = index2addr(L, idx);
   switch (ttypenv(o)) {
     case LUA_TSTRING: return tsvalue(o)->len;
@@ -446,7 +446,7 @@ LUA_API const void *lua_topointer (lua_State *L, int idx) {
     case LUA_TTABLE: return hvalue(o);
     case LUA_TLCL: return clLvalue(o);
     case LUA_TCCL: return clCvalue(o);
-    case LUA_TLCF: return cast(void *, cast(size_t, fvalue(o)));
+    case LUA_TLCF: return cast(void *, cast(uint32_t, fvalue(o)));
     case LUA_TTHREAD: return thvalue(o);
     case LUA_TUSERDATA:
     case LUA_TLIGHTUSERDATA:
@@ -498,7 +498,7 @@ LUA_API void lua_pushunsigned (lua_State *L, lua_Unsigned u) {
 }
 
 
-LUA_API const char *lua_pushlstring (lua_State *L, const char *s, size_t len) {
+LUA_API const char *lua_pushlstring (lua_State *L, const char *s, uint32_t len) {
   TString *ts;
   lua_lock(L);
   luaC_checkGC(L);
@@ -1172,7 +1172,7 @@ LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void *ud) {
 }
 
 
-LUA_API void *lua_newuserdata (lua_State *L, size_t size) {
+LUA_API void *lua_newuserdata (lua_State *L, uint32_t size) {
   Udata *u;
   lua_lock(L);
   luaC_checkGC(L);

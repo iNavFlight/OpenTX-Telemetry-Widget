@@ -225,7 +225,7 @@ static int os_date (lua_State *L) {
       if (*s != '%')  /* no conversion specifier? */
         luaL_addchar(&b, *s++);
       else {
-        size_t reslen;
+        uint32_t reslen;
         char buff[200];  /* should be big enough for any conversion result */
         s = checkoption(L, s + 1, cc);
         reslen = strftime(buff, sizeof(buff), cc, stm);

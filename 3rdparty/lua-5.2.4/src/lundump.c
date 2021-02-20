@@ -42,7 +42,7 @@ static l_noret error(LoadState* S, const char* why)
 #define luai_verifycode(L,b,f)	/* empty */
 #endif
 
-static void LoadBlock(LoadState* S, void* b, size_t size)
+static void LoadBlock(LoadState* S, void* b, LUAC_STR_SIZE_TYPE size)
 {
  if (luaZ_read(S->Z,b,size)!=0) error(S,"truncated");
 }
@@ -71,7 +71,7 @@ static lua_Number LoadNumber(LoadState* S)
 
 static TString* LoadString(LoadState* S)
 {
- size_t size;
+ LUAC_STR_SIZE_TYPE size;
  LoadVar(S,size);
  if (size==0)
   return NULL;
@@ -250,7 +250,7 @@ void luaU_header (lu_byte* h)
  *h++=cast_byte(FORMAT);
  *h++=cast_byte(*(char*)&x);			/* endianness */
  *h++=cast_byte(sizeof(int));
- *h++=cast_byte(sizeof(size_t));
+ *h++=cast_byte(sizeof(LUAC_STR_SIZE_TYPE));
  *h++=cast_byte(sizeof(Instruction));
  *h++=cast_byte(sizeof(lua_Number));
  *h++=cast_byte(((lua_Number)0.5)==0);		/* is lua_Number integral? */

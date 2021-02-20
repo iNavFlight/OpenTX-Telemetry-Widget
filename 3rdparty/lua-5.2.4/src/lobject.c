@@ -155,7 +155,7 @@ static lua_Number lua_strx2number (const char *s, char **endptr) {
 #endif
 
 
-int luaO_str2d (const char *s, size_t len, lua_Number *result) {
+int luaO_str2d (const char *s, uint32_t len, lua_Number *result) {
   char *endptr;
   if (strpbrk(s, "nN"))  /* reject 'inf' and 'nan' */
     return 0;
@@ -170,7 +170,7 @@ int luaO_str2d (const char *s, size_t len, lua_Number *result) {
 
 
 
-static void pushstr (lua_State *L, const char *str, size_t l) {
+static void pushstr (lua_State *L, const char *str, uint32_t l) {
   setsvalue2s(L, L->top++, luaS_newlstr(L, str, l));
 }
 
@@ -249,8 +249,8 @@ const char *luaO_pushfstring (lua_State *L, const char *fmt, ...) {
 
 #define addstr(a,b,l)	( memcpy(a,b,(l) * sizeof(char)), a += (l) )
 
-void luaO_chunkid (char *out, const char *source, size_t bufflen) {
-  size_t l = strlen(source);
+void luaO_chunkid (char *out, const char *source, uint32_t bufflen) {
+  uint32_t l = strlen(source);
   if (*source == '=') {  /* 'literal' source */
     if (l <= bufflen)  /* small enough? */
       memcpy(out, source + 1, l * sizeof(char));

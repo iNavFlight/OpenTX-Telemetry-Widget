@@ -19,7 +19,7 @@
 
 
 int luaZ_fill (ZIO *z) {
-  size_t size;
+  uint32_t size;
   lua_State *L = z->L;
   const char *buff;
   lua_unlock(L);
@@ -43,9 +43,9 @@ void luaZ_init (lua_State *L, ZIO *z, lua_Reader reader, void *data) {
 
 
 /* --------------------------------------------------------------- read --- */
-size_t luaZ_read (ZIO *z, void *b, size_t n) {
+uint32_t luaZ_read (ZIO *z, void *b, uint32_t n) {
   while (n) {
-    size_t m;
+    uint32_t m;
     if (z->n == 0) {  /* no bytes in buffer? */
       if (luaZ_fill(z) == EOZ)  /* try to read more */
         return n;  /* no more input; return number of missing bytes */
@@ -65,7 +65,7 @@ size_t luaZ_read (ZIO *z, void *b, size_t n) {
 }
 
 /* ------------------------------------------------------------------------ */
-char *luaZ_openspace (lua_State *L, Mbuffer *buff, size_t n) {
+char *luaZ_openspace (lua_State *L, Mbuffer *buff, uint32_t n) {
   if (n > buff->buffsize) {
     if (n < LUA_MINBUFFER) n = LUA_MINBUFFER;
     luaZ_resizebuffer(L, buff, n);

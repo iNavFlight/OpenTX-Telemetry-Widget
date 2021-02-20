@@ -83,11 +83,11 @@ typedef struct LG {
 ** randomness..
 */
 #define addbuff(b,p,e) \
-  { size_t t = cast(size_t, e); \
+  { uint32_t t = cast(uint32_t, e); \
     memcpy(buff + p, &t, sizeof(t)); p += sizeof(t); }
 
 static unsigned int makeseed (lua_State *L) {
-  char buff[4 * sizeof(size_t)];
+  char buff[4 * sizeof(uint32_t)];
   unsigned int h = luai_makeseed();
   int p = 0;
   addbuff(buff, p, L);  /* heap variable */

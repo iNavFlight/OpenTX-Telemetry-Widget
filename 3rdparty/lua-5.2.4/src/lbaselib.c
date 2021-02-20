@@ -26,7 +26,7 @@ static int luaB_print (lua_State *L) {
   lua_getglobal(L, "tostring");
   for (i=1; i<=n; i++) {
     const char *s;
-    size_t l;
+    uint32_t l;
     lua_pushvalue(L, -1);  /* function to be called */
     lua_pushvalue(L, i);   /* value to print */
     lua_call(L, 1, 1);
@@ -56,7 +56,7 @@ static int luaB_tonumber (lua_State *L) {
     luaL_checkany(L, 1);
   }
   else {
-    size_t l;
+    uint32_t l;
     const char *s = luaL_checklstring(L, 1, &l);
     const char *e = s + l;  /* end point for 's' */
     int base = luaL_checkint(L, 2);
@@ -289,7 +289,7 @@ static int luaB_loadfile (lua_State *L) {
 ** stack top. Instead, it keeps its resulting string in a
 ** reserved slot inside the stack.
 */
-static const char *generic_reader (lua_State *L, void *ud, size_t *size) {
+static const char *generic_reader (lua_State *L, void *ud, uint32_t *size) {
   (void)(ud);  /* not used */
   luaL_checkstack(L, 2, "too many nested functions");
   lua_pushvalue(L, 1);  /* get function */
@@ -308,7 +308,7 @@ static const char *generic_reader (lua_State *L, void *ud, size_t *size) {
 
 static int luaB_load (lua_State *L) {
   int status;
-  size_t l;
+  uint32_t l;
   const char *s = lua_tolstring(L, 1, &l);
   const char *mode = luaL_optstring(L, 3, "bt");
   int env = (!lua_isnone(L, 4) ? 4 : 0);  /* 'env' index or 0 if no 'env' */

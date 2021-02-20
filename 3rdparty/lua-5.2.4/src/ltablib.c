@@ -93,7 +93,7 @@ static void addfield (lua_State *L, luaL_Buffer *b, int i) {
 
 static int tconcat (lua_State *L) {
   luaL_Buffer b;
-  size_t lsep;
+  uint32_t lsep;
   int i, last;
   const char *sep = luaL_optlstring(L, 2, "", &lsep);
   luaL_checktype(L, 1, LUA_TTABLE);

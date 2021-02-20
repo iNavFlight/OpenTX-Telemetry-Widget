@@ -26,7 +26,7 @@ typedef struct {
 #define DumpMem(b,n,size,D)	DumpBlock(b,(n)*(size),D)
 #define DumpVar(x,D)		DumpMem(&x,1,sizeof(x),D)
 
-static void DumpBlock(const void* b, size_t size, DumpState* D)
+static void DumpBlock(const void* b, LUAC_STR_SIZE_TYPE size, DumpState* D)
 {
  if (D->status==0)
  {
@@ -52,7 +52,7 @@ static void DumpNumber(lua_Number x, DumpState* D)
  DumpVar(x,D);
 }
 
-static void DumpVector(const void* b, int n, size_t size, DumpState* D)
+static void DumpVector(const void* b, int n, LUAC_STR_SIZE_TYPE size, DumpState* D)
 {
  DumpInt(n,D);
  DumpMem(b,n,size,D);
@@ -62,12 +62,12 @@ static void DumpString(const TString* s, DumpState* D)
 {
  if (s==NULL)
  {
-  size_t size=0;
+  LUAC_STR_SIZE_TYPE size=0;
   DumpVar(size,D);
  }
  else
  {
-  size_t size=s->tsv.len+1;		/* include trailing '\0' */
+  LUAC_STR_SIZE_TYPE size=s->tsv.len+1;		/* include trailing '\0' */
   DumpVar(size,D);
   DumpBlock(getstr(s),size*sizeof(char),D);
  }

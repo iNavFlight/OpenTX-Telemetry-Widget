@@ -116,7 +116,7 @@ static int doargs(int argc, char* argv[])
 
 #define FUNCTION "(function()end)();"
 
-static const char* reader(lua_State *L, void *ud, size_t *size)
+static const char* reader(lua_State *L, void *ud, uint32_t *size)
 {
  UNUSED(L);
  if ((*(int*)ud)--)
@@ -153,7 +153,7 @@ static const Proto* combine(lua_State* L, int n)
  }
 }
 
-static int writer(lua_State* L, const void* p, size_t size, void* u)
+static int writer(lua_State* L, const void* p, uint32_t size, void* u)
 {
  UNUSED(L);
  return (fwrite(p,size,1,(FILE*)u)!=1) && (size!=0);
@@ -223,7 +223,7 @@ int main(int argc, char* argv[])
 static void PrintString(const TString* ts)
 {
  const char* s=getstr(ts);
- size_t i,n=ts->tsv.len;
+ uint32_t i,n=ts->tsv.len;
  printf("%c",'"');
  for (i=0; i<n; i++)
  {

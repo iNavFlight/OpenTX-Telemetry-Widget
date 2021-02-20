@@ -372,7 +372,7 @@ static int read_line (lua_State *L, FILE *f, int chop) {
   luaL_Buffer b;
   luaL_buffinit(L, &b);
   for (;;) {
-    size_t l;
+    uint32_t l;
     char *p = luaL_prepbuffer(&b);
     if (fgets(p, LUAL_BUFFERSIZE, f) == NULL) {  /* eof? */
       luaL_pushresult(&b);  /* close buffer */
@@ -390,15 +390,15 @@ static int read_line (lua_State *L, FILE *f, int chop) {
 }
 
 
-#define MAX_SIZE_T	(~(size_t)0)
+#define MAX_SIZE_T	(~(uint32_t)0)
 
 static void read_all (lua_State *L, FILE *f) {
-  size_t rlen = LUAL_BUFFERSIZE;  /* how much to read in each cycle */
+  uint32_t rlen = LUAL_BUFFERSIZE;  /* how much to read in each cycle */
   luaL_Buffer b;
   luaL_buffinit(L, &b);
   for (;;) {
     char *p = luaL_prepbuffsize(&b, rlen);
-    size_t nr = fread(p, sizeof(char), rlen, f);
+    uint32_t nr = fread(p, sizeof(char), rlen, f);
     luaL_addsize(&b, nr);
     if (nr < rlen) break;  /* eof? */
     else if (rlen <= (MAX_SIZE_T / 4))  /* avoid buffers too large */
@@ -408,8 +408,8 @@ static void read_all (lua_State *L, FILE *f) {
 }
 
 
-static int read_chars (lua_State *L, FILE *f, size_t n) {
-  size_t nr;  /* number of chars actually read */
+static int read_chars (lua_State *L, FILE *f, uint32_t n) {
+  uint32_t nr;  /* number of chars actually read */
   char *p;
   luaL_Buffer b;
   luaL_buffinit(L, &b);
@@ -435,7 +435,7 @@ static int g_read (lua_State *L, FILE *f, int first) {
     success = 1;
     for (n = first; nargs-- && success; n++) {
       if (lua_type(L, n) == LUA_TNUMBER) {
-        size_t l = (size_t)lua_tointeger(L, n);
+        uint32_t l = (uint32_t)lua_tointeger(L, n);
         success = (l == 0) ? test_eof(L, f) : read_chars(L, f, l);
       }
       else {
@@ -521,7 +521,7 @@ static int g_write (lua_State *L, FILE *f, int arg) {
           fprintf(f, LUA_NUMBER_FMT, lua_tonumber(L, arg)) > 0;
     }
     else {
-      size_t l;
+      uint32_t l;
       const char *s = luaL_checklstring(L, arg, &l);
       status = status && (fwrite(s, sizeof(char), l, f) == l);
     }

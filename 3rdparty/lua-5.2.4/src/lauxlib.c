@@ -354,7 +354,7 @@ LUALIB_API void luaL_checkany (lua_State *L, int narg) {
 }
 
 
-LUALIB_API const char *luaL_checklstring (lua_State *L, int narg, size_t *len) {
+LUALIB_API const char *luaL_checklstring (lua_State *L, int narg, uint32_t *len) {
   const char *s = lua_tolstring(L, narg, len);
   if (!s) tag_error(L, narg, LUA_TSTRING);
   return s;
@@ -362,7 +362,7 @@ LUALIB_API const char *luaL_checklstring (lua_State *L, int narg, size_t *len) {
 
 
 LUALIB_API const char *luaL_optlstring (lua_State *L, int narg,
-                                        const char *def, size_t *len) {
+                                        const char *def, uint32_t *len) {
   if (lua_isnoneornil(L, narg)) {
     if (len)
       *len = (def ? strlen(def) : 0);
@@ -434,11 +434,11 @@ LUALIB_API lua_Unsigned luaL_optunsigned (lua_State *L, int narg,
 /*
 ** returns a pointer to a free area with at least 'sz' bytes
 */
-LUALIB_API char *luaL_prepbuffsize (luaL_Buffer *B, size_t sz) {
+LUALIB_API char *luaL_prepbuffsize (luaL_Buffer *B, uint32_t sz) {
   lua_State *L = B->L;
   if (B->size - B->n < sz) {  /* not enough space? */
     char *newbuff;
-    size_t newsize = B->size * 2;  /* double buffer size */
+    uint32_t newsize = B->size * 2;  /* double buffer size */
     if (newsize - B->n < sz)  /* not big enough? */
       newsize = B->n + sz;
     if (newsize < B->n || newsize - B->n < sz)
@@ -456,7 +456,7 @@ LUALIB_API char *luaL_prepbuffsize (luaL_Buffer *B, size_t sz) {
 }
 
 
-LUALIB_API void luaL_addlstring (luaL_Buffer *B, const char *s, size_t l) {
+LUALIB_API void luaL_addlstring (luaL_Buffer *B, const char *s, uint32_t l) {
   char *b = luaL_prepbuffsize(B, l);
   memcpy(b, s, l * sizeof(char));
   luaL_addsize(B, l);
@@ -476,7 +476,7 @@ LUALIB_API void luaL_pushresult (luaL_Buffer *B) {
 }
 
 
-LUALIB_API void luaL_pushresultsize (luaL_Buffer *B, size_t sz) {
+LUALIB_API void luaL_pushresultsize (luaL_Buffer *B, uint32_t sz) {
   luaL_addsize(B, sz);
   luaL_pushresult(B);
 }
@@ -484,7 +484,7 @@ LUALIB_API void luaL_pushresultsize (luaL_Buffer *B, size_t sz) {
 
 LUALIB_API void luaL_addvalue (luaL_Buffer *B) {
   lua_State *L = B->L;
-  size_t l;
+  uint32_t l;
   const char *s = lua_tolstring(L, -1, &l);
   if (buffonstack(B))
     lua_insert(L, -2);  /* put value below buffer */
@@ -501,7 +501,7 @@ LUALIB_API void luaL_buffinit (lua_State *L, luaL_Buffer *B) {
 }
 
 
-LUALIB_API char *luaL_buffinitsize (lua_State *L, luaL_Buffer *B, size_t sz) {
+LUALIB_API char *luaL_buffinitsize (lua_State *L, luaL_Buffer *B, uint32_t sz) {
   luaL_buffinit(L, B);
   return luaL_prepbuffsize(B, sz);
 }
@@ -566,7 +566,7 @@ typedef struct LoadF {
 } LoadF;
 
 
-static const char *getF (lua_State *L, void *ud, size_t *size) {
+static const char *getF (lua_State *L, void *ud, uint32_t *size) {
   LoadF *lf = (LoadF *)ud;
   (void)L;  /* not used */
   if (lf->n > 0) {  /* are there pre-read characters to be read? */
@@ -665,11 +665,11 @@ LUALIB_API int luaL_loadfilex (lua_State *L, const char *filename,
 
 typedef struct LoadS {
   const char *s;
-  size_t size;
+  uint32_t size;
 } LoadS;
 
 
-static const char *getS (lua_State *L, void *ud, size_t *size) {
+static const char *getS (lua_State *L, void *ud, uint32_t *size) {
   LoadS *ls = (LoadS *)ud;
   (void)L;  /* not used */
   if (ls->size == 0) return NULL;
@@ -679,7 +679,7 @@ static const char *getS (lua_State *L, void *ud, size_t *size) {
 }
 
 
-LUALIB_API int luaL_loadbufferx (lua_State *L, const char *buff, size_t size,
+LUALIB_API int luaL_loadbufferx (lua_State *L, const char *buff, uint32_t size,
                                  const char *name, const char *mode) {
   LoadS ls;
   ls.s = buff;
@@ -734,7 +734,7 @@ LUALIB_API int luaL_len (lua_State *L, int idx) {
 }
 
 
-LUALIB_API const char *luaL_tolstring (lua_State *L, int idx, size_t *len) {
+LUALIB_API const char *luaL_tolstring (lua_State *L, int idx, uint32_t *len) {
   if (!luaL_callmeta(L, idx, "__tostring")) {  /* no metafield? */
     switch (lua_type(L, idx)) {
       case LUA_TNUMBER:
@@ -902,7 +902,7 @@ LUALIB_API void luaL_requiref (lua_State *L, const char *modname,
 LUALIB_API const char *luaL_gsub (lua_State *L, const char *s, const char *p,
                                                                const char *r) {
   const char *wild;
-  size_t l = strlen(p);
+  uint32_t l = strlen(p);
   luaL_Buffer b;
   luaL_buffinit(L, &b);
   while ((wild = strstr(s, p)) != NULL) {
@@ -916,7 +916,7 @@ LUALIB_API const char *luaL_gsub (lua_State *L, const char *s, const char *p,
 }
 
 
-static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
+static void *l_alloc (void *ud, void *ptr, uint32_t osize, uint32_t nsize) {
   (void)ud; (void)osize;  /* not used */
   if (nsize == 0) {
     free(ptr);
