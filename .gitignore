@@ -199,3 +199,7 @@ dmypy.json
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+
+# Local copy of lua
+3rdparty/lua-5.2.4/src/lua
+3rdparty/lua-5.2.4/src/luac
