@@ -68,7 +68,7 @@ local function title()
 	--[[ Show usage
 	text(data.nv and 75 or 130, 0, getUsage() .. "%", RIGHT)
 	]]
-	
+
 	-- Reset colors
 	color(WARNING_COLOR, YELLOW)
 	if data.widget then
