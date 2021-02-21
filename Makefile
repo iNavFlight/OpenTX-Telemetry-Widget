@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean print-version
 
 SRC_ROOT := src
 TELEMETRY := $(SRC_ROOT)/SCRIPTS/TELEMETRY
@@ -12,7 +12,11 @@ SRC += $(wildcard $(TELEMETRY)/iNav/*/*.wav)
 
 DIST := dist
 VERSION := $(shell grep VERSION $(TELEMETRY)/iNav.lua | head -n 1 | cut -d\" -f 2)
-ZIP := $(DIST)/LuaTelemetry_v$(VERSION).zip
+BUILD_SUFFIX ?=
+ifneq ($(BUILD_SUFFIX),)
+	BUILD_SUFFIX := _$(BUILD_SUFFIX)
+endif
+ZIP := $(DIST)/LuaTelemetry_v$(VERSION)$(BUILD_SUFFIX).zip
 
 OBJ := obj
 OBJ_SRC := $(subst $(SRC_ROOT),$(OBJ),$(SRC))
@@ -78,3 +82,6 @@ clean-lua:
 	$(MAKE) -C $(LUA_DIST) clean
 
 clean: clean-obj clean-zip clean-lua
+
+print-version:
+	@echo $(VERSION)
