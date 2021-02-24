@@ -2,8 +2,6 @@
 
 ### FrSky SmartPort(S.Port), D-series, F.Port & TBS Crossfire telemetry on Taranis, Horus, Jumper & Nirvana transmitters
 
-[![Build Status](https://travis-ci.com/iNavFlight/LuaTelemetry.svg?branch=master)](https://travis-ci.com/iNavFlight/LuaTelemetry)
-
 - **New documentation:** https://luatelemetry.readthedocs.io/en/latest/
 
 ## Interface
