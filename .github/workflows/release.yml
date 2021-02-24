@@ -1,0 +1,23 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  publish:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get -y install zip build-essential
+      - name: Build dist
+        run: make dist
+      - name: Upload release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/*.zip
+          file_glob: true
+          overwrite: true
+          tag: ${{ github.ref }}
