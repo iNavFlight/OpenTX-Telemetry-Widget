@@ -19,10 +19,8 @@ local tx = string.sub(r, 0, 2)
 if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or string.sub(r, 0, 6) == "x9d+20" then
 	tx = "x7"
 end
-local tmp = tx == "x9" and EVT_PLUS_FIRST or EVT_UP_FIRST
-local PREV = tx == "x7" and EVT_ROT_LEFT or tmp
-tmp = tx == "x9" and EVT_MINUS_FIRST or EVT_DOWN_FIRST
-local NEXT = tx == "x7" and EVT_ROT_RIGHT or tmp
+local PREV = EVT_VIRTUAL_PREVIOUS
+local NEXT = EVT_VIRTUAL_NEXT
 local MENU = tx == "xl" and EVT_SHIFT_BREAK or (HORUS and EVT_SYS_FIRST or (string.sub(r, 0, 3) == "t12" and EVT_VIRTUAL_PREVIOUS or EVT_MENU_BREAK))
 
 local general = getGeneralSettings()
