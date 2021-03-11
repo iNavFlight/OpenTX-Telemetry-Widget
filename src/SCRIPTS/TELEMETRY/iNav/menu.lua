@@ -5,7 +5,7 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	local HIGH = HORUS and (data.nv and 28 or 22) or 9
 	local RSIDE = HORUS and 200 or 83
 	local GPS = HORUS and 45 or 21
-	local ROWS = HORUS and (data.nv and 12 or 9) or 5
+	local ROWS = HORUS and (data.nv and 12 or 9) or math.floor((LCD_H - TOP) / HIGH - 1)
 	local FONT = HORUS and 0 or SMLSIZE
 	local offOn = {[0] = "Off", "On"}
 
@@ -124,13 +124,13 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 
 	-- Select config option
 	if data.configSelect == 0 then
-		if event == NEXT or event == EVT_DOWN_REPT or event == EVT_MINUS_REPT then -- Next option
+		if event == EVT_VIRTUAL_INC or event == EVT_VIRTUAL_INC_REPT then -- Next option
 			data.configStatus = data.configStatus == #config and 1 or data.configStatus + 1
 			data.configTop = data.configStatus > math.min(#config, data.configTop + ROWS) and data.configTop + 1 or (data.configStatus == 1 and 1 or data.configTop)
-		elseif event == PREV or event == EVT_UP_REPT or event == EVT_PLUS_REPT then -- Previous option
+		elseif event == EVT_VIRTUAL_DEC or event == EVT_VIRTUAL_DEC_REPT then -- Previous option
 			data.configStatus = data.configStatus == 1 and #config or data.configStatus - 1
 			data.configTop = data.configStatus < data.configTop and data.configTop - 1 or (data.configStatus == #config and #config - ROWS or data.configTop)
-		elseif event == EVT_ENTER_BREAK and data.configStatus == 34 and config2[34].p == nil then -- Log file selected
+		elseif event == EVT_VIRTUAL_ENTER and data.configStatus == 34 and config2[34].p == nil then -- Log file selected
 			data.doLogs = true
 		end
 	end
@@ -148,11 +148,11 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	if data.configSelect ~= 0 then
 		local z = config[data.configStatus].z
 		local i = config2[z].i == nil and 1 or config2[z].i
-		if event == EVT_EXIT_BREAK then
+		if event == EVT_VIRTUAL_MENU or event == EVT_EXIT_BREAK then
 			data.configSelect = 0
-		elseif event == NEXT or event == EVT_DOWN_REPT or event == EVT_MINUS_REPT then
+		elseif event == EVT_VIRTUAL_DEC or event == EVT_VIRTUAL_DEC_REPT then
 			config[z].v = math.min(math.floor(config[z].v * 10 + i * 10) * 0.1, config[z].x == nil and 1 or config[z].x)
-		elseif event == PREV or event == EVT_UP_REPT or event == EVT_PLUS_REPT then
+		elseif event == EVT_VIRTUAL_INC or event == EVT_VIRTUAL_INC_REPT then
 			config[z].v =math.max(math.floor(config[z].v * 10 - i * 10) * 0.1, config2[z].m == nil and 0 or config2[z].m)
 		end
 
