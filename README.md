@@ -58,7 +58,7 @@
 
 ## Requirements
 
-* [INAV v2.1.0+](https://github.com/iNavFlight/inav/releases) running on your flight controller - Also compatible with Betaflight v4.0.0+ (with reduced functionality)
+* [INAV v2.6.1+](https://github.com/iNavFlight/inav/releases) running on your flight controller (theoretically, it should support v2.1.0 and higher, but don't complain if it doesn't work in the future) - Also compatible with Betaflight v4.0.0+ (with reduced functionality)
 * [OpenTX v2.2.3+](http://www.open-tx.org/) running on Taranis Q X7/Q X7S, X9D/X9D+, X9E, X9 Lite, X-Lite/X-Lite Pro, Horus X10/X10S or X12S
 * Jumper T12/T16 requires [JumperTX 2.2.3+](https://www.jumper.xyz/) (May 23, 2019 or after release)
 * FrSky X, R9 or D series telemetry receiver: X4RSB, X8R, XSR, R-XSR, XSR-M, XSR-E, RX4R, RX6R, R9, R9 Slim, R9 Slim+, R9 Mini, R9 MM, D8R-II plus, D8R-XP, D4R-II, etc. or any TBS Crossfire receiver: Micro, Nano, Diversity, etc.
@@ -85,28 +85,28 @@
 
 ## Setup
 
-* [Lua Telemetry Wiki](https://github.com/iNavFlight/LuaTelemetry/wiki)
-* [Download latest release](https://github.com/iNavFlight/LuaTelemetry/releases/latest)
-* [Installation Instructions](https://github.com/iNavFlight/LuaTelemetry/wiki/Installation)
-* [Upgrade Instructions](https://github.com/iNavFlight/LuaTelemetry/wiki/Upgrade)
-* [Download Options](https://github.com/iNavFlight/LuaTelemetry/wiki/Download-Options)
+* [Lua Telemetry Wiki](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki)
+* [Download latest release](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest)
+* [Installation Instructions](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Installation)
+* [Upgrade Instructions](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Upgrade)
+* [Download Options](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Download-Options)
 
-## Information & Settings
+## Information & SettingsOpenTX-Telemetry-Widget
 
-* [Screen Description](https://github.com/iNavFlight/LuaTelemetry/wiki/Screen-Description)
-* [Configuration Settings](https://github.com/iNavFlight/LuaTelemetry/wiki/Configuration-Settings)
-* [Suggested Battery Settings](https://github.com/iNavFlight/LuaTelemetry/wiki/Suggested-Battery-Settings)
-* [Playback Telemetry Logs](https://github.com/iNavFlight/LuaTelemetry/wiki/Playback-Telemetry-Log-Files)
+* [Screen Description](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Screen-Description)
+* [Configuration Settings](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Configuration-Settings)
+* [Suggested Battery Settings](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Suggested-Battery-Settings)
+* [Playback Telemetry Logs](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Playback-Telemetry-Log-Files)
 
 ## Support
 
-* [Tips & Common Problems](https://github.com/iNavFlight/LuaTelemetry/wiki/Tips-&-Common-Problems)
-* [Support Issues](https://github.com/iNavFlight/LuaTelemetry/issues?q=is%3Aissue)
-* [Support Chat (Telegram)](https://t.me/luatelemetry)
+* [Tips & Common Problems](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Tips-&-Common-Problems)
+* [Support Issues](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues?q=is%3Aissue)
+* ~~Support Chat (Telegram)~~: Contact current maintainer @nvrm17 on telegram for any questions
 
 ## Other
 
-* [Upgrade to Development Build](https://github.com/iNavFlight/LuaTelemetry/wiki/Upgrade-to-Development-Build)
-* [Release History](https://github.com/iNavFlight/LuaTelemetry/wiki/Change-Log)
-* [Multilingual Support](https://github.com/iNavFlight/LuaTelemetry/wiki/Multilingual-Support)
-* [License](https://github.com/iNavFlight/LuaTelemetry/blob/master/LICENSE)
+* [Upgrade to Development Build](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Upgrade-to-Development-Build)
+* [Release History](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Change-Log)
+* [Multilingual Support](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Multilingual-Support)
+* [License](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/blob/master/LICENSE)
