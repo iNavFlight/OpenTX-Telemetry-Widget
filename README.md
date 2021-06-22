@@ -85,28 +85,26 @@
 
 ## Setup
 
-* [Lua Telemetry Wiki](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki)
+* [Lua Telemetry Docs](https://luatelemetry.readthedocs.io/en/latest/)
 * [Download latest release](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest)
-* [Installation Instructions](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Installation)
-* [Upgrade Instructions](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Upgrade)
-* [Download Options](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Download-Options)
+* [Installation Instructions](https://luatelemetry.readthedocs.io/en/latest/Getting-Started/)
+* [Upgrade Instructions](https://luatelemetry.readthedocs.io/en/latest/Upgrade/)
+* [Download Options](https://luatelemetry.readthedocs.io/en/latest/Getting-Started/#download-options)
 
-## Information & SettingsOpenTX-Telemetry-Widget
+## Information & Settings 
 
-* [Screen Description](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Screen-Description)
-* [Configuration Settings](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Configuration-Settings)
-* [Suggested Battery Settings](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Suggested-Battery-Settings)
-* [Playback Telemetry Logs](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Playback-Telemetry-Log-Files)
+* [Configuration Settings and more](https://luatelemetry.readthedocs.io/en/latest/Configuration-Settings/) (!)
+* [Playback Telemetry Logs](https://luatelemetry.readthedocs.io/en/latest/Configuration-Settings/#playback-telemetry-log-files)
 
 ## Support
 
-* [Tips & Common Problems](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Tips-&-Common-Problems)
+* [Tips & Common Problems](https://luatelemetry.readthedocs.io/en/latest/Tips-%26-Common-Problems/)
 * [Support Issues](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues?q=is%3Aissue)
 * ~~Support Chat (Telegram)~~: Contact current maintainer @nvrm17 on telegram for any questions
 
 ## Other
 
-* [Upgrade to Development Build](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Upgrade-to-Development-Build)
-* [Release History](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Change-Log)
-* [Multilingual Support](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/wiki/Multilingual-Support)
+* [Upgrade to Development Build](https://luatelemetry.readthedocs.io/en/latest/Upgrade/#upgrade-to-development-build)
+* [Release History](https://luatelemetry.readthedocs.io/en/latest/Change-Log)
+* [Multilingual Support](https://luatelemetry.readthedocs.io/en/latest/Multilingual-Support/)
 * [License](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/blob/master/LICENSE)
