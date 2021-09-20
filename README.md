@@ -8,7 +8,17 @@ This fork works for EdgeTX (2.5 pre 2021-09-20 and later) and TX16S (Horus). It 
 * The main screen is not corrupted
 * Prefers compilation on the TX, avoiding incompatible Lua binary formats
 
-Legacy documentation below ...
+#### Installation
+
+* Install the official inav / OpenTX [release](https://github.com/iNavFlight/OpenTX-Telemetry-Widget)
+* Copy the `*.lua` files from here into the respective target directories
+* Delete the correspnding `*.luac` files; they will be recreated
+
+#### Apologies and embarassment
+
+This is _so_ ugly. This hack replaces the original module's overwriting of the system theme colours with colours specific to the telemetry module. It's far too horrible to offer as an upstrem PR ... maybe someone competent will be inspired to fix it properly.
+
+## Legacy documentation below ...
 
 ### FrSky SmartPort(S.Port), D-series, F.Port & TBS Crossfire telemetry on Taranis, Horus, Jumper & Nirvana transmitters
 
