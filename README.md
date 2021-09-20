@@ -6,6 +6,7 @@ This fork works for EdgeTX (2.5 pre 2021-09-20 and later) and TX16S (Horus). It 
 
 * Colours are somewhat correct
 * The main screen is not corrupted
+* Prefers compilation on the TX, avoiding incompatible Lua binary formats
 
 Legacy documentation below ...
 
