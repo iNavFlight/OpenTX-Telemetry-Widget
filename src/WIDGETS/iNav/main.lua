@@ -2,7 +2,7 @@ local buildMode = ...
 local iNav = nil
 local options = {
 	{ "Restore", BOOL, 1},
-	{ "Text", COLOR, BLACK},
+	{ "Text", COLOR, WHITE},
 	{ "Warning", COLOR, YELLOW}
 }
 local TELE_PATH = "/SCRIPTS/TELEMETRY/"
@@ -10,7 +10,7 @@ local TELE_PATH = "/SCRIPTS/TELEMETRY/"
 -- Build with Companion
 local v, r, m, i, e = getVersion()
 if string.sub(r, -4) == "simu" and buildMode ~= true then
-	loadScript(TELE_PATH .. "iNav", "tc")(true)
+	loadScript(TELE_PATH .. "iNav", "bt")(true)
 end
 
 -- Nirvana NV14 doesn't have have these global constants, so we set them
@@ -25,7 +25,7 @@ end
 -- Run once at the creation of the widget
 local function create(zone, options)
 	iNavZone = { zone = zone, options = options }
-	iNav = loadfile(TELE_PATH .. "iNav.luac")(false)
+	iNav = loadfile(TELE_PATH .. "iNav.lua")(false)
 	iNav.background()
 	return iNavZone
 end

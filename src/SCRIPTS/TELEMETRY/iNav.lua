@@ -9,7 +9,7 @@ local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
 local FLASH = HORUS and WARNING_COLOR or 3
 local tmp, view, lang, playLog
-local env = "bx"
+local env = "bt"
 local ext = ".luac"
 
 -- Build with Companion and allow debugging
@@ -90,7 +90,7 @@ local function background()
 	data.rssi, data.rssiLow, data.rssiCrit = getRSSI()
 	if data.rssi > 0 then
 		data.telem = true
-		data.telemFlags = 0
+		data.telemFlags = iNavZone.options.Text
 		data.rssiMin = math.min(data.rssiMin, data.rssi)
 		data.satellites = getValue(data.sat_id)
 		if data.showFuel then

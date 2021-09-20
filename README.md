@@ -1,5 +1,14 @@
 ## INAV Lua Telemetry Flight Status for Taranis/Horus/Jumper/Nirvana - v1.7.4
 
+### Fork for EdgeTX / Horus
+
+This fork works for EdgeTX (2.5 pre 2021-09-20 and later) and TX16S (Horus). It may not work elsewhere
+
+* Colours are somewhat correct
+* The main screen is not corrupted
+
+Legacy documentation below ...
+
 ### FrSky SmartPort(S.Port), D-series, F.Port & TBS Crossfire telemetry on Taranis, Horus, Jumper & Nirvana transmitters
 
 - **New documentation:** https://luatelemetry.readthedocs.io/en/latest/
@@ -91,7 +100,7 @@
 * [Upgrade Instructions](https://luatelemetry.readthedocs.io/en/latest/Upgrade/)
 * [Download Options](https://luatelemetry.readthedocs.io/en/latest/Getting-Started/#download-options)
 
-## Information & Settings 
+## Information & Settings
 
 * [Configuration Settings and more](https://luatelemetry.readthedocs.io/en/latest/Configuration-Settings/) (!)
 * [Playback Telemetry Logs](https://luatelemetry.readthedocs.io/en/latest/Configuration-Settings/#playback-telemetry-log-files)
