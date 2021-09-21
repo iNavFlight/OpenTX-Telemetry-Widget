@@ -480,13 +480,13 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if config[23].v > 0 or (data.crsf and data.showMax) then
 			text(X1, TOP + 1, (data.crsf and data.fuelRaw or data.fuel) .. data.fUnit[data.crsf and 1 or config[23].v], MIDSIZE + RIGHT + tmp)
 		else
+		   text(X1 - 3, TOP, data.fuel .. "%", MIDSIZE + RIGHT + tmp)
 		   if data.fl ~= data.fuel then
 		      local red = data.fuel >= config[18].v and max(floor((100 - data.fuel) / (100 - config[18].v) * 255), 0) or 255
 		      local green = data.fuel < config[18].v and max(floor((data.fuel - config[17].v) / (config[18].v - config[17].v) * 255), 0) or 255
 		      data.fc = rgb(red, green, 60)
 		      data.fl = data.fuel
 		   end
-		   text(X1 - 3, TOP, data.fuel .. "%", MIDSIZE + RIGHT + data.fc)
 		   color(CUSTOM_COLOR, data.fc)
 		   lcd.drawGauge(0, TOP + 26, X1 - 3, 15, min(data.fuel, 99), 100, CUSTOM_COLOR)
 		end
@@ -494,6 +494,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	end
 
 	local val = math.floor((data.showMax and data.cellMin or data.cell) * 100 + 0.5) * 0.01
+	text(X1 - 3, TOP + 42, frmt(config[1].v == 0 and "%.2fV" or "%.1fV", config[1].v == 0 and val or (data.showMax and data.battMin or data.batt)), MIDSIZE + RIGHT + tmp)
 	text(0, TOP + 51, labels[2], SMLSIZE+iNavZone.options.Text)
 	if data.bl ~= val then
 		local red = val >= config[2].v and max(floor((4.2 - val) / (4.2 - config[2].v) * 255), 0) or 255
@@ -501,12 +502,12 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		data.bc = rgb(red, green, 60)
 		data.bl = val
 	end
-	text(X1 - 3, TOP + 42, frmt(config[1].v == 0 and "%.2fV" or "%.1fV", config[1].v == 0 and val or (data.showMax and data.battMin or data.batt)), MIDSIZE + RIGHT + data.bc)
 	color(CUSTOM_COLOR, data.bc)
 	lcd.drawGauge(0, TOP + 68, X1 - 3, 15, min(max(val - config[3].v + 0.1, 0) * (100 / (4.2 - config[3].v + 0.1)), 99), 100, CUSTOM_COLOR)
 
 	tmp = (not data.telem or data.rssi < data.rssiLow) and FLASH or iNavZone.options.Text
 	val = data.showMax and data.rssiMin or data.rssiLast
+	text(X1 - 3, TOP + 84, val .. (data.crsf and "%" or "dB"), MIDSIZE + RIGHT + tmp)
 	text(0, TOP + 93, data.crsf and "LQ" or "RSSI", SMLSIZE+iNavZone.options.Text)
 	if data.rl ~= val then
 		local red = val >= data.rssiLow and max(floor((100 - val) / (100 - data.rssiLow) * 255), 0) or 255
@@ -514,7 +515,6 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		data.rc = rgb(red, green, 60)
 		data.rl = val
 	end
-	text(X1 - 3, TOP + 84, val .. (data.crsf and "%" or "dB"), MIDSIZE + RIGHT + data.rc)
 	color(CUSTOM_COLOR, data.rc)
 	lcd.drawGauge(0, TOP + 110, X1 - 3, 15, min(val, 99), 100, CUSTOM_COLOR)
 
