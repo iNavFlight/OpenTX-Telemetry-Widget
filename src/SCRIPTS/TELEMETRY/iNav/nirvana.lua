@@ -253,7 +253,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		tics(data.speed, 1)
 		tics(data.altitude, RIGHT_POS - 4)
 		text(42, Y_CNTR - 25, units[data.speed_unit], SMLSIZE + RIGHT)
-		text(RIGHT_POS - 4, Y_CNTR - 25, "Alt " .. units[data.alt_unit], SMLSIZE + RIGHT  iNavZone.options.Text)
+		text(RIGHT_POS - 4, Y_CNTR - 25, "Alt " .. units[data.alt_unit], SMLSIZE + RIGHT + iNavZone.options.Text)
 	end
 
 	-- Compass
