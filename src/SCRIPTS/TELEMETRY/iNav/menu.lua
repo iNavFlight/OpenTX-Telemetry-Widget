@@ -57,8 +57,8 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 			lcd.setColor(CUSTOM_COLOR, GREY)
 			fill(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, CUSTOM_COLOR)
 		end
-		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, TEXT_COLOR)
-		lcd.setColor(CUSTOM_COLOR, data.nv and LIGHTGREY or 12678) -- Dark grey
+		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, iNavZone.options.Text)
+		lcd.setColor(CUSTOM_COLOR, data.nv and LIGHTGREY or lcd.RGB(49, 48, 49)) -- Dark grey
 	elseif not SMLCD then
 		rect(CONFIG_X - 5, TOP - 2, LCD_W - CONFIG_X * 2 + 10, HIGH * (ROWS + 1) + 1, SOLID)
 	end
@@ -189,10 +189,10 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 		if config2[z].p == 1 and HORUS then
 			tmp = tmp + CUSTOM_COLOR
 		end
-		text(CONFIG_X, y, config2[z].t, FONT + ((config2[z].p == 1 and HORUS) and CUSTOM_COLOR or 0))
+		text(CONFIG_X, y, config2[z].t, FONT + ((config2[z].p == 1 and HORUS) and CUSTOM_COLOR or iNavZone.options.Text))
 		if config2[z].p == nil then
 			if config2[z].l == nil then
-				text(CONFIG_X + RSIDE, y, (config[z].d ~= nil and frmt("%.1f", config[z].v) or config[z].v) .. config2[z].a, FONT + tmp)
+				text(CONFIG_X + RSIDE, y, (config[z].d ~= nil and frmt("%.1f", config[z].v) or config[z].v) .. config2[z].a, FONT + tmp + iNavZone.options.Text)
 			else
 				if config2[z].l == 0 then
 					if config[z].v == 0 then
@@ -204,14 +204,14 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 					config2[z].l = offOn
 				end
 				if not config2[z].l then
-					text(CONFIG_X + RSIDE, y, config[z].v, FONT + tmp)
+					text(CONFIG_X + RSIDE, y, config[z].v, FONT + tmp + iNavZone.options.Text)
 				else
-					text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), FONT + tmp + (z == 16 and RIGHT or 0))
+					text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), FONT + tmp + (z == 16 and RIGHT or 0) + iNavZone.options.Text)
 				end
 			end
 			config2[z] = nil
 		else
-			text(CONFIG_X + RSIDE, y, "--", FONT + tmp)
+			text(CONFIG_X + RSIDE, y, "--", FONT + tmp + iNavZone.options.Text)
 		end
 	end
 
