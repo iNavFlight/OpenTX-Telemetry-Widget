@@ -1,16 +1,25 @@
 ## INAV Lua Telemetry Flight Status fork for EdgeTX / Horus, TX16S etc.
 
-This fork works for EdgeTX (2.5 dev of 2021-09-20 and later) and TX16S (Horus). It may not work elsewhere; specifically, it is not backwards compatible with OpenTX. Nivana has also been updated, but is untested.
+This fork works for EdgeTX (2.5 dev of 2021-09-20 and later) and TX16S (Horus). It may not work elsewhere. Nivana has also been updated, but is untested.
 
 * Colours are somewhat correct
 * The main screen is not corrupted
 * Prefers compilation on the TX, avoiding incompatible Lua binary formats
 
+There are two branches:
+
+* master : EdgeTX only. The most stable.
+* edgeTX_and_openTX_compat : In theory, works on both EdgeTX and OpenTX. Less well tested.
+
+Tested Platforms
+
+* TX16S, EdgeTX (both zip files)
+* Simulator. Both zip files tested on EdgeTX and OpenTX against TX16S.
+
+
 #### Installation
 
-* Install the official inav / OpenTX [release](https://github.com/iNavFlight/OpenTX-Telemetry-Widget)
-* Copy the `*.lua` files from here into the respective target directories
-* Delete the corresponding `*.luac` files; they will be recreated
+* Unzip the relevant release Zip file into the root of the SDcard (real or simulator image).
 
 #### In use
 
