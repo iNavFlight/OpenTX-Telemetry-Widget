@@ -4,7 +4,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	local LEFT_POS = SMLCD and LEFT_DIV or 73
 	local RIGHT_POS = SMLCD and LCD_W - 31 or LCD_W - 53
 	local X_CNTR = (RIGHT_POS + LEFT_POS) * 0.5 - 1
-	local gpsFlags = SMLSIZE + RIGHT + ((not data.telem or not data.gpsFix) and FLASH or iNavZone.options.Text)
+	local gpsFlags = SMLSIZE + RIGHT + ((not data.telem or not data.gpsFix) and FLASH or 0)
 	local tmp, pitch
 
 	-- Startup message
@@ -42,7 +42,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			text(LEFT_POS + 25, 57, data.startup > 0 and "Dist " or (tmp < 1000 and math.floor(tmp + 0.5) .. units[data.dist_unit] or (frmt("%.1f", tmp / (data.dist_unit == 9 and 1000 or 5280)) .. (data.dist_unit == 9 and "km" or "mi"))), SMLSIZE + RIGHT + data.telemFlags)
 			-- Altitude
 			tmp = data.showMax and data.altitudeMax or data.altitude
-			text(RIGHT_POS, 57, data.startup > 0 and "Alt" or (math.floor(tmp + 0.5) .. units[data.alt_unit]), SMLSIZE + RIGHT + ((not data.telem or tmp + 0.5 >= config[6].v) and FLASH or iNavZone.options.Text))
+			text(RIGHT_POS, 57, data.startup > 0 and "Alt" or (math.floor(tmp + 0.5) .. units[data.alt_unit]), SMLSIZE + RIGHT + ((not data.telem or tmp + 0.5 >= config[6].v) and FLASH or 0))
 			if data.altHold then
 				icons.lock(RIGHT_POS - 6, 50)
 			end
@@ -52,7 +52,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			text(LEFT_POS + 15, 17, pitch .. (math.abs(pitch) < 10 and "\64" or ""), SMLSIZE + RIGHT + data.telemFlags)
 			line(LEFT_POS + 1, 17, LEFT_POS + 1, 24, SOLID, ERASE)
 		else
-			text(LEFT_POS + 2, 17, "Ptch", SMLSIZE+iNavZone.options.Text)
+			text(LEFT_POS + 2, 17, "Ptch", SMLSIZE)
 		end
 	elseif data.showDir or data.headingRef == -1 then
 		-- Heading
@@ -60,15 +60,15 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	end
 	-- Min/Max
 	if not data.showDir and data.showMax then
-		text(RIGHT_POS, 9, "\192", SMLSIZE + RIGHT+iNavZone.options.Text)
+		text(RIGHT_POS, 9, "\192", SMLSIZE + RIGHT)
 	end
 
 	-- Radar
 	if data.startup == 0 then
 		tmp = data.headingRef
 		if data.showDir or data.headingRef == -1 then
-			text(LEFT_POS + 2, 33, dir[6], SMLSIZE+iNavZone.options.Text)
-			text(RIGHT_POS, 33, dir[2], SMLSIZE + RIGHT+iNavZone.options.Text)
+			text(LEFT_POS + 2, 33, dir[6], SMLSIZE)
+			text(RIGHT_POS, 33, dir[2], SMLSIZE + RIGHT)
 			tmp = 0
 		end
 		local cx, cy, d
@@ -142,17 +142,17 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	end
 	if SMLCD then
 		if data.crsf == false then
-			text(LCD_W + 1, config[22].v == 0 and 32 or 22, "HDOP", RIGHT + SMLSIZE+iNavZone.options.Text)
+			text(LCD_W + 1, config[22].v == 0 and 32 or 22, "HDOP", RIGHT + SMLSIZE)
 		end
 		hdopGraph(LCD_W - 12, config[22].v == 0 and (data.crsf and 37 or 24) or 31, MIDSIZE, SMLCD)
 	else
 		hdopGraph(LCD_W - 39, data.crsf and 24 or 10, MIDSIZE, SMLCD)
 		if data.crsf == false then
-			text(LCD_W - (config[22].v == 0 and 24 or 25), config[22].v == 0 and 18 or 20, "HDOP", RIGHT + SMLSIZE+iNavZone.options.Text)
+			text(LCD_W - (config[22].v == 0 and 24 or 25), config[22].v == 0 and 18 or 20, "HDOP", RIGHT + SMLSIZE)
 		end
 		text(LCD_W + 1, 33, config[16].v == 0 and frmt("%.5f", data.gpsLatLon.lat) or gpsDegMin(data.gpsLatLon.lat, true), gpsFlags)
 		text(LCD_W + 1, 42, config[16].v == 0 and frmt("%.5f", data.gpsLatLon.lon) or gpsDegMin(data.gpsLatLon.lon, false), gpsFlags)
-		text(RIGHT_POS + 8, 57, data.crsf and "LQ" or "RSSI", SMLSIZE+iNavZone.options.Text)
+		text(RIGHT_POS + 8, 57, data.crsf and "LQ" or "RSSI", SMLSIZE)
 	end
 	line(RIGHT_POS + (config[7].v % 2 == 1 and (SMLCD and 5 or 7) or 0), 50, LCD_W, 50, SOLID, FORCE)
 	local rssiFlags = RIGHT + ((not data.telem or data.rssi < data.rssiLow) and FLASH or 0)
@@ -188,21 +188,21 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		-- Altitude
 		tmp = data.showMax and data.altitudeMax or data.altitude
 		local tmp2 = data.alt_unit == 9 and 6 or 2
-		text(LEFT_DIV + 2, 9, "Alt", SMLSIZE+iNavZone.options.Text)
-		text(LEFT_POS - tmp2, data.alt_unit == 9 and 21 or 17, units[data.alt_unit], SMLSIZE + ((not data.telem or tmp + 0.5 >= config[6].v) and FLASH or iNavZone.options.Text))
-		text(LEFT_POS - tmp2, 16, math.floor(tmp + 0.5), MIDSIZE + RIGHT + ((not data.telem or tmp + 0.5 >= config[6].v) and FLASH or iNavZone.options.Text))
+		text(LEFT_DIV + 2, 9, "Alt", SMLSIZE)
+		text(LEFT_POS - tmp2, data.alt_unit == 9 and 21 or 17, units[data.alt_unit], SMLSIZE + ((not data.telem or tmp + 0.5 >= config[6].v) and FLASH or 0))
+		text(LEFT_POS - tmp2, 16, math.floor(tmp + 0.5), MIDSIZE + RIGHT + ((not data.telem or tmp + 0.5 >= config[6].v) and FLASH or 0))
 		if data.altHold then
 			icons.lock(LEFT_POS - 6, 9)
 		end
 		-- Distance
 		tmp = data.showMax and data.distanceMax or data.distanceLast
 		tmp2 = data.dist_unit == 9 and (tmp < 1000 and 6 or 11) or (tmp < 1000 and 2 or 10)
-		text(LEFT_DIV + 2, 30, "Dist", SMLSIZE+iNavZone.options.Text)
+		text(LEFT_DIV + 2, 30, "Dist", SMLSIZE)
 		text(LEFT_POS - tmp2, (data.dist_unit == 9 or tmp >= 1000) and 42 or 38, tmp < 1000 and units[data.dist_unit] or (data.dist_unit == 9 and "km" or "mi"), SMLSIZE + data.telemFlags)
 		text(LEFT_POS - tmp2, 37, tmp < 1000 and math.floor(tmp + 0.5) or frmt("%.1f", tmp / (data.dist_unit == 9 and 1000 or 5280)), MIDSIZE + RIGHT + data.telemFlags)
 		--Pitch
 		line(LEFT_DIV, 50, LEFT_POS, 50, SOLID, FORCE)
-		text(LEFT_DIV + 5, 54, pitch > 0 and "\194" or (pitch == 0 and "->" or "\195"), SMLSIZE+iNavZone.options.Text)
+		text(LEFT_DIV + 5, 54, pitch > 0 and "\194" or (pitch == 0 and "->" or "\195"), SMLSIZE)
 		text(LEFT_POS, 53, "\64", SMLSIZE + RIGHT + data.telemFlags)
 		text(LEFT_POS - 4, 52, pitch, MIDSIZE + RIGHT + data.telemFlags)
 	end

@@ -463,8 +463,8 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		color(CUSTOM_COLOR, BLACK)
 		text(X_CNTR - 78, 55, "Lua Telemetry", MIDSIZE + CUSTOM_COLOR)
 		text(X_CNTR - 38, 85, "v" .. VERSION, MIDSIZE + CUSTOM_COLOR)
-		text(X_CNTR - 79, 54, "Lua Telemetry", MIDSIZE)
-		text(X_CNTR - 39, 84, "v" .. VERSION, MIDSIZE)
+		text(X_CNTR - 79, 54, "Lua Telemetry", MIDSIZE + iNavZone.options.Text)
+		text(X_CNTR - 39, 84, "v" .. VERSION, MIDSIZE + iNavZone.options.Text)
 	end
 
 	-- Data

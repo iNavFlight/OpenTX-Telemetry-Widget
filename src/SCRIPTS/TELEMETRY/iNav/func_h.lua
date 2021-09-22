@@ -52,10 +52,10 @@ local function title()
 		color(CUSTOM_COLOR, lcd.RGB(49, 48, 49)) -- Dark grey
 		fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, CUSTOM_COLOR)
 		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, iNavZone.options.Text)
-		text(4, 37, "Sats:", 0,iNavZone.options.Text)
+		text(4, 37, "Sats:", iNavZone.options.Text)
 		text(72, 37, data.satellites % 100, RIGHT + tmp)
 		if not data.crsf then
-			text(4, 59, "DOP:", 0)
+			text(4, 59, "DOP:", iNavZone.options.Text)
 			text(72, 59, (data.hdop == 0 and not data.gpsFix) and "---" or (9 - data.hdop) * 0.5 + 0.8, RIGHT + tmp)
 		end
 	end
