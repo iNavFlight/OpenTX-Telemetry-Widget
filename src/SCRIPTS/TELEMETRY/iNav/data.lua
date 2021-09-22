@@ -10,27 +10,6 @@ local function getTelemetryUnit(n)
 	return (field and field.unit <= 10) and field.unit or 0
 end
 
-function data.drawText(x,y,str,flag,col,inv)
-   if not osname then
-      local tcol = lcd.getColor(TEXT_COLOR)
-      lcd.setColor(TEXT_COLOR, col)
-      lcd.drawText(x,y,str,flag,inv)
-      lcd.setColor(TEXT_COLOR, tcol)
-   else
-      lcd.drawText(x,y,str,flag+col,inv)
-   end
-end
-
-function data.RGB(r, g, b)
-  local rgb = lcd.RGB(r, g, b)
-  if not rgb then
-    rgb = bit32.lshift(bit32.rshift(bit32.band(r, 0xFF), 3), 11)
-    rgb = rgb + bit32.lshift(bit32.rshift(bit32.band(g, 0xFF), 2), 5)
-    rgb = rgb + bit32.rshift(bit32.band(b, 0xFF), 3)
-  end
-  return rgb
-end
-
 --[[	Replace with EVT_VIRTUAL_XXX at begining of 2020 and require OpenTX 2.3+
 		Currently missing EVT_VIRTUAL_MENU on Jumper T12
 		Can remove PREV, NEXT, MENU constants from code
@@ -118,6 +97,30 @@ local data = {
 	--msg = m + i * 0.1 < 2.2 and "OpenTX v2.2+ Required" or false,
 	lastLock = { lat = 0, lon = 0 },
 	fUnit = {"mAh", "mWh"},
+	isEdge = (osname ~= nil),
 }
 
-return data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, HORUS and data.drawText or lcd.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format
+function data.drawText(x,y,str,flag,col)
+   col = (col == nil and 0) or col
+   flag = (flag == nil and 0) or flag
+   if data.isEdge then
+      lcd.drawText(x,y,str,flag+col)
+   else
+      local tcol = lcd.getColor(TEXT_COLOR)
+      lcd.setColor(TEXT_COLOR, col)
+      lcd.drawText(x,y,str,flag)
+      lcd.setColor(TEXT_COLOR, tcol)
+   end
+end
+
+function data.RGB(r, g, b)
+  local rgb = lcd.RGB(r, g, b)
+  if not rgb then
+    rgb = bit32.lshift(bit32.rshift(bit32.band(r, 0xFF), 3), 11)
+    rgb = rgb + bit32.lshift(bit32.rshift(bit32.band(g, 0xFF), 2), 5)
+    rgb = rgb + bit32.rshift(bit32.band(b, 0xFF), 3)
+  end
+  return rgb
+end
+
+return data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, data.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format

@@ -2,11 +2,7 @@ local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt =
 
 local function title()
 	local color = lcd.setColor
-	local tmp = iNavZone.options.Text
-
-	if not data.telem then
-	   tmp = iNavZone.options.Warning
-	end
+	local tmp = data.telem and iNavZone.options.Text or iNavZone.options.Warning
 
 	-- Title
 	color(CUSTOM_COLOR, BLACK)
@@ -36,7 +32,14 @@ local function title()
 		if data.doLogs and data.time ~= nil then
 			text(data.nv and 184 or 340, 0, data.time, 0, iNavZone.options.Text)
 		else
-			lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, 0, iNavZone.options.Text)
+		   if data.isEdge then
+		      lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, iNavZone.options.Text)
+		   else
+		      local tcol = lcd.getColor(TEXT_COLOR)
+		      lcd.setColor(TEXT_COLOR, iNavZone.options.Text)
+		      lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, 0)
+		      lcd.setColor(TEXT_COLOR, tcol)
+		      end
 		end
 	end
 
@@ -47,11 +50,11 @@ local function title()
 		text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", RIGHT, tmp)
 	end
 
-	-- Data on config menu
+	--[[ Data on config menu ]]
 	if data.configStatus > 0 then
 		color(CUSTOM_COLOR, data.RGB(49, 48, 49)) -- Dark grey
 		fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, CUSTOM_COLOR)
-		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, 0, iNavZone.options.Text)
+		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, 0, (data.isEdge) and iNavZone.options.Text or 0)
 		text(4, 37, "Sats:", 0, iNavZone.options.Text)
 		text(72, 37, data.satellites % 100, RIGHT, tmp)
 		if not data.crsf then
@@ -66,19 +69,6 @@ local function title()
 		--text(data.nv and 75 or 130, 0, frmt("%.1f", math.min(100 / (getTime() - data.start), 20)), RIGHT)
 		text(data.nv and 115 or 180, 0, frmt("%.1f", data.frames / (getTime() - data.fpsStart) * 100), RIGHT, iNavZone.options.Text)
 	end
-
-	--[[ Show usage
-	text(data.nv and 75 or 130, 0, getUsage() .. "%", RIGHT)
-	]]
-
-	-- Reset colors
---	color(WARNING_COLOR, YELLOW)
---	if data.widget then
---		if iNavZone.options.Restore % 2 == 1 then
---			color(TEXT_COLOR, iNavZone.options.Text)
---			color(WARNING_COLOR, iNavZone.options.Warning)
---		end
---	end
 
 end
 
@@ -215,7 +205,7 @@ function data.menu(prev)
 		fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, CUSTOM_COLOR)
 		lcd.setColor(CUSTOM_COLOR, YELLOW)
 		rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, CUSTOM_COLOR)
-		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE), CUSTOM_COLOR)
+		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE), YELLOW)
 	end
 end
 

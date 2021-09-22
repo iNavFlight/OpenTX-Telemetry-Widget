@@ -129,7 +129,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		end
 	elseif data.showMax then
 		text(LEFT_POS + 21, 33, "\192", SMLSIZE)
-		text(RIGHT_POS - 22, 33, "\192", SMLSIZE)
+		text(RIGHT_POS - 22, 33, "\192", SMLSIZE + RIGHT)
 	end
 
 	-- Heading part 1
