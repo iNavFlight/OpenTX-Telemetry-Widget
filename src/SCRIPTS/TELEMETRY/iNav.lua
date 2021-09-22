@@ -11,15 +11,10 @@ local FLASH = HORUS and WARNING_COLOR or 3
 local tmp, view, lang, playLog
 local env = "bt"
 local ext = ".luac"
+local osname = nil
 
 -- Build with Companion and allow debugging
-local v, r, m, i, e = getVersion()
-if string.sub(r, -4) == "simu" then
-	env = "tx"
-	if buildMode ~= false then
-		loadScript(FILE_PATH .. "build", env)(buildMode)
-	end
-end
+local v, r, m, i, e, osname = getVersion()
 
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
@@ -27,7 +22,7 @@ collectgarbage()
 local modes, units, labels, dir = loadScript(FILE_PATH .. "modes" .. ext, env)(HORUS)
 collectgarbage()
 
-local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
+local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS, osname)
 collectgarbage()
 
 loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
