@@ -24,9 +24,9 @@ Some bench test images:
 
 ![No Telemetry](assets/edgetx/screen-2021-09-21-211359.png)
 
-#### Apologies and embarassment
+#### Future
 
-This is _so_ ugly. This hack replaces the original module's overwriting of the system theme colours with colours specific to the telemetry module. It's far too horrible to offer as an upstrem PR ... maybe someone competent will be inspired to fix it properly.
+At some stage, this will be made to work on both EdgeTX and OpenTX; then it can go back upstream.
 
 #### Official Documentation
 
