@@ -15,7 +15,6 @@ local ext = ""
 -- Build with Companion and allow debugging
 local v, r, m, i, e, osname = getVersion()
 
-
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
 

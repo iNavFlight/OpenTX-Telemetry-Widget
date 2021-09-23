@@ -19,6 +19,7 @@ local tx = string.sub(r, 0, 2)
 if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or string.sub(r, 0, 6) == "x9d+20" then
 	tx = "x7"
 end
+
 local PREV = EVT_VIRTUAL_PREVIOUS
 local NEXT = EVT_VIRTUAL_NEXT
 local MENU = tx == "xl" and EVT_SHIFT_BREAK or (HORUS and EVT_SYS_FIRST or (string.sub(r, 0, 3) == "t12" and EVT_VIRTUAL_PREVIOUS or EVT_MENU_BREAK))
@@ -93,7 +94,7 @@ local data = {
 	alt = {},
 	v = -1,
 	simu = string.sub(r, -4) == "simu",
-	nv = r == "NV14",
+	nv = string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14",
 	--msg = m + i * 0.1 < 2.2 and "OpenTX v2.2+ Required" or false,
 	lastLock = { lat = 0, lon = 0 },
 	fUnit = {"mAh", "mWh"},
