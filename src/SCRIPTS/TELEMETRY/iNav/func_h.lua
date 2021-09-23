@@ -10,7 +10,7 @@ local function title()
 
 	-- Model
 	iNavZone.options.Text = WHITE
-	iNavZone.options.Warning = YELLOW
+	iNavZone.options.Warning = data.RGB(0xF0, 0xD0, 0x10)
 	text(0, 0, model.getInfo().name, 0, iNavZone.options.Text)
 
 	-- TX battery
@@ -203,9 +203,9 @@ function data.menu(prev)
 	if data.stickMsg ~= nil and not data.armed then
 		lcd.setColor(CUSTOM_COLOR, BLACK)
 		fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, CUSTOM_COLOR)
-		lcd.setColor(CUSTOM_COLOR, YELLOW)
+		lcd.setColor(CUSTOM_COLOR, iNavZone.options.Warning)
 		rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, CUSTOM_COLOR)
-		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE), YELLOW)
+		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE), iNavZone.options.Warning)
 	end
 end
 
