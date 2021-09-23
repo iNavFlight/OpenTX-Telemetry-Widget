@@ -8,17 +8,18 @@ This fork works for EdgeTX (2.5 dev of 2021-09-20 and later) and TX16S (Horus). 
 
 There are two branches:
 
-* master : EdgeTX only. The most stable.
-* edgeTX_and_openTX_compat : In theory, works on both EdgeTX and OpenTX. Less well tested.
+* master : EdgeTX only. Obsolete.
+* edgeTX_and_openTX_compat : Should be working on both EdgeTX and OTX.
 
 Tested Platforms
 
 * TX16S, EdgeTX (both zip files)
-* Simulator. Both zip files tested on EdgeTX and OpenTX against TX16S.
+* Simulator. Both zip files tested on EdgeTX and OpenTX against TX16S, NV14 tested on EdgeTX/simulator.
 
 
 #### Installation
 
+* Remove the old extension files
 * Unzip the relevant release Zip file into the root of the SDcard (real or simulator image).
 
 #### In use
@@ -35,7 +36,7 @@ Some bench test images:
 
 #### Future
 
-At some stage, this will be made to work on both EdgeTX and OpenTX; then it can go back upstream.
+After some more testing, on both EdgeTX and OpenTX; then it can be offered upstream.
 
 #### Official Documentation
 
