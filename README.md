@@ -10,7 +10,7 @@ This fork works for EdgeTX (2.5 dev of 2021-09-20 and later) and OpenTX.
 Tested Platforms
 
 * TX16S, EdgeTX
-* Simulator. EdgeTX and OpenTX against TX16S, NV14 tested on EdgeTX/simulator.
+* Simulator. EdgeTX and OpenTX against TX16S, NV14 and x9d tested on EdgeTX/simulator.
 
 #### Installation
 
