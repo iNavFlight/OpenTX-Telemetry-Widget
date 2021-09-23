@@ -85,3 +85,14 @@ clean: clean-obj clean-zip clean-lua
 
 print-version:
 	@echo $(VERSION)
+
+zip-ng: $(SRC)
+	cd src ; zip -9r ../lua-edge-otx-compat-1.7.4.zip .
+ifneq ($(SDCARD),)
+install-ng: obj
+	mkdir -p "$(SDCARD)"
+	cp -av src/* "$(SDCARD)"
+else
+install:
+	$(error $$SDCARD is empty - use SDCARD=dest make install-ng)
+endif

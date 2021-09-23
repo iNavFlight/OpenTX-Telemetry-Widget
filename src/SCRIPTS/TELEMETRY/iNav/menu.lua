@@ -178,12 +178,13 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 			end
 		end
 	end
+
 	-- Print screen
 	for i = data.configTop, bottom do
 		local y = (i - data.configTop) * HIGH + TOP
 		local z = config[i].z
 		local tmp = (data.configStatus == i and INVERS + data.configSelect or 0)
-		local tmpf = (config2[z].p == 1 and HORUS) and CUSTOM_COLOR or iNavZone.options.Text
+		local tmpf = (config2[z].p == 1 and HORUS) and CUSTOM_COLOR or 0
 		text(CONFIG_X, y, config2[z].t, FONT, tmpf)
 		if config2[z].p == nil then
 			if config2[z].l == nil then
