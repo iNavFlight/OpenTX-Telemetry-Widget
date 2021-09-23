@@ -2,11 +2,7 @@ local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt =
 
 local function title()
 	local color = lcd.setColor
-	local tmp = iNavZone.options.Text
-
-	if not data.telem then
-	   tmp = iNavZone.options.Warning
-	end
+	local tmp = data.telem and iNavZone.options.Text or iNavZone.options.Warning
 
 	-- Title
 	color(CUSTOM_COLOR, BLACK)
@@ -15,7 +11,7 @@ local function title()
 	-- Model
 	iNavZone.options.Text = WHITE
 	iNavZone.options.Warning = YELLOW
-	text(0, 0, model.getInfo().name, iNavZone.options.Text)
+	text(0, 0, model.getInfo().name, 0, iNavZone.options.Text)
 
 	-- TX battery
 	local bat = data.nv and 135 or 197
@@ -28,35 +24,42 @@ local function title()
 		end
 	end
 	if config[19].v ~= 1 then
-	   text(data.nv and 180 or bat + 93, 0, frmt("%.1fV", data.txBatt), RIGHT+iNavZone.options.Text)
+	   text(data.nv and 180 or bat + 93, 0, frmt("%.1fV", data.txBatt), RIGHT, iNavZone.options.Text)
 	end
 
 	-- Timer
 	if config[13].v > 0 then
 		if data.doLogs and data.time ~= nil then
-			text(data.nv and 184 or 340, 0, data.time, iNavZone.options.Text)
+			text(data.nv and 184 or 340, 0, data.time, 0, iNavZone.options.Text)
 		else
-			lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, iNavZone.options.Text)
+		   if data.isEdge then
+		      lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, iNavZone.options.Text)
+		   else
+		      local tcol = lcd.getColor(TEXT_COLOR)
+		      lcd.setColor(TEXT_COLOR, iNavZone.options.Text)
+		      lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, 0)
+		      lcd.setColor(TEXT_COLOR, tcol)
+		      end
 		end
 	end
 
 	-- Receiver voltage or Crossfire speed
 	if data.rxBatt > 0 and config[14].v == 1 then
-		text(LCD_W, 0, frmt("%.1fV", data.rxBatt), RIGHT + tmp)
+		text(LCD_W, 0, frmt("%.1fV", data.rxBatt), RIGHT, tmp)
 	elseif data.crsf then
-		text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", RIGHT + tmp)
+		text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", RIGHT, tmp)
 	end
 
-	-- Data on config menu
+	--[[ Data on config menu ]]
 	if data.configStatus > 0 then
-		color(CUSTOM_COLOR, lcd.RGB(49, 48, 49)) -- Dark grey
+		color(CUSTOM_COLOR, data.RGB(49, 48, 49)) -- Dark grey
 		fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, CUSTOM_COLOR)
-		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, iNavZone.options.Text)
-		text(4, 37, "Sats:", iNavZone.options.Text)
-		text(72, 37, data.satellites % 100, RIGHT + tmp)
+		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, 0, (data.isEdge) and iNavZone.options.Text or 0)
+		text(4, 37, "Sats:", 0, iNavZone.options.Text)
+		text(72, 37, data.satellites % 100, RIGHT, tmp)
 		if not data.crsf then
-			text(4, 59, "DOP:", iNavZone.options.Text)
-			text(72, 59, (data.hdop == 0 and not data.gpsFix) and "---" or (9 - data.hdop) * 0.5 + 0.8, RIGHT + tmp)
+			text(4, 59, "DOP:", 0, iNavZone.options.Text)
+			text(72, 59, (data.hdop == 0 and not data.gpsFix) and "---" or (9 - data.hdop) * 0.5 + 0.8, RIGHT, tmp)
 		end
 	end
 
@@ -64,21 +67,8 @@ local function title()
 	if data.nv then
 		data.frames = data.frames + 1
 		--text(data.nv and 75 or 130, 0, frmt("%.1f", math.min(100 / (getTime() - data.start), 20)), RIGHT)
-		text(data.nv and 115 or 180, 0, frmt("%.1f", data.frames / (getTime() - data.fpsStart) * 100), RIGHT+iNavZone.options.Text)
+		text(data.nv and 115 or 180, 0, frmt("%.1f", data.frames / (getTime() - data.fpsStart) * 100), RIGHT, iNavZone.options.Text)
 	end
-
-	--[[ Show usage
-	text(data.nv and 75 or 130, 0, getUsage() .. "%", RIGHT)
-	]]
-
-	-- Reset colors
---	color(WARNING_COLOR, YELLOW)
---	if data.widget then
---		if iNavZone.options.Restore % 2 == 1 then
---			color(TEXT_COLOR, iNavZone.options.Text)
---			color(WARNING_COLOR, iNavZone.options.Warning)
---		end
---	end
 
 end
 
@@ -92,7 +82,7 @@ local function hdopGraph(x, y)
 	lcd.setColor(CUSTOM_COLOR, data.hdop < 11 - config[21].v * 2 and YELLOW or WHITE)
 	for i = 4, 9 do
 		if i > data.hdop then
-			lcd.setColor(CUSTOM_COLOR, lcd.RGB(131, 137, 148))
+			lcd.setColor(CUSTOM_COLOR, data.RGB(131, 137, 148))
 		end
 		fill(i * 4 + x - 16, y - (i * 3 - 10), 2, i * 3 - 10, CUSTOM_COLOR)
 	end
@@ -133,7 +123,7 @@ if type(iNavZone) == "table" and type(iNavZone.zone) ~= "nil" then
 	if iNavZone.zone.w < (data.nv and 280 or 450) or iNavZone.zone.h < (data.nv and 450 or 250) then
 		data.startupTime = math.huge
 		function data.nfs()
-			text(iNavZone.zone.x + 14, iNavZone.zone.y + 16, "Full screen required", SMLSIZE + iNavZone.options.Warning)
+		   text(iNavZone.zone.x + 14, iNavZone.zone.y + 16, "Full screen required", SMLSIZE, iNavZone.options.Warning)
 		end
 	end
 end
@@ -151,7 +141,7 @@ if data.nv then
 end
 
 function data.clear(event)
-	lcd.setColor(CUSTOM_COLOR, data.nv and (data.configStatus > 0 and lcd.RGB(98, 106, 115) or lcd.RGB(50, 82, 115)) or lcd.RGB(0, 32, 65))
+	lcd.setColor(CUSTOM_COLOR, data.nv and (data.configStatus > 0 and data.RGB(98, 106, 115) or data.RGB(50, 82, 115)) or data.RGB(0, 32, 65))
 	lcd.clear(CUSTOM_COLOR)
 
 	if event == 0 or event == nil then
@@ -202,9 +192,9 @@ function data.menu(prev)
 
 	-- Aircraft symbol preview
 	if data.configStatus == 27 and data.configSelect ~= 0 then
-		lcd.setColor(CUSTOM_COLOR, data.nv and lcd.RGB(49, 170, 230) or lcd.RGB(0, 121, 180) ) -- Sky
+		lcd.setColor(CUSTOM_COLOR, data.nv and data.RGB(49, 170, 230) or data.RGB(0, 121, 180) ) -- Sky
 		fill(LCD_W - 124, (data.nv and 28 or 111), 123, 31, CUSTOM_COLOR)
-		lcd.setColor(CUSTOM_COLOR, data.nv and lcd.RGB(148, 117, 57) or lcd.RGB(98, 68, 8)) -- Ground
+		lcd.setColor(CUSTOM_COLOR, data.nv and data.RGB(148, 117, 57) or data.RGB(98, 68, 8)) -- Ground
 		fill(LCD_W - 124, (data.nv and 59 or 142), 123, 31, CUSTOM_COLOR)
 		lcd.drawBitmap(icons.fg, LCD_W - 125, (data.nv and 27 or 110), 50)
 		rect(LCD_W - 125, (data.nv and 27 or 110), 125, 64, iNavZone.options.Text)
@@ -215,7 +205,7 @@ function data.menu(prev)
 		fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, CUSTOM_COLOR)
 		lcd.setColor(CUSTOM_COLOR, YELLOW)
 		rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, CUSTOM_COLOR)
-		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE) + CUSTOM_COLOR)
+		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE), YELLOW)
 	end
 end
 
