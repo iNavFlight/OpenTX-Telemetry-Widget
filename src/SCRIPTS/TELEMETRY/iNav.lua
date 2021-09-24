@@ -33,12 +33,6 @@ collectgarbage()
 local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
 collectgarbage()
 
-if HORUS then
-   data.saveZero = lcd.getColor(0)
-   data.saveText = lcd.getColor(TEXT_COLOR)
-   data.saveWarn = lcd.getColor(WARNING_COLOR)
-end
-
 loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
 collectgarbage()
 
@@ -463,6 +457,11 @@ function inav.run(event)
 	-- Startup message
 	if data.startup == 1 then
 		data.startupTime = getTime()
+		if HORUS then
+		   data.saveZero = lcd.getColor(0)
+		   data.saveText = lcd.getColor(TEXT_COLOR)
+		   data.saveWarn = lcd.getColor(WARNING_COLOR)
+		end
 		data.startup = 2
 	elseif data.startup == 2 and getTime() - data.startupTime >= 200 then
 		data.startup = 0
