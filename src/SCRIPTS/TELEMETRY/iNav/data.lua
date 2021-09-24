@@ -1,4 +1,4 @@
-local r, m, i, HORUS, osname = ...
+local r, m, i, HORUS = ...
 
 local function getTelemetryId(n)
 	local field = getFieldInfo(n)
@@ -19,14 +19,12 @@ local tx = string.sub(r, 0, 2)
 if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or string.sub(r, 0, 6) == "x9d+20" then
 	tx = "x7"
 end
-
 local PREV = EVT_VIRTUAL_PREVIOUS
 local NEXT = EVT_VIRTUAL_NEXT
 local MENU = tx == "xl" and EVT_SHIFT_BREAK or (HORUS and EVT_SYS_FIRST or (string.sub(r, 0, 3) == "t12" and EVT_VIRTUAL_PREVIOUS or EVT_MENU_BREAK))
 
 local general = getGeneralSettings()
 local distSensor = getTelemetryId("Dist") > -1 and "Dist" or (getTelemetryId("0420") > -1 and "0420" or "0007")
-
 local data = {
 	txBattMin = general.battMin,
 	txBattMax = general.battMax,
@@ -98,21 +96,7 @@ local data = {
 	--msg = m + i * 0.1 < 2.2 and "OpenTX v2.2+ Required" or false,
 	lastLock = { lat = 0, lon = 0 },
 	fUnit = {"mAh", "mWh"},
-	isEdge = (osname ~= nil),
 }
-
-function data.drawText(x,y,str,flag,col)
-   col = (col == nil and 0) or col
-   flag = (flag == nil and 0) or flag
-   if data.isEdge then
-      lcd.drawText(x,y,str,flag+col)
-   else
-      local tcol = lcd.getColor(TEXT_COLOR)
-      lcd.setColor(TEXT_COLOR, col)
-      lcd.drawText(x,y,str,flag)
-      lcd.setColor(TEXT_COLOR, tcol)
-   end
-end
 
 function data.RGB(r, g, b)
   local rgb = lcd.RGB(r, g, b)
@@ -124,4 +108,4 @@ function data.RGB(r, g, b)
   return rgb
 end
 
-return data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, data.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format
+return data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, lcd.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format

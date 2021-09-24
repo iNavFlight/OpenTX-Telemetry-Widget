@@ -51,12 +51,13 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	if lang ~= nil then
 		offOn = lang(config2)
 	end
+
 	if HORUS then
 		if not data.nv then
 			lcd.setColor(CUSTOM_COLOR, GREY)
 			fill(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, CUSTOM_COLOR)
 		end
-		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, iNavZone.options.Text)
+		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, TEXT_COLOR)
 		lcd.setColor(CUSTOM_COLOR, data.nv and LIGHTGREY or data.RGB(49, 48, 49)) -- Dark grey
 	elseif not SMLCD then
 		rect(CONFIG_X - 5, TOP - 2, LCD_W - CONFIG_X * 2 + 10, HIGH * (ROWS + 1) + 1, SOLID)
@@ -69,6 +70,7 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	if config[28].v == 0 and config[25].v == 3 then
 		config[25].v = 2
 	end
+
 	-- Disabled options
 	config2[7].p = data.vspeed_id == -1 and 1 or nil
 	config2[15].p = not HORUS and 1 or nil
@@ -184,16 +186,13 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 		local y = (i - data.configTop) * HIGH + TOP
 		local z = config[i].z
 		local tmp = (data.configStatus == i and INVERS + data.configSelect or 0)
-		local tmpf = 0
-		if HORUS then
-		   tmpf =  (config2[z].p == 1) and CUSTOM_COLOR or iNavZone.options.Text
+		if config2[z].p == 1 and HORUS then
+			tmp = tmp + CUSTOM_COLOR
 		end
-
-
-		text(CONFIG_X, y, config2[z].t, FONT, tmpf)
+		text(CONFIG_X, y, config2[z].t, FONT + ((config2[z].p == 1 and HORUS) and CUSTOM_COLOR or 0))
 		if config2[z].p == nil then
 			if config2[z].l == nil then
-				text(CONFIG_X + RSIDE, y, (config[z].d ~= nil and frmt("%.1f", config[z].v) or config[z].v) .. config2[z].a, FONT + tmp, tmpf)
+				text(CONFIG_X + RSIDE, y, (config[z].d ~= nil and frmt("%.1f", config[z].v) or config[z].v) .. config2[z].a, FONT + tmp)
 			else
 				if config2[z].l == 0 then
 					if config[z].v == 0 then
@@ -205,14 +204,14 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 					config2[z].l = offOn
 				end
 				if not config2[z].l then
-					text(CONFIG_X + RSIDE, y, config[z].v, FONT + tmp, tmpf)
+					text(CONFIG_X + RSIDE, y, config[z].v, FONT + tmp)
 				else
-					text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), FONT + tmp + (z == 16 and RIGHT or 0), tmpf)
+					text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), FONT + tmp + (z == 16 and RIGHT or 0))
 				end
 			end
 			config2[z] = nil
 		else
-		   text(CONFIG_X + RSIDE, y, "--", FONT + tmp, tmpf)
+			text(CONFIG_X + RSIDE, y, "--", FONT + tmp)
 		end
 	end
 

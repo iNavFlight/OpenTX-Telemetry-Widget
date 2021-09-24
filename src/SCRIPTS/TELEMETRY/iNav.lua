@@ -2,18 +2,27 @@
 -- Author: https://github.com/teckel12
 -- Docs: https://github.com/iNavFlight/LuaTelemetry
 
-local buildMode = ...
+local zone, options = ...
 local VERSION = "1.7.4"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
-local FLASH = HORUS and RED or 3
+local FLASH = HORUS and WARNING_COLOR or 3
 local tmp, view, lang, playLog
-local env = "bt"
-local ext = ""
+local env = "bt" -- compile on platform
+local inav = {}
 
--- Build with Companion and allow debugging
-local v, r, m, i, e, osname = getVersion()
+local ext = "" -- compile on platform
+
+local v, r, m, i, e = getVersion()
+-- Nirvana NV14 doesn't have have these global constants, so we set them
+if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
+	EVT_SYS_FIRST = 1 --1542
+	EVT_ROT_LEFT = 2 --57088
+	EVT_ROT_RIGHT = 3 --56832
+	EVT_ENTER_BREAK = 4 --514
+	EVT_EXIT_BREAK = 5 --516
+end
 
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
@@ -21,8 +30,14 @@ collectgarbage()
 local modes, units, labels, dir = loadScript(FILE_PATH .. "modes" .. ext, env)(HORUS)
 collectgarbage()
 
-local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS, osname)
+local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
 collectgarbage()
+
+if HORUS then
+   data.saveZero = lcd.getColor(0)
+   data.saveText = lcd.getColor(TEXT_COLOR)
+   data.saveWarn = lcd.getColor(WARNING_COLOR)
+end
 
 loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
 collectgarbage()
@@ -79,12 +94,16 @@ local function endLog()
 	loadScript(FILE_PATH .. "reset" .. ext, env)(data)
 end
 
-local function background()
+function inav.update(opt)
+   options = opt
+end
+
+function inav.background()
 	local gpsTemp
 	data.rssi, data.rssiLow, data.rssiCrit = getRSSI()
 	if data.rssi > 0 then
 		data.telem = true
-		data.telemFlags = iNavZone.options.Text
+		data.telemFlags = 0
 		data.rssiMin = math.min(data.rssiMin, data.rssi)
 		data.satellites = getValue(data.sat_id)
 		if data.showFuel then
@@ -239,7 +258,7 @@ local function background()
 	local beep = false
 	if data.armed and not armedPrev then -- Engines armed
 		data.timerStart = getTime()
-		data.headingRef = data.heading
+
 		data.gpsHome = false
 		data.battPercentPlayed = 100
 		data.battLow = false
@@ -430,14 +449,14 @@ local function background()
 	data.bkgd = true
 end
 
-local function run(event)
+function inav.run(event)
 	--[[ Show FPS
 	data.start = getTime()
 	]]
 
 	-- Insure background() has run before rendering screen
 	if not data.bkgd then
-		background()
+		inav.background()
 	end
 	data.bkgd = false
 
@@ -449,7 +468,11 @@ local function run(event)
 		data.startup = 0
 		--data.msg = false
 	end
-
+	if HORUS then
+	   lcd.setColor(0,  options.Text)
+	   lcd.setColor(TEXT_COLOR,  options.Text)
+	   lcd.setColor(WARNING_COLOR, options.Warning)
+	end
 	-- Clear screen
 	if HORUS then
 		-- Display error if Horus widget isn't full screen
@@ -473,7 +496,7 @@ local function run(event)
 
 	-- Config menu or views
 	if data.configStatus > 0 then
-	   if data.v ~= 9 then
+		if data.v ~= 9 then
 			view = nil
 			collectgarbage()
 			view = loadScript(FILE_PATH .. "menu" .. ext, env)()
@@ -482,7 +505,7 @@ local function run(event)
 		tmp = config[30].v
 		view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, FLASH, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
 		if HORUS then
-		   data.menu(tmp)
+			data.menu(tmp)
 		end
 		-- Exit menu or select log for playback, save config settings
 		if data.configSelect == 0 and (event == EVT_EXIT_BREAK or (event == EVT_ENTER_BREAK and data.configStatus == 34 and config[34].x > -1 and not data.armed)) then
@@ -503,8 +526,8 @@ local function run(event)
 			-- Cycle through views
 			config[25].v = config[25].v >= (config[28].v == 0 and 2 or 3) and 0 or config[25].v + 1
 		elseif event == MENU then
-		   -- Config menu
-		   data.configStatus = data.configLast
+			-- Config menu
+			data.configStatus = data.configLast
 		elseif event == EVT_EXIT_BREAK and data.doLogs then
 			-- Exit playback
 			endLog()
@@ -524,7 +547,13 @@ local function run(event)
 	-- Paint title
 	title()
 
+	if HORUS then
+	   lcd.setColor(0, data.saveZero)
+	   lcd.setColor(TEXT_COLOR, data.saveText)
+	   lcd.setColor(WARNING_COLOR, data.saveWarn)
+	end
+
 	return 0
 end
 
-return { run = run, background = background }
+return inav
