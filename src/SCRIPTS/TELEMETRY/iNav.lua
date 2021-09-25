@@ -467,18 +467,18 @@ function inav.run(event)
 		data.startup = 0
 		--data.msg = false
 	end
-	if HORUS then
-	   lcd.setColor(0,  options.Text)
-	   lcd.setColor(TEXT_COLOR,  options.Text)
-	   lcd.setColor(WARNING_COLOR, options.Warning)
-	end
+
 	-- Clear screen
 	if HORUS then
-		-- Display error if Horus widget isn't full screen
+	   -- Display error if Horus widget isn't full screen
 		if data.nfs ~= nil then
 			data.nfs()
 			return 0
 		end
+		-- set user preference colours
+		lcd.setColor(0,  options.Text)
+		lcd.setColor(TEXT_COLOR,  options.Text)
+		lcd.setColor(WARNING_COLOR, options.Warning)
 		-- On Horus use sticks to control the menu
 		event = data.clear(event)
 	else
