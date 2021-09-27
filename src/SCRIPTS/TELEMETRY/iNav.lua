@@ -2,23 +2,26 @@
 -- Author: https://github.com/teckel12
 -- Docs: https://github.com/iNavFlight/LuaTelemetry
 
-local buildMode = ...
+local zone, options = ...
 local VERSION = "1.7.4"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
 local FLASH = HORUS and WARNING_COLOR or 3
 local tmp, view, lang, playLog
-local env = "bx"
-local ext = ".luac"
+local env = "bt" -- compile on platform
+local inav = {}
 
--- Build with Companion and allow debugging
+local ext = "" -- compile on platform
+
 local v, r, m, i, e = getVersion()
-if string.sub(r, -4) == "simu" then
-	env = "tx"
-	if buildMode ~= false then
-		loadScript(FILE_PATH .. "build", env)(buildMode)
-	end
+-- Nirvana NV14 doesn't have have these global constants, so we set them
+if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
+	EVT_SYS_FIRST = 1 --1542
+	EVT_ROT_LEFT = 2 --57088
+	EVT_ROT_RIGHT = 3 --56832
+	EVT_ENTER_BREAK = 4 --514
+	EVT_EXIT_BREAK = 5 --516
 end
 
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
@@ -85,7 +88,11 @@ local function endLog()
 	loadScript(FILE_PATH .. "reset" .. ext, env)(data)
 end
 
-local function background()
+function inav.update(opt)
+   options = opt
+end
+
+function inav.background()
 	local gpsTemp
 	data.rssi, data.rssiLow, data.rssiCrit = getRSSI()
 	if data.rssi > 0 then
@@ -245,7 +252,7 @@ local function background()
 	local beep = false
 	if data.armed and not armedPrev then -- Engines armed
 		data.timerStart = getTime()
-		data.headingRef = data.heading
+
 		data.gpsHome = false
 		data.battPercentPlayed = 100
 		data.battLow = false
@@ -436,20 +443,25 @@ local function background()
 	data.bkgd = true
 end
 
-local function run(event)
+function inav.run(event)
 	--[[ Show FPS
 	data.start = getTime()
 	]]
 
 	-- Insure background() has run before rendering screen
 	if not data.bkgd then
-		background()
+		inav.background()
 	end
 	data.bkgd = false
 
 	-- Startup message
 	if data.startup == 1 then
 		data.startupTime = getTime()
+		if HORUS then
+		   data.saveZero = lcd.getColor(0)
+		   data.saveText = lcd.getColor(TEXT_COLOR)
+		   data.saveWarn = lcd.getColor(WARNING_COLOR)
+		end
 		data.startup = 2
 	elseif data.startup == 2 and getTime() - data.startupTime >= 200 then
 		data.startup = 0
@@ -458,11 +470,15 @@ local function run(event)
 
 	-- Clear screen
 	if HORUS then
-		-- Display error if Horus widget isn't full screen
+	   -- Display error if Horus widget isn't full screen
 		if data.nfs ~= nil then
 			data.nfs()
 			return 0
 		end
+		-- set user preference colours
+		lcd.setColor(0,  options.Text)
+		lcd.setColor(TEXT_COLOR,  options.Text)
+		lcd.setColor(WARNING_COLOR, options.Warning)
 		-- On Horus use sticks to control the menu
 		event = data.clear(event)
 	else
@@ -530,7 +546,13 @@ local function run(event)
 	-- Paint title
 	title()
 
+	if HORUS then
+	   lcd.setColor(0, data.saveZero)
+	   lcd.setColor(TEXT_COLOR, data.saveText)
+	   lcd.setColor(WARNING_COLOR, data.saveWarn)
+	end
+
 	return 0
 end
 
-return { run = run, background = background }
+return inav

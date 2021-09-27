@@ -58,7 +58,7 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 			fill(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, CUSTOM_COLOR)
 		end
 		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, TEXT_COLOR)
-		lcd.setColor(CUSTOM_COLOR, data.nv and LIGHTGREY or 12678) -- Dark grey
+		lcd.setColor(CUSTOM_COLOR, data.nv and LIGHTGREY or data.RGB(49, 48, 49)) -- Dark grey
 	elseif not SMLCD then
 		rect(CONFIG_X - 5, TOP - 2, LCD_W - CONFIG_X * 2 + 10, HIGH * (ROWS + 1) + 1, SOLID)
 	end

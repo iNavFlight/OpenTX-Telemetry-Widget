@@ -92,10 +92,20 @@ local data = {
 	alt = {},
 	v = -1,
 	simu = string.sub(r, -4) == "simu",
-	nv = r == "NV14",
+	nv = string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14",
 	--msg = m + i * 0.1 < 2.2 and "OpenTX v2.2+ Required" or false,
 	lastLock = { lat = 0, lon = 0 },
 	fUnit = {"mAh", "mWh"},
 }
+
+function data.RGB(r, g, b)
+  local rgb = lcd.RGB(r, g, b)
+  if not rgb then
+    rgb = bit32.lshift(bit32.rshift(bit32.band(r, 0xFF), 3), 11)
+    rgb = rgb + bit32.lshift(bit32.rshift(bit32.band(g, 0xFF), 2), 5)
+    rgb = rgb + bit32.rshift(bit32.band(b, 0xFF), 3)
+  end
+  return rgb
+end
 
 return data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, lcd.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format

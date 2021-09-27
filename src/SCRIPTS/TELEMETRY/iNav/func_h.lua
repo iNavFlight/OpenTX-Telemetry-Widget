@@ -47,7 +47,7 @@ local function title()
 
 	-- Data on config menu
 	if data.configStatus > 0 then
-		color(CUSTOM_COLOR, 12678) -- Dark grey
+		color(CUSTOM_COLOR, data.RGB(49, 48, 49)) -- Dark grey
 		fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, CUSTOM_COLOR)
 		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, TEXT_COLOR)
 		text(4, 37, "Sats:", 0)
@@ -65,19 +65,6 @@ local function title()
 		text(data.nv and 115 or 180, 0, frmt("%.1f", data.frames / (getTime() - data.fpsStart) * 100), RIGHT)
 	end
 
-	--[[ Show usage
-	text(data.nv and 75 or 130, 0, getUsage() .. "%", RIGHT)
-	]]
-
-	-- Reset colors
-	color(WARNING_COLOR, YELLOW)
-	if data.widget then
-		if iNavZone.options.Restore % 2 == 1 then
-			color(TEXT_COLOR, iNavZone.options.Text)
-			color(WARNING_COLOR, iNavZone.options.Warning)
-		end
-	end
-
 end
 
 local function gpsDegMin(c, lat)
@@ -90,7 +77,7 @@ local function hdopGraph(x, y)
 	lcd.setColor(CUSTOM_COLOR, data.hdop < 11 - config[21].v * 2 and YELLOW or WHITE)
 	for i = 4, 9 do
 		if i > data.hdop then
-			lcd.setColor(CUSTOM_COLOR, 33874)
+			lcd.setColor(CUSTOM_COLOR, data.RGB(131, 137, 148))
 		end
 		fill(i * 4 + x - 16, y - (i * 3 - 10), 2, i * 3 - 10, CUSTOM_COLOR)
 	end
@@ -149,10 +136,10 @@ if data.nv then
 end
 
 function data.clear(event)
-	lcd.setColor(CUSTOM_COLOR, data.nv and (data.configStatus > 0 and 25422 or 12942) or 264) --lcd.RGB(98, 106, 115) / lcd.RGB(50, 82, 115) / lcd.RGB(0, 32, 65)
+	lcd.setColor(CUSTOM_COLOR, data.nv and (data.configStatus > 0 and data.RGB(98, 106, 115) or data.RGB(50, 82, 115)) or data.RGB(0, 32, 65))
 	lcd.clear(CUSTOM_COLOR)
 	lcd.setColor(TEXT_COLOR, WHITE)
-	lcd.setColor(WARNING_COLOR, data.telem and (data.nv and 65516 or YELLOW) or (data.nv and 64300 or RED)) --lcd.RGB(255, 255, 100) / lcd.RGB(255, 100, 100)
+	lcd.setColor(WARNING_COLOR, data.telem and (data.nv and data.RGB(255, 255, 100) or YELLOW) or (data.nv and data.RGB(255, 100, 100) or RED)) --lcd.RGB(255, 255, 100) / lcd.RGB(255, 100, 100)
 
 	if event == 0 or event == nil then
 		event = 0
@@ -202,9 +189,9 @@ function data.menu(prev)
 
 	-- Aircraft symbol preview
 	if data.configStatus == 27 and data.configSelect ~= 0 then
-		lcd.setColor(CUSTOM_COLOR, data.nv and 13660 or 982) -- Sky
+                lcd.setColor(CUSTOM_COLOR, data.nv and data.RGB(49, 170, 230) or data.RGB(0, 121, 180) ) -- Sky
 		fill(LCD_W - 124, (data.nv and 28 or 111), 123, 31, CUSTOM_COLOR)
-		lcd.setColor(CUSTOM_COLOR, data.nv and 37799 or 25121) -- Ground
+                lcd.setColor(CUSTOM_COLOR, data.nv and data.RGB(148, 117, 57) or data.RGB(98, 68, 8)) -- Ground
 		fill(LCD_W - 124, (data.nv and 59 or 142), 123, 31, CUSTOM_COLOR)
 		lcd.drawBitmap(icons.fg, LCD_W - 125, (data.nv and 27 or 110), 50)
 		rect(LCD_W - 125, (data.nv and 27 or 110), 125, 64, TEXT_COLOR)

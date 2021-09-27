@@ -1,15 +1,15 @@
 local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGraph, icons, calcBearing, calcDir, VERSION, SMLCD, FLASH, FILE_PATH, text, line, rect, fill, frmt)
 
-	local rgb = lcd.RGB
-	local SKY = 13660 --rgb(50, 171, 230)
-	local GROUND = 37799 --rgb(148, 118, 58)
+	local rgb = data.RGB
+	local SKY = rgb(50, 171, 230)
+	local GROUND = rgb(148, 118, 58)
 	--local SKY2 = 8943 --rgb(32, 92, 122)
 	--local GROUND2 = 20996 --rgb(81, 65, 36)
-	local MAP = 13478 --rgb(50, 150, 50)
+	local MAP = rgb(50, 150, 50)
 	--local DKMAP = 544 --rgb(0, 70, 0)
 	local LIGHTMAP = rgb(50, 200, 50)
 	--local DATA = 12942 --rgb(50, 82, 115)
-	local DKGREY = 33874 --rgb(98, 106, 115)
+	local DKGREY = rgb(98, 106, 115)
 	local RIGHT_POS = 270
 	local X_CNTR = 134 --(RIGHT_POS + LEFT_POS [0]) / 2 - 1
 	local HEADING_DEG = 190

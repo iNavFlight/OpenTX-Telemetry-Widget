@@ -17,6 +17,7 @@ ifneq ($(BUILD_SUFFIX),)
 	BUILD_SUFFIX := _$(BUILD_SUFFIX)
 endif
 ZIP := $(DIST)/LuaTelemetry_v$(VERSION)$(BUILD_SUFFIX).zip
+ZIPLUA := $(DIST)/LuaTelemetry_v$(VERSION)$(BUILD_SUFFIX)_lua.zip
 
 OBJ := obj
 OBJ_SRC := $(subst $(SRC_ROOT),$(OBJ),$(SRC))
@@ -76,7 +77,7 @@ clean-obj:
 	$(RM) -r $(OBJ)
 
 clean-zip:
-	$(RM) $(ZIP)
+	$(RM) $(ZIP) $(ZIPLUA)
 
 clean-lua:
 	$(MAKE) -C $(LUA_DIST) clean
@@ -85,3 +86,18 @@ clean: clean-obj clean-zip clean-lua
 
 print-version:
 	@echo $(VERSION)
+
+zip-lua: $(ZIPLUA)
+$(ZIPLUA): $(SRC)
+	cd src && zip -9r ../$@ .
+
+dist-lua: zip-lua
+
+ifneq ($(SDCARD),)
+install-lua: obj
+	mkdir -p "$(SDCARD)"
+	cp -av src/* "$(SDCARD)"
+else
+install-lua:
+	$(error $$SDCARD is empty - use SDCARD=dest make install-lua)
+endif
