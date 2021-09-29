@@ -83,7 +83,6 @@ local data = {
 	headFree = false,
 	headingHold = false,
 	altHold = false,
-	telemFlags = 0,
 	config = 0,
 	configLast = 1,
 	configTop = 1,

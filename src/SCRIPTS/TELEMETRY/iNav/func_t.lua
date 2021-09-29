@@ -1,5 +1,12 @@
 local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt = ...
 
+
+data.TextColor = 0
+data.WarningColor = WARNING_COLOR
+function data.set_flags(flag, color)
+   return flag
+end
+
 local function title()
 	fill(0, 0, LCD_W, 8, FORCE)
 	text(0, 0, model.getInfo().name, INVERS)

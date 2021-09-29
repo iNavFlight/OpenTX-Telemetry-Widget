@@ -1,11 +1,11 @@
-local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGraph, icons, calcBearing, calcDir, VERSION, SMLCD, FLASH, FILE_PATH, text, line, rect, fill, frmt)
+local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGraph, icons, calcBearing, calcDir, VERSION, SMLCD, FILE_PATH, text, line, rect, fill, frmt)
 
 	local RIGHT_POS = SMLCD and 129 or 195
 	local GAUGE_WIDTH = SMLCD and 82 or 149
 	local X_CNTR_1 = SMLCD and 63 or 68
 	local X_CNTR_2 = SMLCD and 63 or 104
 	local tmp
-
+	local FLASH = 3 -- legacy constant (wtf??)
 	local function drawDirection(h, w, r, x, y)
 		local r1 = math.rad(h)
 		local r2 = math.rad(h + w)
@@ -45,18 +45,19 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	end
 
 	-- GPS
+	local telemFlag = data.telem and 0 or FLASH
 	local gpsFlags = SMLSIZE + RIGHT + ((not data.telem or not data.gpsFix) and FLASH or 0)
 	tmp = RIGHT_POS - (gpsFlags == SMLSIZE + RIGHT and 0 or 1)
 	text(tmp, 25, config[16].v == 0 and frmt(SMLCD and "%.5f" or "%.6f", data.gpsLatLon.lat) or gpsDegMin(data.gpsLatLon.lat, true), gpsFlags)
 	text(tmp, 33, config[16].v == 0 and frmt(SMLCD and "%.5f" or "%.6f", data.gpsLatLon.lon) or gpsDegMin(data.gpsLatLon.lon, false), gpsFlags)
 	if data.crsf then
-		text(RIGHT_POS - (data.telem and 0 or 1), 9, data.tpwr < 1000 and data.tpwr .. "mW" or data.tpwr * 0.001 .. "W", SMLSIZE + RIGHT + data.telemFlags)
+		text(RIGHT_POS - (data.telem and 0 or 1), 9, data.tpwr < 1000 and data.tpwr .. "mW" or data.tpwr * 0.001 .. "W", SMLSIZE + RIGHT + telemFlag)
 	else
 		text(tmp, 17, math.floor(data.gpsAlt + 0.5) .. units[data.gpsAlt_unit], gpsFlags)
 	end
 	hdopGraph(RIGHT_POS - 30, data.crsf and 17 or 9, SMLSIZE, SMLCD)
 	icons.gps(RIGHT_POS - 17, data.crsf and 17 or 9)
-	text(RIGHT_POS - (data.telem and 0 or 1), data.crsf and 17 or 9, data.satellites % 100, SMLSIZE + RIGHT + data.telemFlags)
+	text(RIGHT_POS - (data.telem and 0 or 1), data.crsf and 17 or 9, data.satellites % 100, SMLSIZE + RIGHT + telemFlag)
 
 	-- Directionals
 	if data.showHead and data.startup == 0 then
@@ -101,12 +102,12 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	drawData("Altd", 9, 1, data.altitude, data.altitudeMax, 10000, units[data.alt_unit], 0, (not data.telem or data.altitude + 0.5 >= config[6].v) and FLASH or 0)
 	if data.altHold then icons.lock(46, 9) end
 	tmp = (not data.telem or data.cell < config[3].v or (data.showCurr and config[23].v == 0 and data.fuel <= config[17].v)) and FLASH or 0
-	drawData("Dist", data.showCurr and 17 or 21, 1, data.distanceLast, data.distanceMax, 10000, units[data.dist_unit], 0, data.telemFlags)
-	drawData(units[data.speed_unit], data.showCurr and 25 or 33, 1, data.speed, data.speedMax, 100, '', "%.1f", data.telemFlags)
+	drawData("Dist", data.showCurr and 17 or 21, 1, data.distanceLast, data.distanceMax, 10000, units[data.dist_unit], 0, telemFlag)
+	drawData(units[data.speed_unit], data.showCurr and 25 or 33, 1, data.speed, data.speedMax, 100, '', "%.1f", telemFlag)
 	drawData("Batt", data.showCurr and 49 or 45, 2, config[1].v == 0 and data.cell or data.batt, config[1].v == 0 and data.cellMin or data.battMin, 100, "V", config[1].v == 0 and "%.2f" or "%.1f", tmp, 1)
 	drawData(data.crsf and "LQ" or "RSSI", 57, 2, data.rssiLast, data.rssiMin, 200, data.crsf and "%" or "dB", 0, (not data.telem or data.rssi < data.rssiLow) and FLASH or 0)
 	if data.showCurr then
-		drawData("Curr", 33, 1, data.current, data.currentMax, 100, "A", "%.1f", data.telemFlags)
+		drawData("Curr", 33, 1, data.current, data.currentMax, 100, "A", "%.1f", telemFlag)
 		drawData(config[23].v == 0 and "Fuel" or data.fUnit[config[23].v], 41, 0, data.fuel, 0, 200, config[23].v == 0 and "%" or "", 0, tmp)
 		if config[23].v == 0 then
 			lcd.drawGauge(46, 41, GAUGE_WIDTH, 7, math.min(data.fuel, 99), 100)
