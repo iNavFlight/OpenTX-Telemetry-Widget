@@ -23,6 +23,11 @@ if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	EVT_EXIT_BREAK = 5 --516
 end
 
+--[[ if string.sub(r, -4) == "simu" then
+   env = "btd"
+   end
+]]
+
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
 

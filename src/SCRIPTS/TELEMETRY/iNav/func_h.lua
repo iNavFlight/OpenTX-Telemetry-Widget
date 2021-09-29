@@ -6,10 +6,10 @@ data.WarningColor = opts.Warn
 function data.set_flags(flag, color)
    local rflag
    if data.etx then
-      rflag  = flag + color -- bit32.bor(flag, color)
+      rflag  = bit32.bor(flag, color) -- flag + color
    else
       lcd.setColor(CUSTOM_COLOR, color)
-      rflag = flag + CUSTOM_COLOR --bit32.bor(flag, CUSTOM_COLOR)
+      rflag = bit32.bor(flag, CUSTOM_COLOR) -- flag + CUSTOM_COLOR
    end
    return rflag
 end
@@ -17,6 +17,7 @@ end
 local function title()
 	local color = lcd.setColor
 	local tmp = data.TextColor
+	local flags = 0
 
 	if not data.telem then
 	   tmp = data.WarningColor
@@ -31,8 +32,9 @@ local function title()
 	-- TX battery
 	local bat = data.nv and 135 or 197
 	if config[19].v > 0 then
-	   fill(bat, 3, 43, 14, data.set_flags(0, data.TextColor))
-	   fill(bat + 43, 6, 2, 8, data.set_flags(0, data.TextColor))
+	   flags = data.set_flags(0, data.TextColor)
+	   fill(bat, 3, 43, 14, flags)
+	   fill(bat + 43, 6, 2, 8, flags)
 	   local lev = math.max(math.min((data.txBatt - data.txBattMin) / (data.txBattMax - data.txBattMin) * 42, 42), 0) + bat
 	   for i = bat + 3, lev, 4 do
 	      fill(i, 5, 2, 10, data.set_flags(0,BLACK))
@@ -62,8 +64,9 @@ local function title()
 	if data.configStatus > 0 then
 	   local dkgrey = data.RGB(49, 48, 49)
 	   fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, data.set_flags(0, dkgrey))
-	   rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, data.set_flags(0, data.TextColor))
-	   text(4, 37, "Sats:", data.set_flags(0, data.TextColor))
+	   flags = data.set_flags(0, data.TextColor)
+	   rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, flags)
+	   text(4, 37, "Sats:", flags)
 	   text(72, 37, data.satellites % 100, data.set_flags(RIGHT, tmp))
 	   if not data.crsf then
 	      text(4, 59, "DOP:", data.set_flags(0, data.TextColor))
