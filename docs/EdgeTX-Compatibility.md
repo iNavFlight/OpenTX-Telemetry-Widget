@@ -14,7 +14,7 @@ In order to keep the inav Lua widget compatible with both EdgeTX and OpenTX, the
 * Use the new `data.RBG()` function to convert RGB colour definitions to a Lua `COLOR`.
   - Do not call `lcd.RBG()` directly as it may return `nil` under some circumstances on OpenTX.
   - Do not use pre-computed integer values for colours; these will not work on EdgeTX.
-* Do not set colours and display flags directly _on colour devices_. Use the new `data.set_flags()` function as this will work correctly on both EdgeTX and OpenTX. It will also work on older monochrome displays, but is unnecesasry in code that will not be executed on a colour device (e.g. `src/SCRIPTS/TELEMETRY/iNav/radar.lua`; note that `src/SCRIPTS/TELEMETRY/iNav/menu.lua` requires some care, it is runs on both colour and monochrome devices.
+* Do not set colours and display flags directly _on colour devices_. Use the new `data.set_flags()` function as this will work correctly on both EdgeTX and OpenTX. It will also work on older monochrome displays, but is unnecesasry in code that will not be executed on a colour device (e.g. `src/SCRIPTS/TELEMETRY/iNav/radar.lua`); note that `src/SCRIPTS/TELEMETRY/iNav/menu.lua` requires some care, it is runs on both colour and monochrome devices.
 
 ## Hints and tips
 
