@@ -1,68 +1,84 @@
-local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt = ...
+local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt, opts = ...
+
+data.TextColor = opts.Text
+data.WarningColor = opts.Warn
+
+function data.set_flags(flag, color)
+   local rflag
+   if data.etx then
+      rflag  = bit32.bor(flag, color) -- flag + color
+   else
+      lcd.setColor(CUSTOM_COLOR, color)
+      rflag = bit32.bor(flag, CUSTOM_COLOR) -- flag + CUSTOM_COLOR
+   end
+   return rflag
+end
 
 local function title()
 	local color = lcd.setColor
-	local tmp = 0
+	local tmp = data.TextColor
+	local flags = 0
 
 	if not data.telem then
-		tmp = WARNING_COLOR
+	   tmp = data.WarningColor
 	end
 
 	-- Title
-	color(CUSTOM_COLOR, BLACK)
-	fill(0, 0, LCD_W, 20, CUSTOM_COLOR)
+	fill(0, 0, LCD_W, 20, data.set_flags(0,BLACK))
 
 	-- Model
-	text(0, 0, model.getInfo().name)
+	text(0, 0, model.getInfo().name, data.set_flags(0, data.TextColor))
 
 	-- TX battery
 	local bat = data.nv and 135 or 197
 	if config[19].v > 0 then
-		fill(bat, 3, 43, 14, TEXT_COLOR)
-		fill(bat + 43, 6, 2, 8, TEXT_COLOR)
-		local lev = math.max(math.min((data.txBatt - data.txBattMin) / (data.txBattMax - data.txBattMin) * 42, 42), 0) + bat
-		for i = bat + 3, lev, 4 do
-			fill(i, 5, 2, 10, CUSTOM_COLOR)
-		end
+	   flags = data.set_flags(0, data.TextColor)
+	   fill(bat, 3, 43, 14, flags)
+	   fill(bat + 43, 6, 2, 8, flags)
+	   local lev = math.max(math.min((data.txBatt - data.txBattMin) / (data.txBattMax - data.txBattMin) * 42, 42), 0) + bat
+	   for i = bat + 3, lev, 4 do
+	      fill(i, 5, 2, 10, data.set_flags(0,BLACK))
+	   end
 	end
 	if config[19].v ~= 1 then
-		text(data.nv and 180 or bat + 93, 0, frmt("%.1fV", data.txBatt), RIGHT)
+	   text(data.nv and 180 or bat + 93, 0, frmt("%.1fV", data.txBatt), data.set_flags(RIGHT, data.TextColor))
 	end
 
 	-- Timer
 	if config[13].v > 0 then
 		if data.doLogs and data.time ~= nil then
-			text(data.nv and 184 or 340, 0, data.time, WARNING_COLOR)
+		   text(data.nv and 184 or 340, 0, data.time, data.set_flags(0, data.TextColor))
 		else
-			lcd.drawTimer(data.nv and 202 or 340, 0, data.timer)
+		   lcd.drawTimer(data.nv and 202 or 340, 0, data.timer, data.set_flags(0,data.TextColor))
 		end
 	end
 
 	-- Receiver voltage or Crossfire speed
 	if data.rxBatt > 0 and config[14].v == 1 then
-		text(LCD_W, 0, frmt("%.1fV", data.rxBatt), RIGHT + tmp)
+	   text(LCD_W, 0, frmt("%.1fV", data.rxBatt), data.set_flags(RIGHT, tmp))
 	elseif data.crsf then
-		text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", RIGHT + tmp)
+	   text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", data.set_flags(RIGHT,tmp))
 	end
 
 	-- Data on config menu
 	if data.configStatus > 0 then
-		color(CUSTOM_COLOR, data.RGB(49, 48, 49)) -- Dark grey
-		fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, CUSTOM_COLOR)
-		rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, TEXT_COLOR)
-		text(4, 37, "Sats:", 0)
-		text(72, 37, data.satellites % 100, RIGHT + tmp)
-		if not data.crsf then
-			text(4, 59, "DOP:", 0)
-			text(72, 59, (data.hdop == 0 and not data.gpsFix) and "---" or (9 - data.hdop) * 0.5 + 0.8, RIGHT + tmp)
-		end
+	   local dkgrey = data.RGB(49, 48, 49)
+	   fill(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, data.set_flags(0, dkgrey))
+	   flags = data.set_flags(0, data.TextColor)
+	   rect(0, 30, 75, (22 * (data.crsf and 1 or 2)) + 14, flags)
+	   text(4, 37, "Sats:", flags)
+	   text(72, 37, data.satellites % 100, data.set_flags(RIGHT, tmp))
+	   if not data.crsf then
+	      text(4, 59, "DOP:", data.set_flags(0, data.TextColor))
+	      text(72, 59, (data.hdop == 0 and not data.gpsFix) and "---" or (9 - data.hdop) * 0.5 + 0.8, data.set_flags(RIGHT, tmp))
+	   end
 	end
 
 	--[[ Show FPS ]]
 	if data.nv then
 		data.frames = data.frames + 1
 		--text(data.nv and 75 or 130, 0, frmt("%.1f", math.min(100 / (getTime() - data.start), 20)), RIGHT)
-		text(data.nv and 115 or 180, 0, frmt("%.1f", data.frames / (getTime() - data.fpsStart) * 100), RIGHT)
+		text(data.nv and 115 or 180, 0, frmt("%.1f", data.frames / (getTime() - data.fpsStart) * 100), data.set_flags(RIGHT,data.TextColor))
 	end
 
 end
@@ -74,12 +90,12 @@ local function gpsDegMin(c, lat)
 end
 
 local function hdopGraph(x, y)
-	lcd.setColor(CUSTOM_COLOR, data.hdop < 11 - config[21].v * 2 and YELLOW or WHITE)
+	local ctmp = data.hdop < 11 - config[21].v * 2 and YELLOW or WHITE
 	for i = 4, 9 do
 		if i > data.hdop then
-			lcd.setColor(CUSTOM_COLOR, data.RGB(131, 137, 148))
+		   ctmp = data.RGB(131, 137, 148)
 		end
-		fill(i * 4 + x - 16, y - (i * 3 - 10), 2, i * 3 - 10, CUSTOM_COLOR)
+		fill(i * 4 + x - 16, y - (i * 3 - 10), 2, i * 3 - 10, data.set_flags(0, ctmp))
 	end
 end
 
@@ -118,7 +134,7 @@ if type(iNavZone) == "table" and type(iNavZone.zone) ~= "nil" then
 	if iNavZone.zone.w < (data.nv and 280 or 450) or iNavZone.zone.h < (data.nv and 450 or 250) then
 		data.startupTime = math.huge
 		function data.nfs()
-			text(iNavZone.zone.x + 14, iNavZone.zone.y + 16, "Full screen required", SMLSIZE + WARNING_COLOR)
+		   text(iNavZone.zone.x + 14, iNavZone.zone.y + 16, "Full screen required", data.set_flags(SMLSIZE, data.WarningColor))
 		end
 	end
 end
@@ -136,10 +152,9 @@ if data.nv then
 end
 
 function data.clear(event)
-	lcd.setColor(CUSTOM_COLOR, data.nv and (data.configStatus > 0 and data.RGB(98, 106, 115) or data.RGB(50, 82, 115)) or data.RGB(0, 32, 65))
-	lcd.clear(CUSTOM_COLOR)
-	lcd.setColor(TEXT_COLOR, WHITE)
-	lcd.setColor(WARNING_COLOR, data.telem and (data.nv and data.RGB(255, 255, 100) or YELLOW) or (data.nv and data.RGB(255, 100, 100) or RED)) --lcd.RGB(255, 255, 100) / lcd.RGB(255, 100, 100)
+   local bcol = data.nv and (data.configStatus > 0 and data.RGB(98, 106, 115) or data.RGB(50, 82, 115)) or data.RGB(0, 32, 65)
+   lcd.clear(data.set_flags(0, bcol))
+   data.WarningColor = data.telem and (data.nv and data.RGB(255, 255, 100) or YELLOW) or (data.nv and data.RGB(255, 100, 100) or RED) --lcd.RGB(255, 255, 100) / lcd.RGB(255, 100, 100)
 
 	if event == 0 or event == nil then
 		event = 0
@@ -189,20 +204,18 @@ function data.menu(prev)
 
 	-- Aircraft symbol preview
 	if data.configStatus == 27 and data.configSelect ~= 0 then
-                lcd.setColor(CUSTOM_COLOR, data.nv and data.RGB(49, 170, 230) or data.RGB(0, 121, 180) ) -- Sky
-		fill(LCD_W - 124, (data.nv and 28 or 111), 123, 31, CUSTOM_COLOR)
-                lcd.setColor(CUSTOM_COLOR, data.nv and data.RGB(148, 117, 57) or data.RGB(98, 68, 8)) -- Ground
-		fill(LCD_W - 124, (data.nv and 59 or 142), 123, 31, CUSTOM_COLOR)
-		lcd.drawBitmap(icons.fg, LCD_W - 125, (data.nv and 27 or 110), 50)
-		rect(LCD_W - 125, (data.nv and 27 or 110), 125, 64, TEXT_COLOR)
+	   local scol = data.nv and data.RGB(49, 170, 230) or data.RGB(0, 121, 180)
+	   fill(LCD_W - 124, (data.nv and 28 or 111), 123, 31, data.set_flags(0, scol))
+	   local gcol = data.nv and data.RGB(148, 117, 57) or data.RGB(98, 68, 8)
+	   fill(LCD_W - 124, (data.nv and 59 or 142), 123, 31, data.set_flags(0, gcol))
+	   lcd.drawBitmap(icons.fg, LCD_W - 125, (data.nv and 27 or 110), 50)
+	   rect(LCD_W - 125, (data.nv and 27 or 110), 125, 64, data.set_flags(0,data.TextColor))
 	end
 	-- Return throttle stick to bottom center
 	if data.stickMsg ~= nil and not data.armed then
-		lcd.setColor(CUSTOM_COLOR, BLACK)
-		fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, CUSTOM_COLOR)
-		lcd.setColor(CUSTOM_COLOR, YELLOW)
-		rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, CUSTOM_COLOR)
-		text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, (data.nv and SMLSIZE or MIDSIZE) + CUSTOM_COLOR)
+	   fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, data.set_flags(0, BLACK))
+	   rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, data.set_flags(0, YELLOW))
+	   text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, data.set_flags(data.nv and SMLSIZE or MIDSIZE, YELLOW))
 	end
 end
 

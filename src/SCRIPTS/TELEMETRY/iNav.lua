@@ -3,18 +3,17 @@
 -- Docs: https://github.com/iNavFlight/LuaTelemetry
 
 local zone, options = ...
-local VERSION = "2.0.0"
+local VERSION = "2.0.1"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
-local FLASH = HORUS and WARNING_COLOR or 3
 local tmp, view, lang, playLog
 local env = "bt" -- compile on platform
 local inav = {}
 
 local ext = "" -- compile on platform
 
-local v, r, m, i, e = getVersion()
+local v, r, m, i, e, osname = getVersion()
 -- Nirvana NV14 doesn't have have these global constants, so we set them
 if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	EVT_SYS_FIRST = 1 --1542
@@ -24,6 +23,11 @@ if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	EVT_EXIT_BREAK = 5 --516
 end
 
+--[[ if string.sub(r, -4) == "simu" then
+   env = "btd"
+   end
+]]
+
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
 
@@ -32,6 +36,8 @@ collectgarbage()
 
 local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
 collectgarbage()
+
+data.etx = (osname ~= nil)
 
 loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
 collectgarbage()
@@ -49,10 +55,10 @@ end
 loadScript(FILE_PATH .. "reset" .. ext, env)(data)
 collectgarbage()
 
-local crsf, distCalc = loadScript(FILE_PATH .. "other" .. ext, env)(config, data, units, getTelemetryId, getTelemetryUnit, FILE_PATH, env, SMLCD, FLASH)
+local crsf, distCalc = loadScript(FILE_PATH .. "other" .. ext, env)(config, data, units, getTelemetryId, getTelemetryUnit, FILE_PATH, env, SMLCD)
 collectgarbage()
 
-local title, gpsDegMin, hdopGraph, icons, rect = loadScript(FILE_PATH .. "func_" .. (HORUS and "h" or "t") .. ext, env)(config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt)
+local title, gpsDegMin, hdopGraph, icons, rect = loadScript(FILE_PATH .. "func_" .. (HORUS and "h" or "t") .. ext, env)(config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt, options)
 collectgarbage()
 
 local function playAudio(f, a)
@@ -97,7 +103,6 @@ function inav.background()
 	data.rssi, data.rssiLow, data.rssiCrit = getRSSI()
 	if data.rssi > 0 then
 		data.telem = true
-		data.telemFlags = 0
 		data.rssiMin = math.min(data.rssiMin, data.rssi)
 		data.satellites = getValue(data.sat_id)
 		if data.showFuel then
@@ -143,7 +148,6 @@ function inav.background()
 		end
 	else
 		data.telem = false
-		data.telemFlags = FLASH
 	end
 	data.txBatt = getValue(data.txBatt_id)
 	data.throttle = getValue(data.thr_id)
@@ -447,7 +451,6 @@ function inav.run(event)
 	--[[ Show FPS
 	data.start = getTime()
 	]]
-
 	-- Insure background() has run before rendering screen
 	if not data.bkgd then
 		inav.background()
@@ -457,11 +460,6 @@ function inav.run(event)
 	-- Startup message
 	if data.startup == 1 then
 		data.startupTime = getTime()
-		if HORUS then
-		   data.saveZero = lcd.getColor(0)
-		   data.saveText = lcd.getColor(TEXT_COLOR)
-		   data.saveWarn = lcd.getColor(WARNING_COLOR)
-		end
 		data.startup = 2
 	elseif data.startup == 2 and getTime() - data.startupTime >= 200 then
 		data.startup = 0
@@ -475,10 +473,6 @@ function inav.run(event)
 			data.nfs()
 			return 0
 		end
-		-- set user preference colours
-		lcd.setColor(0,  options.Text)
-		lcd.setColor(TEXT_COLOR,  options.Text)
-		lcd.setColor(WARNING_COLOR, options.Warning)
 		-- On Horus use sticks to control the menu
 		event = data.clear(event)
 	else
@@ -502,9 +496,9 @@ function inav.run(event)
 			data.v = 9
 		end
 		tmp = config[30].v
-		view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, FLASH, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
+		view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
 		if HORUS then
-			data.menu(tmp)
+		   data.menu(tmp)
 		end
 		-- Exit menu or select log for playback, save config settings
 		if data.configSelect == 0 and (event == EVT_EXIT_BREAK or (event == EVT_ENTER_BREAK and data.configStatus == 34 and config[34].x > -1 and not data.armed)) then
@@ -539,19 +533,12 @@ function inav.run(event)
 			view = loadScript(FILE_PATH .. (HORUS and (data.nv and "nirvana" or "horus") or (config[25].v == 0 and "view" or (config[25].v == 1 and "pilot" or (config[25].v == 2 and "radar" or "alt")))) .. ext, env)()
 			data.v = config[25].v
 		end
-		view(data, config, modes, dir, units, labels, gpsDegMin, hdopGraph, icons, calcBearing, calcDir, VERSION, SMLCD, FLASH, FILE_PATH, text, line, rect, fill, frmt)
+		view(data, config, modes, dir, units, labels, gpsDegMin, hdopGraph, icons, calcBearing, calcDir, VERSION, SMLCD, FILE_PATH, text, line, rect, fill, frmt)
 	end
 	collectgarbage()
 
 	-- Paint title
 	title()
-
-	if HORUS then
-	   lcd.setColor(0, data.saveZero)
-	   lcd.setColor(TEXT_COLOR, data.saveText)
-	   lcd.setColor(WARNING_COLOR, data.saveWarn)
-	end
-
 	return 0
 end
 

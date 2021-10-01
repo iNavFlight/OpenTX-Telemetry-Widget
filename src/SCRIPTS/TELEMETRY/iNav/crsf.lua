@@ -1,4 +1,4 @@
-local config, data, getTelemetryId, FLASH = ...
+local config, data, getTelemetryId = ...
 
 data.crsf = true
 data.rfmd_id = getTelemetryId("RFMD")
@@ -23,7 +23,6 @@ local function crsf(data)
 	if getValue(data.rssi_id) == 0 then
 		data.rssi = 0
 		data.telem = false
-		data.telemFlags = FLASH
 		return 0
 	end
 	if data.rssi == 99 then data.rssi = 100 end

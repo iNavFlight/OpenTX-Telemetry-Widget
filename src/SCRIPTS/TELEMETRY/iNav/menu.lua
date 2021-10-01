@@ -1,5 +1,4 @@
-local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, FLASH, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
-
+local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
 	local CONFIG_X = HORUS and (data.nv and 10 or 90) or (SMLCD and 0 or 46)
 	local TOP = HORUS and (data.nv and 107 or 37) or 11
 	local HIGH = HORUS and (data.nv and 28 or 22) or 9
@@ -52,13 +51,13 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 		offOn = lang(config2)
 	end
 
+	local ccol = 0
 	if HORUS then
 		if not data.nv then
-			lcd.setColor(CUSTOM_COLOR, GREY)
-			fill(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, CUSTOM_COLOR)
+		   fill(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, data.set_flags(0, GREY))
 		end
-		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, TEXT_COLOR)
-		lcd.setColor(CUSTOM_COLOR, data.nv and LIGHTGREY or data.RGB(49, 48, 49)) -- Dark grey
+		rect(CONFIG_X - 10, TOP - 7, LCD_W - CONFIG_X * 2 + 20, HIGH * (ROWS + 1) + 12, data.set_flags(0, data.TextColor))
+		ccol = data.nv and LIGHTGREY or data.RGB(49, 48, 49) -- Dark grey
 	elseif not SMLCD then
 		rect(CONFIG_X - 5, TOP - 2, LCD_W - CONFIG_X * 2 + 10, HIGH * (ROWS + 1) + 1, SOLID)
 	end
@@ -185,14 +184,15 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	for i = data.configTop, bottom do
 		local y = (i - data.configTop) * HIGH + TOP
 		local z = config[i].z
-		local tmp = (data.configStatus == i and INVERS + data.configSelect or 0)
-		if config2[z].p == 1 and HORUS then
-			tmp = tmp + CUSTOM_COLOR
-		end
-		text(CONFIG_X, y, config2[z].t, FONT + ((config2[z].p == 1 and HORUS) and CUSTOM_COLOR or 0))
+		local tmp = (data.configStatus == i) and (INVERS + data.configSelect) or 0
+		local tmpf = 0
+		if HORUS then
+                   tmpf =  (config2[z].p == 1) and ccol or data.TextColor
+                end
+		text(CONFIG_X, y, config2[z].t, data.set_flags(FONT+tmp, tmpf))
 		if config2[z].p == nil then
 			if config2[z].l == nil then
-				text(CONFIG_X + RSIDE, y, (config[z].d ~= nil and frmt("%.1f", config[z].v) or config[z].v) .. config2[z].a, FONT + tmp)
+			   text(CONFIG_X + RSIDE, y, (config[z].d ~= nil and frmt("%.1f", config[z].v) or config[z].v) .. config2[z].a, data.set_flags(FONT + tmp, tmpf))
 			else
 				if config2[z].l == 0 then
 					if config[z].v == 0 then
@@ -204,14 +204,14 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 					config2[z].l = offOn
 				end
 				if not config2[z].l then
-					text(CONFIG_X + RSIDE, y, config[z].v, FONT + tmp)
+				   text(CONFIG_X + RSIDE, y, config[z].v, data.set_flags(FONT + tmp, tmpf))
 				else
-					text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), FONT + tmp + (z == 16 and RIGHT or 0))
+				   text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), data.set_flags(FONT + tmp + (z == 16 and RIGHT or 0), tmpf))
 				end
 			end
 			config2[z] = nil
 		else
-			text(CONFIG_X + RSIDE, y, "--", FONT + tmp)
+		   text(CONFIG_X + RSIDE, y, "--", data.set_flags(FONT + tmp, tmpf))
 		end
 	end
 

@@ -153,7 +153,6 @@ local function playLog(data, config, distCalc, date, NEXT, PREV)
 				end
 			end
 			data.telem = true
-			data.telemFlags = 0
 		end
 	else
 		data.doLogs = false
