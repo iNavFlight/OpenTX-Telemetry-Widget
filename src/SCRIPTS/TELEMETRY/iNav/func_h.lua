@@ -1,5 +1,7 @@
 local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt, opts = ...
 
+local OYELLOW = data.RGB(255, 220, 16) -- common across ETX/OTX
+
 data.TextColor = opts.Text
 data.WarningColor = opts.Warn
 
@@ -90,7 +92,7 @@ local function gpsDegMin(c, lat)
 end
 
 local function hdopGraph(x, y)
-	local ctmp = data.hdop < 11 - config[21].v * 2 and YELLOW or WHITE
+	local ctmp = data.hdop < 11 - config[21].v * 2 and OYELLOW or WHITE
 	for i = 4, 9 do
 		if i > data.hdop then
 		   ctmp = data.RGB(131, 137, 148)
@@ -154,7 +156,7 @@ end
 function data.clear(event)
    local bcol = data.nv and (data.configStatus > 0 and data.RGB(98, 106, 115) or data.RGB(50, 82, 115)) or data.RGB(0, 32, 65)
    lcd.clear(data.set_flags(0, bcol))
-   data.WarningColor = data.telem and (data.nv and data.RGB(255, 255, 100) or YELLOW) or (data.nv and data.RGB(255, 100, 100) or RED) --lcd.RGB(255, 255, 100) / lcd.RGB(255, 100, 100)
+   data.WarningColor = data.telem and (data.nv and data.RGB(255, 255, 100) or OYELLOW) or (data.nv and data.RGB(255, 100, 100) or RED) --lcd.RGB(255, 255, 100) / lcd.RGB(255, 100, 100)
 
 	if event == 0 or event == nil then
 		event = 0
@@ -214,8 +216,8 @@ function data.menu(prev)
 	-- Return throttle stick to bottom center
 	if data.stickMsg ~= nil and not data.armed then
 	   fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, data.set_flags(0, BLACK))
-	   rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, data.set_flags(0, YELLOW))
-	   text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, data.set_flags(data.nv and SMLSIZE or MIDSIZE, YELLOW))
+	   rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, data.set_flags(0, OYELLOW))
+	   text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, data.set_flags(data.nv and SMLSIZE or MIDSIZE, OYELLOW))
 	end
 end
 

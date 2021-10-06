@@ -32,6 +32,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	local deg = math.deg
 	local sin = math.sin
 	local cos = math.cos
+	local OYELLOW = data.RGB(255, 220, 16) -- common across ETX/OTX
 
 	function intersect(s1, e1, s2, e2)
 		local d = (s1.x - e1.x) * (s2.y - e2.y) - (s1.y - e1.y) * (s2.x - e2.x)
@@ -346,7 +347,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		bmap(icons.roll, 43, 20)
 		if roll > 30 and roll < 150 and not upsideDown then
 			local x1, y1, x2, y2, x3, y3 = calcDir(rad(roll - 90), rad(roll + 55), rad(roll - 235), X_CNTR - (cos(roll1) * 75), 79 - (sin(roll1) * 40), 7)
-			local ycol = data.set_flags(0, YELLOW)
+			local ycol = data.set_flags(0, OYELLOW)
 			line(x1, y1, x2, y2, SOLID, ycol)
 			line(x1, y1, x3, y3, SOLID, ycol)
 			line(x2, y2, x3, y3, SOLID, ycol)
@@ -362,7 +363,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		   tmp = math.log(1 + min(abs(0.6 * (data.vspeed_unit == 6 and data.vspeed * 0.3048 or data.vspeed)), 10)) * (data.vspeed < 0 and -1 or 1)
 		   local y1 = Y_CNTR - (tmp * 0.416667 * (Y_CNTR - 21))
 		   local y2 = Y_CNTR - (tmp * 0.384615 * (Y_CNTR - 21))
-		   local ycol = data.set_flags(0, YELLOW)
+		   local ycol = data.set_flags(0, OYELLOW)
 		   line(RIGHT_POS, y1 - 1, RIGHT_POS + 9, y2 - 1, SOLID, ycol)
 		   line(RIGHT_POS, y1, RIGHT_POS + 9, y2, SOLID, ycol)
 		end
@@ -593,7 +594,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	line(0, TOP - 1, LCD_W - 1, TOP - 1, SOLID, data.set_flags(0, LIGHTGREY))
 
 	if data.showMax then
-		fill(190, TOP - 20, 80, 20, data.set_flags(0, YELLOW))
+		fill(190, TOP - 20, 80, 20, data.set_flags(0, OYELLOW))
 		text(265, TOP - 20, "Min/Max", data.set_flags(RIGHT, BLACK))
 	end
 end
