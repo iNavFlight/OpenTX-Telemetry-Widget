@@ -9,6 +9,8 @@ SRC += $(wildcard $(WIDGETS)/iNav/*.lua)
 SRC += $(wildcard $(TELEMETRY)/*.lua)
 SRC += $(wildcard $(TELEMETRY)/iNav/*.lua)
 SRC += $(wildcard $(TELEMETRY)/iNav/*/*.wav)
+SRC += $(wildcard $(TELEMETRY)/iNav/pics/*.*)
+SRC += $(wildcard $(TELEMETRY)/iNav/cfg/*.*)
 
 DIST := dist
 VERSION := $(shell grep VERSION $(TELEMETRY)/iNav.lua | head -n 1 | cut -d\" -f 2)
@@ -50,6 +52,14 @@ $(OBJ)/%.wav: $(SRC_ROOT)/%.wav
 	mkdir -p $(dir $@)
 	cp -f "$<" "$@"
 
+$(OBJ)/%.png: $(SRC_ROOT)/%.png
+	mkdir -p $(dir $@)
+	cp -f "$<" "$@"
+
+$(OBJ)/%.txt: $(SRC_ROOT)/%.txt
+	mkdir -p $(dir $@)
+	cp -f "$<" "$@"
+
 obj: $(OBJS)
 
 dist: $(DIST_SRC) $(OBJS)
@@ -58,8 +68,6 @@ luac: $(LUAC)
 
 $(ZIP):
 	mkdir -p $(DIST)
-	cp -a src/SCRIPTS/TELEMETRY/iNav/pics $(OBJ)/SCRIPTS/TELEMETRY/iNav/
-	cp -a src/SCRIPTS/TELEMETRY/iNav/cfg $(OBJ)/SCRIPTS/TELEMETRY/iNav/
 	cd $(OBJ) && \
 		zip ../$@ -r *
 
