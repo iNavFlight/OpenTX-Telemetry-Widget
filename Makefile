@@ -58,6 +58,8 @@ luac: $(LUAC)
 
 $(ZIP):
 	mkdir -p $(DIST)
+	cp -a src/SCRIPTS/TELEMETRY/iNav/pics $(OBJ)/SCRIPTS/TELEMETRY/iNav/
+	cp -a src/SCRIPTS/TELEMETRY/iNav/cfg $(OBJ)/SCRIPTS/TELEMETRY/iNav/
 	cd $(OBJ) && \
 		zip ../$@ -r *
 
