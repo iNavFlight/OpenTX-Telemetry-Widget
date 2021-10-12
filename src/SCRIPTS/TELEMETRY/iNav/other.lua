@@ -1,4 +1,4 @@
-local config, data, units, getTelemetryId, getTelemetryUnit, FILE_PATH, env, SMLCD, FLASH = ...
+local config, data, units, getTelemetryId, getTelemetryUnit, FILE_PATH, env, SMLCD = ...
 local crsf = nil
 
 -- Detect Crossfire
@@ -11,7 +11,7 @@ data.fm_id = getTelemetryId("FM") > -1 and getTelemetryId("FM") or getTelemetryI
 --data.nv = true
 
 if data.fm_id > -1 then
-	crsf = loadScript(FILE_PATH .. "crsf.luac", env)(config, data, getTelemetryId, FLASH)
+	crsf = loadScript(FILE_PATH .. "crsf.luac", env)(config, data, getTelemetryId)
 	collectgarbage()
 end
 
