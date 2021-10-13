@@ -215,9 +215,32 @@ function data.menu(prev)
 	end
 	-- Return throttle stick to bottom center
 	if data.stickMsg ~= nil and not data.armed then
-	   fill(data.nv and 6 or 20, data.nv and 270 or 128, data.nv and 308 or 439, 30, data.set_flags(0, BLACK))
-	   rect(data.nv and 5 or 19, data.nv and 269 or 127, data.nv and 310 or 441, 32, data.set_flags(0, OYELLOW))
-	   text(data.nv and 14 or 28, data.nv and 275 or 128, data.stickMsg, data.set_flags(data.nv and SMLSIZE or MIDSIZE, OYELLOW))
+	   local tflags = data.set_flags(data.nv and SMLSIZE or MIDSIZE, OYELLOW)
+	   local ox,oy, oh, ow, ty
+	   if data.etx then -- takes flags into account for sizing
+	      fw,fh = lcd.sizeText(data.stickMsg, tflags)
+	      oh = fh + 2
+	      ow = fw + 16
+	      ox = (LCD_W - ow) / 2 - 1
+	      oy = (LCD_H - fh) / 2 - 2
+	      ty = oy + 1
+	   else
+	      if data.nv then
+		 ox = 6
+		 oy = 270
+		 ow = 308
+		 ty = 275
+	      else
+		 ox = 20
+		 oy = 128
+		 ow = 439
+		 ty = 128
+	      end
+	      oh = 30
+	   end
+	   fill(ox, oy, ow, oh, data.set_flags(0, BLACK))
+	   rect(ox-1, oy - 1, ow+2, oh + 2, data.set_flags(0, OYELLOW))
+	   text(ox+8, ty, data.stickMsg, tflags)
 	end
 end
 
