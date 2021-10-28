@@ -96,6 +96,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 * [INAV v2.6.1+](https://github.com/iNavFlight/inav/releases) running on your flight controller (theoretically, it should support v2.1.0 and higher, but don't complain if it doesn't work in the future) - Also compatible with Betaflight v4.0.0+ (with reduced functionality)
 * [OpenTX v2.2.3+](http://www.open-tx.org/) running on Taranis Q X7/Q X7S, X9D/X9D+, X9E, X9 Lite, X-Lite/X-Lite Pro, Horus X10/X10S or X12S
+* [EdgeTX v2.5.0+](https://edgetx.org/) running on a [supported radio](https://github.com/EdgeTX/edgetx.github.io/wiki/Frequently-Asked-Questions).
 * Jumper T12/T16 requires [JumperTX 2.2.3+](https://www.jumper.xyz/) (May 23, 2019 or after release)
 * FrSky X, R9 or D series telemetry receiver: X4RSB, X8R, XSR, R-XSR, XSR-M, XSR-E, RX4R, RX6R, R9, R9 Slim, R9 Slim+, R9 Mini, R9 MM, D8R-II plus, D8R-XP, D4R-II, etc. or any TBS Crossfire receiver: Micro, Nano, Diversity, etc.
 * GPS - If you're looking for a GPS module, I suggest the [Beitian BN-880](https://us.banggood.com/custlink/vvGD6DZWyg)
@@ -127,7 +128,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 * [Upgrade Instructions](https://luatelemetry.readthedocs.io/en/latest/Upgrade/)
 * [Download Options](https://luatelemetry.readthedocs.io/en/latest/Getting-Started/#download-options)
 
-## Information & Settings 
+## Information & Settings
 
 * [Configuration Settings and more](https://luatelemetry.readthedocs.io/en/latest/Configuration-Settings/) (!)
 * [Playback Telemetry Logs](https://luatelemetry.readthedocs.io/en/latest/Configuration-Settings/#playback-telemetry-log-files)
