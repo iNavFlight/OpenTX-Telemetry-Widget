@@ -6,8 +6,8 @@ local function getTelemetryId(n)
 end
 
 local function getTelemetryUnit(n)
-	local field = getFieldInfo(n)
-	return (field and field.unit <= 10) and field.unit or 0
+   local field = getFieldInfo(n)
+   return (field and field.unit and field.unit <= 10) and field.unit or 0
 end
 
 --[[	Replace with EVT_VIRTUAL_XXX at begining of 2020 and require OpenTX 2.3+
