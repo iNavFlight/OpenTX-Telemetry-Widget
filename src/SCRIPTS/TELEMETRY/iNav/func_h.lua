@@ -172,7 +172,7 @@ function data.clear(event)
 				elseif getValue(data.hcury_id) > 200 then
 					event = EVT_ROT_LEFT -- Up
 				elseif getValue(data.hcury_id) < -200 then
-					event = EVT_ROT_RIGHT -- Down
+				   event = EVT_ROT_RIGHT -- Down
 				end
 			end
 			if data.lastevt == event and (data.configStatus == 0 or math.abs(getValue(data.hcury_id)) < 940) then

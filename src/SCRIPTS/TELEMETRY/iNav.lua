@@ -16,16 +16,20 @@ local v, r, m, i, e, osname = getVersion()
 -- Nirvana NV14 doesn't have have these global constants, so we set them
 if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	EVT_SYS_FIRST = 1 --1542
-	EVT_ROT_LEFT = 2 --57088
-	EVT_ROT_RIGHT = 3 --56832
 	EVT_ENTER_BREAK = 4 --514
 	EVT_EXIT_BREAK = 5 --516
+	if osname == nil then
+	   EVT_ROT_LEFT = 2 --57088
+	   EVT_ROT_RIGHT = 3 --56832
+	else 	-- EdgetTX gratuitous break backwards compatibility
+	   EVT_ROT_LEFT = 1541
+	   EVT_ROT_RIGHT = 1540
+	end
 end
 
 --[[ if string.sub(r, -4) == "simu" then
    env = "btd"
-   end
-]]
+   end ]]
 
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
