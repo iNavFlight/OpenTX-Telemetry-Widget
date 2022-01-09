@@ -28,7 +28,7 @@ if tx == "xl" then
 elseif HORUS then
    MENU = EVT_SYS_FIRST
 elseif string.sub(r, 0, 3) == "t12" then
-   MENU = EVT_VIRTUAL_PREVIOUS
+   MENU = EVT_VIRTUAL_PREV
 elseif string.sub(r,0,5) == "tlite" then
    MENU = EVT_VIRTUAL_MENU_LONG
 else
