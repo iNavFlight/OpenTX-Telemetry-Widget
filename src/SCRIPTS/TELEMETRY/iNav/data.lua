@@ -21,7 +21,19 @@ if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or str
 end
 local PREV = EVT_VIRTUAL_PREVIOUS
 local NEXT = EVT_VIRTUAL_NEXT
-local MENU = tx == "xl" and EVT_SHIFT_BREAK or (HORUS and EVT_SYS_FIRST or (string.sub(r, 0, 3) == "t12" and EVT_VIRTUAL_PREVIOUS or EVT_MENU_BREAK))
+local MENU
+
+if tx == "xl" then
+   MENU = EVT_SHIFT_BREAK
+elseif HORUS then
+   MENU = EVT_SYS_FIRST
+elseif string.sub(r, 0, 3) == "t12" then
+   MENU = EVT_VIRTUAL_PREV
+elseif string.sub(r,0,5) == "tlite" then
+   MENU = EVT_VIRTUAL_MENU_LONG
+else
+   MENU = EVT_MENU_BREAK
+end
 
 local general = getGeneralSettings()
 local distSensor = getTelemetryId("Dist") > -1 and "Dist" or (getTelemetryId("0420") > -1 and "0420" or "0007")
