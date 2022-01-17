@@ -21,9 +21,9 @@ if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	if osname == nil then
 	   EVT_ROT_LEFT = 2 --57088
 	   EVT_ROT_RIGHT = 3 --56832
-	else 	-- EdgetTX compatibility
-	   EVT_ROT_LEFT = 1541
-	   EVT_ROT_RIGHT = 1540
+	else 	-- Edge TX compatibility
+	   EVT_ROT_LEFT = 1541 -- 4099
+	   EVT_ROT_RIGHT = 1540 -- 4100
 	end
 end
 
