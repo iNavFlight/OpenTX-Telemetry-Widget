@@ -13,6 +13,15 @@ Press the `Menu` button (`Shift` on X-Lite) to display the configuration options
 
 ![sample](https://raw.githubusercontent.com/iNavFlight/LuaTelemetry/master/assets/iNavConfigHorus.png "Horus config menu")
 
+## Other radios
+
+There are a number of smaller ('budget') radios, often with few buttons and a small screen. The combination of fewer buttons and the small screen makes finding a common button press somewhat problematic; the following are supported (2.0.2 and later):
+
+* Jumper T12 / T-Lite : Menu long press to access the config menu
+* Radiomaster Zorro / TX12 : Roller long press to access the config menu
+	* Dismiss the "Reset" menu with "RTN".
+    * Access the configuration options via the roller.
+
 ### Configuration menu options
 
 ![sample](https://raw.githubusercontent.com/iNavFlight/LuaTelemetry/master/assets/iNavConfig.png "Configuration menu")
