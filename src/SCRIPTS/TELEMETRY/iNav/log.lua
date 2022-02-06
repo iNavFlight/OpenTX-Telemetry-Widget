@@ -29,7 +29,7 @@ local function parseLine(line)
 	return record
 end
 
-local function playLog(data, config, distCalc, date, NEXT, PREV)
+local function playLog(data, config, distCalc, date)
 
 	local gpsTemp = nil
 
