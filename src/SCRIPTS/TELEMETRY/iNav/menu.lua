@@ -1,4 +1,4 @@
-local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
+local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, HORUS, text, rect, fill, frmt, env)
 	local CONFIG_X = HORUS and (data.nv and 10 or 90) or (SMLCD and 0 or 46)
 	local TOP = HORUS and (data.nv and 107 or 37) or 11
 	local HIGH = HORUS and (data.nv and 28 or 22) or 9
@@ -121,17 +121,35 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 		data.configSelect = (data.configSelect == 0) and BLINK or 0
 	end
 
+	--[[
+	   The non-roller radios have a mapping of VIRTUAL PREV/NEXT
+	   (for menu navigation) and INC/DEC (for incrementing / decrementing values);
+	   these are effectively a one-one transformation, so everything works.
+	   The roller radios map PREV / NEXT and INC / DEC the same way, which doesn't
+	   work here, so it gets a bit ugly.
+	   | VIRTUAL | ROLLER | +/- | Up / Down |
+	   | ------- | ------ | --- | --------- |
+	   | PREV    | LEFT   |  +  | Up        |
+	   | NEXT    | RIGHT  |  -  | Down      |
+	   | DEC     | LEFT   |  -  | Down      |
+	   | INC     | RIGHT  |  +  | Up        |
+	]]
 	-- Select config option
 	if data.configSelect == 0 then
-		if event == EVT_VIRTUAL_INC or event == EVT_VIRTUAL_INC_REPT then -- Next option
-			data.configStatus = data.configStatus == #config and 1 or data.configStatus + 1
-			data.configTop = data.configStatus > math.min(#config, data.configTop + ROWS) and data.configTop + 1 or (data.configStatus == 1 and 1 or data.configTop)
-		elseif event == EVT_VIRTUAL_DEC or event == EVT_VIRTUAL_DEC_REPT then -- Previous option
-			data.configStatus = data.configStatus == 1 and #config or data.configStatus - 1
-			data.configTop = data.configStatus < data.configTop and data.configTop - 1 or (data.configStatus == #config and #config - ROWS or data.configTop)
-		elseif event == EVT_VIRTUAL_ENTER and data.configStatus == 34 and config2[34].p == nil then -- Log file selected
-			data.doLogs = true
-		end
+--[[
+	   if event ~= 0 then
+	      print("DBG EVT="..event.." VNEXT="..EVT_VIRTUAL_NEXT.." VPREV="..EVT_VIRTUAL_PREV)
+	   end
+]]
+	   if event == EVT_VIRTUAL_NEXT then -- Next option
+	      data.configStatus = data.configStatus == #config and 1 or data.configStatus + 1
+	      data.configTop = data.configStatus > math.min(#config, data.configTop + ROWS) and data.configTop + 1 or (data.configStatus == 1 and 1 or data.configTop)
+	   elseif event == EVT_VIRTUAL_PREV then -- Previous option
+	      data.configStatus = data.configStatus == 1 and #config or data.configStatus - 1
+	      data.configTop = data.configStatus < data.configTop and data.configTop - 1 or (data.configStatus == #config and #config - ROWS or data.configTop)
+	   elseif event == EVT_VIRTUAL_ENTER and data.configStatus == 34 and config2[34].p == nil then -- Log file selected
+	      data.doLogs = true
+	   end
 	end
 
 	-- Delete invisible menus
@@ -145,15 +163,30 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 
 	-- Select config items
 	if data.configSelect ~= 0 then
-		local z = config[data.configStatus].z
-		local i = config2[z].i == nil and 1 or config2[z].i
-		if event == EVT_VIRTUAL_MENU or event == EVT_EXIT_BREAK then
-			data.configSelect = 0
-		elseif event == EVT_VIRTUAL_DEC or event == EVT_VIRTUAL_DEC_REPT then
-			config[z].v = math.min(math.floor(config[z].v * 10 + i * 10) * 0.1, config[z].x == nil and 1 or config[z].x)
-		elseif event == EVT_VIRTUAL_INC or event == EVT_VIRTUAL_INC_REPT then
-			config[z].v =math.max(math.floor(config[z].v * 10 - i * 10) * 0.1, config2[z].m == nil and 0 or config2[z].m)
-		end
+	   local edit_event = 0
+	   if HORUS and not data.nv then
+	      if event == EVT_VIRTUAL_INC or event == EVT_VIRTUAL_INC_REPT then
+		 edit_event = 2
+	      elseif event == EVT_VIRTUAL_DEC or event == EVT_VIRTUAL_DEC_REPT then
+		 edit_event = 1
+	      end
+	   else
+	      if event == EVT_VIRTUAL_INC or event == EVT_VIRTUAL_INC_REPT then
+		 edit_event = 1
+	      elseif event == EVT_VIRTUAL_DEC or event == EVT_VIRTUAL_DEC_REPT then
+		 edit_event = 2
+	      end
+	   end
+
+	   local z = config[data.configStatus].z
+	   local i = config2[z].i == nil and 1 or config2[z].i
+	   if event == EVT_VIRTUAL_MENU or event == EVT_EXIT_BREAK then
+	      data.configSelect = 0
+	   elseif edit_event == 1 then
+	      config[z].v = math.min(math.floor(config[z].v * 10 + i * 10) * 0.1, config[z].x == nil and 1 or config[z].x)
+	   elseif edit_event == 2 then
+	      config[z].v =math.max(math.floor(config[z].v * 10 - i * 10) * 0.1, config2[z].m == nil and 0 or config2[z].m)
+	   end
 
 		-- Special cases
 		if event ~= 0 and event ~= nil then

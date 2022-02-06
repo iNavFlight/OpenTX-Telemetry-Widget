@@ -170,9 +170,9 @@ function data.clear(event)
 				elseif getValue(data.hcurx_id) > 940 then
 					event = EVT_ENTER_BREAK -- Right (enter)
 				elseif getValue(data.hcury_id) > 200 then
-					event = EVT_ROT_LEFT -- Up
+					event = data.nv and EVT_VIRTUAL_PREV or EVT_ROT_LEFT -- Up
 				elseif getValue(data.hcury_id) < -200 then
-				   event = EVT_ROT_RIGHT -- Down
+				   event = data.nv and EVT_VIRTUAL_NEXT or EVT_ROT_RIGHT -- Down
 				end
 			end
 			if data.lastevt == event and (data.configStatus == 0 or math.abs(getValue(data.hcury_id)) < 940) then
@@ -183,9 +183,9 @@ function data.clear(event)
 		end
 		if event == 0 and data.lastt6 ~= nil then
 			if getValue(data.t6_id) > data.lastt6 then
-				event = EVT_ROT_LEFT -- Up
+				event = data.nv and EVT_VIRTUAL_PREV or EVT_ROT_LEFT -- Up
 			elseif getValue(data.t6_id) < data.lastt6 then
-				event = EVT_ROT_RIGHT -- Down
+				event = data.nv and EVT_VIRTUAL_NEXT or EVT_ROT_RIGHT -- Down
 			end
 		end
 		if event == 0 and data.doLogs and getValue(data.hcurx_id) < -940 then

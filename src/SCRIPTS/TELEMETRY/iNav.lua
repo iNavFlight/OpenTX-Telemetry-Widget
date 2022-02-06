@@ -2,7 +2,7 @@
 -- Docs: https://github.com/iNavFlight/OpenTX-Telemetry-Widget
 
 local zone, options = ...
-local VERSION = "2.0.2-rc5"
+local VERSION = "2.0.2-rc6"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
@@ -18,13 +18,6 @@ if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	EVT_SYS_FIRST = 1 --1542
 	EVT_ENTER_BREAK = 4 --514
 	EVT_EXIT_BREAK = 5 --516
-	if osname == nil then
-	   EVT_ROT_LEFT = 2 --57088
-	   EVT_ROT_RIGHT = 3 --56832
-	else 	-- Edge TX compatibility
-	   EVT_ROT_LEFT = 1541 -- 4099
-	   EVT_ROT_RIGHT = 1540 -- 4100
-	end
 end
 
 --[[ if string.sub(r, -4) == "simu" then
@@ -37,7 +30,7 @@ collectgarbage()
 local modes, units, labels, dir = loadScript(FILE_PATH .. "modes" .. ext, env)(HORUS)
 collectgarbage()
 
-local data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
+local data, getTelemetryId, getTelemetryUnit, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
 collectgarbage()
 
 data.etx = (osname ~= nil)
@@ -168,7 +161,7 @@ function inav.background()
 				data.doLogs = true -- Resist removing this, the reset above sets doLogs to false, so this is needed
 				playLog = loadScript(FILE_PATH .. "log" .. ext, env)(env, FILE_PATH)
 			end
-			gpsTemp = playLog(data, config, distCalc, config[34].l[config[34].v], NEXT, PREV)
+			gpsTemp = playLog(data, config, distCalc, config[34].l[config[34].v])
 			if not data.doLogs then
 				endLog()
 			end
@@ -499,7 +492,7 @@ function inav.run(event)
 			data.v = 9
 		end
 		tmp = config[30].v
-		view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, PREV, NEXT, HORUS, text, rect, fill, frmt, env)
+		view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, HORUS, text, rect, fill, frmt, env)
 		if HORUS then
 		   data.menu(tmp)
 		end
@@ -511,11 +504,11 @@ function inav.run(event)
 		end
 	else
 		-- User input
-		if not data.armed and (event == PREV or event == NEXT) then
+		if not data.armed and (event == EVT_VIRTUAL_PREV or event == EVT_VIRTUAL_NEXT) then
 			-- Toggle showing max/min values
 			data.showMax = not data.showMax
 		end
-		if event == NEXT or event == PREV then
+		if event == EVT_VIRTUAL_NEXT or event == EVT_VIRTUAL_PREV then
 			-- Toggle launch/compass-based orientation
 			data.showDir = not data.showDir
 		elseif event == EVT_ENTER_BREAK and not HORUS then

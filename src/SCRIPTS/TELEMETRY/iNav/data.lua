@@ -10,17 +10,10 @@ local function getTelemetryUnit(n)
    return (field and field.unit <= 10) and field.unit or 0
 end
 
---[[	Replace with EVT_VIRTUAL_XXX at begining of 2020 and require OpenTX 2.3+
-		Currently missing EVT_VIRTUAL_MENU on Jumper T12
-		Can remove PREV, NEXT, MENU constants from code
-		Also, changes in menu.lua, iNav.lua to use the ENV_VIRTUAL_XXX constants
-]]
 local tx = string.sub(r, 0, 2)
 if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or string.sub(r, 0, 6) == "x9d+20" then
 	tx = "x7"
 end
-local PREV = EVT_VIRTUAL_PREV
-local NEXT = EVT_VIRTUAL_NEXT
 local MENU
 
 if tx == "xl" then
@@ -121,4 +114,4 @@ function data.RGB(r, g, b)
   return rgb
 end
 
-return data, getTelemetryId, getTelemetryUnit, PREV, NEXT, MENU, lcd.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format
+return data, getTelemetryId, getTelemetryUnit, MENU, lcd.drawText, lcd.drawLine, lcd.drawRectangle, lcd.drawFilledRectangle, string.format
