@@ -72,7 +72,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ## Features
 
 * Supported receivers: All FrSky telemetry receivers (X, R9 and D series) and all TBS Crossfire receivers
-* Supported transmitters: All FrSky Taranis and Horus transmitters, Jumper T12 & T16 and the FLYSKY Nirvana NV14
+* Supported transmitters: All FrSky Taranis and Horus transmitters, Jumper T12, T-Lite & T16, FLYSKY Nirvana NV14, Radiomaster TX16S, TX12, Zorro.
 * Compatible with Betaflight using FrSky X or R9 series receivers (with reduced functionality) and TBS Crossfire support with Betaflight v4.0.0+
 * Launch/pilot-based model orientation and location indicators (great for lost orientation/losing sight of your model)
 * Compass-based direction indicator (with magnetometer sensor on multirotor or fixed-wing with GPS)

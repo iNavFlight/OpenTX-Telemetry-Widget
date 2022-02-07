@@ -54,7 +54,7 @@ Don't be too concerned about the length of these instructions. The first two sec
 1. Press `EXIT` or `RTN` several times to exit (back icon on Nirvana)
 
 ### Download Options
-When [downloading INAV Lua Telemetry](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest), you may notice there's several different download options at the bottom of the release.  Following are descriptions of each download option:
+When [downloading INAV Lua Telemetry](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest). There may be multiple download options at the bottom of the release.  Following are descriptions of each download option:
 
 * **LuaTelemetry-Horus-en.zip** - Horus transmitters with English sound files only
 * **LuaTelemetry-Horus.zip** - Horus transmitters with sound files for all supported languages
@@ -64,7 +64,7 @@ When [downloading INAV Lua Telemetry](https://github.com/iNavFlight/OpenTX-Telem
 * **Source code** (zip) - ZIP compressed source code for this release - *not for transmitter install*
 * **Source code** (tar.gz) - Tarball format source code for this release - *not for transmitter install*
 
-If you just want to install without thinking about it, download and install the latest [LuaTelemetry.zip](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest) file which includes everything and will work on both Taranis and Horus in any language. The other download options are available to save a bit of SD card space on the transmitter and to keep the install clean of unneeded files.
+If you just want to install without thinking about it, download and install the latest [LuaTelemetry.zip](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest) file which includes everything and will work on supported radios in any available language. The other download options *may* be provided in order to save a bit of SD card space on the transmitter and to keep the install clean of unneeded files.
 
 
 #### Running Lua Telemetry
