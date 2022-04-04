@@ -408,7 +408,7 @@ function inav.background()
 	else
 		data.battLow = false
 		data.battPercentPlayed = 100
-		-- Initalize variables on flight reset (uses timer3)
+		-- Initialize variables on flight reset (uses timer3)
 		tmp = model.getTimer(2)
 		if tmp.value == 0 then
 			loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
