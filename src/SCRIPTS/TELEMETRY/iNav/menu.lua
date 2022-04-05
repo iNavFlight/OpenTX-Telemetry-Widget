@@ -44,7 +44,6 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 		{ t = "Orientation",      l = {[0] = "Launch", "Compass"} }, -- 32
 		{ t = "Roll Scale",       l = 1 }, -- 33
 		{ t = "Playback Log",     l = config[34].l }, -- 34
-		{ t = "CRSF Rates",     l = {[0] = "Crossfire", "ExpressLRS"} }, -- 35
 	}
 
 	-- Import language changes
