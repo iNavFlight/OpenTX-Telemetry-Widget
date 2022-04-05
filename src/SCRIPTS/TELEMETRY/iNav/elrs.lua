@@ -1,5 +1,6 @@
-local deviceId = 0xEE
+-- Adapted from ELRSv2.lua in ExpressLRS
 
+local deviceId = 0xEE
 
 local function byteToStr(b)
 	-- Translate b into a string from symbolChars if available, else use string.char
@@ -39,9 +40,9 @@ local function parseDeviceInfoMessage(data)
 	end
 end
 
--- returns 1 if elrs, -1 if TBS, and 0 if unknown
+-- Returns 1 if elrs, -1 if TBS, and 0 if unknown
 local function elrs()
-	crossfireTelemetryPush(0x28, { 0x00, 0xEA })
+	-- the request for data has already been sent
 	local command, data
 	i = 0
 	-- give up after 50 tries
