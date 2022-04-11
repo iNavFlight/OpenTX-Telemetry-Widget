@@ -54,10 +54,6 @@ collectgarbage()
 local crsf, elrs, distCalc = loadScript(FILE_PATH .. "other" .. ext, env)(config, data, units, getTelemetryId, getTelemetryUnit, FILE_PATH, env, SMLCD)
 collectgarbage()
 
--- Request device info from CRSF devices (used to detect TBS/ExpressLRS)
-if data.fm_id > -1 then
-	crossfireTelemetryPush(0x28, { 0x00, 0xEA })
-end
 
 local title, gpsDegMin, hdopGraph, icons, rect = loadScript(FILE_PATH .. "func_" .. (HORUS and "h" or "t") .. ext, env)(config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt, options)
 collectgarbage()
@@ -448,6 +444,8 @@ function inav.background()
 
 	-- Check if we're talking to an ExpressLRS CRSF device
 	if (data.elrs == nil or data.elrs == 0) and data.fm_id > -1 then
+		-- Request device info from CRSF devices (used to detect TBS/ExpressLRS)
+		crossfireTelemetryPush(0x28, { 0x00, 0xEA })
 		data.elrs = elrs()
 		collectgarbage()
 	end

@@ -43,13 +43,7 @@ end
 -- Returns 1 if elrs, -1 if TBS, and 0 if unknown
 local function elrs()
 	-- the request for data has already been sent
-	local command, data
-	i = 0
-	-- give up after 50 tries
-	while command ~= 0x29 and i < 50 do
-		command, data = crossfireTelemetryPop()
-		i = i + 1
-	end
+	local command, data = crossfireTelemetryPop()
 	if command == 0x29 then
 		if parseDeviceInfoMessage(data) then
 			return 1
