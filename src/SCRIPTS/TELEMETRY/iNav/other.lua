@@ -1,5 +1,6 @@
 local config, data, units, getTelemetryId, getTelemetryUnit, FILE_PATH, env, SMLCD = ...
 local crsf = nil
+local elrs = nil
 
 -- Detect Crossfire
 data.fm_id = getTelemetryId("FM") > -1 and getTelemetryId("FM") or getTelemetryId("PV")
@@ -12,6 +13,7 @@ data.fm_id = getTelemetryId("FM") > -1 and getTelemetryId("FM") or getTelemetryI
 
 if data.fm_id > -1 then
 	crsf = loadScript(FILE_PATH .. "crsf.luac", env)(config, data, getTelemetryId)
+	elrs = loadScript(FILE_PATH .. "elrs.luac", env)()
 	collectgarbage()
 end
 
@@ -91,4 +93,4 @@ if data.dist_id == -1 or data.simu then
 	end
 end
 
-return crsf, distCalc
+return crsf, elrs, distCalc
