@@ -2,7 +2,7 @@
 -- Docs: https://github.com/iNavFlight/OpenTX-Telemetry-Widget
 
 local zone, options = ...
-local VERSION = "2.0.2-rc7"
+local VERSION = "2.0.2-rc8"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
@@ -33,7 +33,7 @@ collectgarbage()
 local data, getTelemetryId, getTelemetryUnit, MENU, text, line, rect, fill, frmt = loadScript(FILE_PATH .. "data" .. ext, env)(r, m, i, HORUS)
 collectgarbage()
 
-data.etx = (osname ~= nil)
+data.etx = osname ~= nil and osname == "EdgeTX"
 
 loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
 collectgarbage()
