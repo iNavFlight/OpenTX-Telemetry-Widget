@@ -136,11 +136,6 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	]]
 	-- Select config option
 	if data.configSelect == 0 then
---[[
-	   if event ~= 0 then
-	      print("DBG EVT="..event.." VNEXT="..EVT_VIRTUAL_NEXT.." VPREV="..EVT_VIRTUAL_PREV)
-	   end
-]]
 	   if event == EVT_VIRTUAL_NEXT then -- Next option
 	      data.configStatus = data.configStatus == #config and 1 or data.configStatus + 1
 	      data.configTop = data.configStatus > math.min(#config, data.configTop + ROWS) and data.configTop + 1 or (data.configStatus == 1 and 1 or data.configTop)
@@ -239,7 +234,7 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 				if not config2[z].l then
 				   text(CONFIG_X + RSIDE, y, config[z].v, data.set_flags(FONT + tmp, tmpf))
 				else
-				   text(z == 16 and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), data.set_flags(FONT + tmp + (z == 16 and RIGHT or 0), tmpf))
+				   text((z == 16 or z == 34) and LCD_W - CONFIG_X or CONFIG_X + RSIDE, y, config2[z].l[config[z].v] .. ((config2[z].a == nil or config[z].v == 0) and "" or config2[z].a), data.set_flags(FONT + tmp + ((z == 16 or z == 34)  and RIGHT or 0), tmpf))
 				end
 			end
 			config2[z] = nil

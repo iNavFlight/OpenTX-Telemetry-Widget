@@ -2,7 +2,7 @@
 -- Docs: https://github.com/iNavFlight/OpenTX-Telemetry-Widget
 
 local zone, options = ...
-local VERSION = "2.1.0"
+local VERSION = "2.1.1-rc1"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
@@ -20,9 +20,7 @@ if string.sub(r, 0, 4) == "nv14" or string.sub(r, 0, 4) == "NV14" then
 	EVT_EXIT_BREAK = 5 --516
 end
 
---[[ if string.sub(r, -4) == "simu" then
-   env = "btd"
-   end ]]
+if string.sub(r, -4) == "simu" then env = "btd" end
 
 local config = loadScript(FILE_PATH .. "config" .. ext, env)(SMLCD)
 collectgarbage()
@@ -35,7 +33,7 @@ collectgarbage()
 
 data.etx = osname ~= nil and osname == "EdgeTX"
 
-loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
+loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or "o") .. ext, env)(config, data, FILE_PATH)
 collectgarbage()
 
 --[[ Simulator language testing
@@ -412,7 +410,7 @@ function inav.background()
 		-- Initialize variables on flight reset (uses timer3)
 		tmp = model.getTimer(2)
 		if tmp.value == 0 then
-			loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
+		   loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or  "o") .. ext, env)(config, data, FILE_PATH)
 			loadScript(FILE_PATH .. "reset" .. ext, env)(data)
 			tmp.value = 3600
 			model.setTimer(2, tmp)
