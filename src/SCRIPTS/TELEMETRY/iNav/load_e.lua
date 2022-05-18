@@ -26,7 +26,8 @@ end
 local log = getDateTime()
 config[34].x = -1
 
-local mbase = string.gsub(model.getInfo().name, " ", ".") .. "-20"
+-- From EdgeTX 2.7.1 (at least) we don't need to translate spaces
+local mbase = model.getInfo().name .. "-20"
 local mblen = string.len(mbase)
 local tempf = {}
 local tempi = 0

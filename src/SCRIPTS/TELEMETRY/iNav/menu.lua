@@ -136,11 +136,6 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	]]
 	-- Select config option
 	if data.configSelect == 0 then
---[[
-	   if event ~= 0 then
-	      print("DBG EVT="..event.." VNEXT="..EVT_VIRTUAL_NEXT.." VPREV="..EVT_VIRTUAL_PREV)
-	   end
-]]
 	   if event == EVT_VIRTUAL_NEXT then -- Next option
 	      data.configStatus = data.configStatus == #config and 1 or data.configStatus + 1
 	      data.configTop = data.configStatus > math.min(#config, data.configTop + ROWS) and data.configTop + 1 or (data.configStatus == 1 and 1 or data.configTop)

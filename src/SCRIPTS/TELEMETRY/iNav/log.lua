@@ -31,10 +31,9 @@ end
 
 local function playLog(data, config, distCalc, date)
    local gpsTemp = nil
-   local replc = data.etx and "." or "_"
    if logfh == nil then
-      logfh = io.open("/LOGS/" .. string.gsub(model.getInfo().name, " ", replc) .. "-20" .. date .. ".csv")
-      fake = loadScript(FILE_PATH .. "log_" .. (data.crsf and "c" or "s") .. ".luac", env)()
+      local mbase = data.etx and model.getInfo().name or string.gsub(model.getInfo().name, " ", "_")
+      logfh = io.open("/LOGS/" .. mbase .. "-20" .. date .. ".csv")
       data.showMax = false
       seek = 0
    end
@@ -115,7 +114,9 @@ local function playLog(data, config, distCalc, date)
 	       if record[i] == "Rud" then break end
 	       label[string.lower(record[i])] = i
 	    end
+	    if record[i] == "1RSS(dB)" then data.crsf = true end
 	 end
+	 fake = loadScript(FILE_PATH .. "log_" .. (data.crsf and "c" or "s") .. ".luac", env)()
       else
 	 -- Fake telemetry specific to Crossfire or S.Port
 	 fake(data, config, record, label, toNum)
