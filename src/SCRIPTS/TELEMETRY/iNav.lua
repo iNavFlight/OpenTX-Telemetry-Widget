@@ -33,7 +33,7 @@ collectgarbage()
 
 data.etx = osname ~= nil and osname == "EdgeTX"
 
-loadScript(FILE_PATH .. (data.etx and "load_e" or "load") .. ext, env)(config, data, FILE_PATH)
+loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or "o") .. ext, env)(config, data, FILE_PATH)
 collectgarbage()
 
 --[[ Simulator language testing
@@ -410,7 +410,7 @@ function inav.background()
 		-- Initialize variables on flight reset (uses timer3)
 		tmp = model.getTimer(2)
 		if tmp.value == 0 then
-		   loadScript(FILE_PATH .. (data.etx and "load_e" or  "load") .. ext, env)(config, data, FILE_PATH)
+		   loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or  "o") .. ext, env)(config, data, FILE_PATH)
 			loadScript(FILE_PATH .. "reset" .. ext, env)(data)
 			tmp.value = 3600
 			model.setTimer(2, tmp)
