@@ -251,7 +251,7 @@ function inav.background()
 	local beep = false
 	if data.armed and not armedPrev then -- Engines armed
 		data.timerStart = getTime()
-
+		data.headingRef = data.heading
 		data.gpsHome = false
 		data.battPercentPlayed = 100
 		data.battLow = false
