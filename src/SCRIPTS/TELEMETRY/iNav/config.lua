@@ -28,7 +28,7 @@ local config = {
 	{ o = 16, c = 1, v = 3, x = 9 }, -- Vario Steps - 24
 	{ o = 25, c = 1, v = 0, x = 3 }, -- View Mode - 25
 	{ o = 23, c = 1, v = 0 }, -- AltHold Center FB - 26
-	{ o = 7,  c = 5, v = 1500, x = 9950 }, -- Battery Capacity - 27
+	{ o = 7,  c = 5, v = 1500, x = 50000 }, -- Battery Capacity - 27
 	{ o = 17, c = 1, v = 0, x = 6 }, -- Altitude Graph - 28
 	{ o = 5,  c = 2, v = 4.3, d = true, x = 4.5 }, -- Cell Calculation - 29
 	{ o = 27, c = 1, v = 0, x = 5 }, -- Aircraft Symbol - 30
