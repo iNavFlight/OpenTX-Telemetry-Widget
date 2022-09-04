@@ -4,6 +4,9 @@ local elrs = nil
 
 -- Detect Crossfire
 data.fm_id = getTelemetryId("FM") > -1 and getTelemetryId("FM") or getTelemetryId("PV")
+if data.fm_id < 0 then
+   data.fm_id = getTelemetryId("RFMD") > -1 and getTelemetryId("RFMD") or getTelemetryId("PV")
+end
 
 -- Testing Crossfire
 --if data.simu then data.fm_id = 1 end
