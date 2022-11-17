@@ -44,12 +44,14 @@ for fname in  dir("/LOGS") do
       end
    end
 end
-table.sort( tempf )
-for i = #tempf, 1, -1 do
-   config[34].x = config[34].x + 1
-   config[34].l[config[34].x] = tempf[i]
-   collectgarbage()
-   if config[34].x == 5 then break end
+if tempi > 0 then
+   table.sort( tempf )
+   for i = #tempf, 1, -1 do
+      config[34].x = config[34].x + 1
+      config[34].l[config[34].x] = tempf[i]
+      collectgarbage()
+      if config[34].x == 5 then break end
+   end
 end
 collectgarbage()
 return
