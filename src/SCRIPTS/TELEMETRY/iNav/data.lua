@@ -26,6 +26,8 @@ elseif string.sub(r,0,5) == "tlite" then
    MENU = EVT_VIRTUAL_MENU_LONG
 elseif string.sub(r,0,5) == "zorro" then
    MENU = EVT_VIRTUAL_MENU_LONG
+elseif string.sub(r,0,6) == "lr3pro" then
+   MENU = EVT_VIRTUAL_MENU_LONG
 else
    MENU = EVT_MENU_BREAK
 end
