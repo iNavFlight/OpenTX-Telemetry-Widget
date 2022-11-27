@@ -2,7 +2,7 @@
 -- Docs: https://github.com/iNavFlight/OpenTX-Telemetry-Widget
 
 local zone, options = ...
-local VERSION = "2.1.1-rc4"
+local VERSION = "2.2.0"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
@@ -511,7 +511,8 @@ function inav.run(event)
 			loadScript(FILE_PATH .. "save" .. ext, env)(config, data, frmt, FILE_PATH)
 		end
 	else
-		-- User input
+	   -- User input
+--	   if event ~= 0 then print("DBG: INPUT "..event)  end
 		if not data.armed and (event == EVT_VIRTUAL_PREV or event == EVT_VIRTUAL_NEXT) then
 			-- Toggle showing max/min values
 			data.showMax = not data.showMax
