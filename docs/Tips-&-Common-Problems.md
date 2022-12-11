@@ -37,6 +37,8 @@
 
 ## Reporting Issues on Github
 
+Submit issues and PRs in English only. Issues / PRs in other languages may be closed without further investigation.
+
 Please include:
 
 * The TX type (e.g. Radiomaster TX16S, Horus, Zorro etc.)
