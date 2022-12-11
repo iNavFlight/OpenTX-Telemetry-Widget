@@ -24,6 +24,7 @@
 ## Tips
 
 * If you have any issues, first make sure you're using the release version 2.2.2+ of OpenTX. There's some bugs in pre-release and release candidate versions that cause Lua Telemetry to crash
+* Preferably use the latest version of your TX firmware (OpenTX or EdgeTX)
 * Between flights (before armed), long-press Enter/dial and select `Reset telemetry` to reset telemetry values
 * If current sensor isn't present or _battery isn't fully charged when plugged in_, fuel gauge will be based on battery voltage
 * If fuel gauge isn't shown or accurate, be sure you've set CLI values `smartport_fuel_unit = percent` and `battery_capacity` correctly. Also, current sensor settings in the configurator need to be calibrated for proper amperage and fuel % data (not applicable to Crossfire)
@@ -33,3 +34,15 @@
 * If you change a telemetry sensor's unit (for example m to ft), power cycle the transmitter to see changes
 * If config option `Battery View` is set to `Total` but average cell voltage is displayed, send INAV CLI command: `set report_cell_voltage = OFF`
 * When GPS accuracy (HDOP) is displayed as a decimal, the range is 0.8 - 5.3 and it's rounded to the nearest 0.5 HDOP.  This is due to HDOP being sent as a single integer from 0 to 9, not as the actual HDOP decimal value  (not applicable to Crossfire)
+
+## Reporting Issues on Github
+
+Please include:
+
+* The TX type (e.g. Radiomaster TX16S, Horus, Zorro etc.)
+* The type and version of radio firmware (e.g. EdgeTX 2.8.0, OpenTX 2.3.15 etc).
+* The flight controller and INAV version (e.g. MATEKF405, INAV 5.1.0)
+
+Try running the script in the EdgeTX / OpenTX Companion. This will force debug mode and display additional information, in particular module line numbers. Please including this information in any Github issue.
+
+For issues concerning discovery or display of sensor information, please provide an EdgeTX / OpenTX telemetry log for TXs that provide such a facility.
