@@ -1,0 +1,669 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Getting Started - INAV Lua Telemetry</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="INAV Lua Telemetry" class="md-header__button md-logo" aria-label="INAV Lua Telemetry" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            INAV Lua Telemetry
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="INAV Lua Telemetry" class="md-nav__button md-logo" aria-label="INAV Lua Telemetry" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    INAV Lua Telemetry
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        INAV Lua Telemetry
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Getting Started
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inav-configurator-telemetry-setup" class="md-nav__link">
+    INAV Configurator Telemetry Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-telemetry-sensors-to-transmitter" class="md-nav__link">
+    Add Telemetry Sensors to Transmitter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installsetup-lua-telemetry-on-transmitter" class="md-nav__link">
+    Install/Setup Lua Telemetry on Transmitter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-options" class="md-nav__link">
+    Download Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Download Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-lua-telemetry" class="md-nav__link">
+    Running Lua Telemetry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Configuration-Settings/" class="md-nav__link">
+        Configuration Settings
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Screen-Description/" class="md-nav__link">
+        Screen Description
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tips-%26-Common-Problems/" class="md-nav__link">
+        Tips & Common Problems
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Upgrade/" class="md-nav__link">
+        Upgrade
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Multilingual-Support/" class="md-nav__link">
+        Multilingual Support
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Change-Log.md" class="md-nav__link">
+        Change Log
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inav-configurator-telemetry-setup" class="md-nav__link">
+    INAV Configurator Telemetry Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-telemetry-sensors-to-transmitter" class="md-nav__link">
+    Add Telemetry Sensors to Transmitter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installsetup-lua-telemetry-on-transmitter" class="md-nav__link">
+    Install/Setup Lua Telemetry on Transmitter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#download-options" class="md-nav__link">
+    Download Options
+  </a>
+  
+    <nav class="md-nav" aria-label="Download Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-lua-telemetry" class="md-nav__link">
+    Running Lua Telemetry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Getting Started</h1>
+                
+                <h3 id="installation">Installation</h3>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To upgrade from a previous version, see the (<em><strong>much</strong></em> shorter) <a href="../Upgrade">upgrade instructions</a></p>
+</div>
+<p>Don't be too concerned about the length of these instructions. The first two sections are about setting up telemetry in INAV and your transmitter, which for most is already completed.  Also, the instructions are for multiple transmitters, telemetry protocols and I've tried to be very descriptive so even a novice could follow along. Therefore, it's a bit verbose but proceeds quickly, I promise.</p>
+<h4 id="inav-configurator-telemetry-setup">INAV Configurator Telemetry Setup</h4>
+<ol>
+<li>Setup SmartPort(S.Port), F.Port, D-series, or Crossfire telemetry to send to your transmitter: <a href="https://github.com/iNavFlight/inav/master/docs/Telemetry.md">INAV telemetry docs</a></li>
+<li>FrSky receivers (skip for TBS Crossfire):<ol>
+<li>If you have an current sensor and want to show fuel percent remaining:<ul>
+<li><code>set smartport_fuel_unit = PERCENT</code></li>
+<li>Set <code>battery_capacity</code> to the mAh you want to draw from your battery</li>
+</ul>
+</li>
+<li>If instead you want to show the current sensor's mAh:<ul>
+<li><code>set smartport_fuel_unit = MAH</code></li>
+</ul>
+</li>
+<li>With INAV v2.0.0+, <code>set frsky_pitch_roll = ON</code> in CLI settings for accurate attitude display and pitch angle</li>
+</ol>
+</li>
+</ol>
+<h4 id="add-telemetry-sensors-to-transmitter">Add Telemetry Sensors to Transmitter</h4>
+<ol>
+<li>With battery connected and <strong>after GPS fix</strong> <a href="https://www.youtube.com/watch?v=n09q26Gh858">discover telemetry sensors</a> so all telemetry sensors are discovered</li>
+<li>FrSky receivers (skip for TBS Crossfire):<ol>
+<li>Telemetry distance sensor name <code>0420</code> (or <code>0007</code> with D-series receivers) should be changed to <code>Dist</code> and set to the desired unit: <code>m</code> or <code>ft</code></li>
+<li>The sensors <code>Dist</code>, <code>Alt</code>, <code>GAlt</code> and <code>Gspd</code> can be changed to the desired unit: <code>m</code> or <code>ft</code> / <code>kmh</code> or <code>mph</code></li>
+<li>If you <code>set frsky_pitch_roll = ON</code> on INAV v2.0.0+ (which I suggest) you can optionally change the following for clarification:<ul>
+<li>Telemetry sensor <code>0430</code> (or <code>0008</code> with D-series receivers) can be changed to <code>Ptch</code></li>
+<li>Telemetry sensor <code>0440</code> (or <code>0020</code> with D-series receivers) can be changed to <code>Roll</code></li>
+</ul>
+</li>
+<li><strong>Don't</strong> change <code>Tmp1</code> or <code>Tmp2</code> from Celsius to Fahrenheit! They're not temps (used for flight modes and GPS info)</li>
+<li>If you don't have a current sensor, you can optionally delete or rename the <code>Fuel</code> sensor so it doesn't show in Lua Telemetry</li>
+</ol>
+</li>
+</ol>
+<h4 id="installsetup-lua-telemetry-on-transmitter">Install/Setup Lua Telemetry on Transmitter</h4>
+<ol>
+<li>Download the latest <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest">LuaTelemetry.zip</a> file (Note: <strong>NOT</strong> the source code)</li>
+<li>Copy the contents of the ZIP file (<code>SCRIPTS</code> and <code>WIDGETS</code> folders) to the transmitter's SD card's root<ul>
+<li>Taranis:<ol>
+<li>In model setup, page to <code>DISPLAY</code></li>
+<li>Set desired screen to <code>Script</code></li>
+<li>Select <code>iNav</code></li>
+</ol>
+</li>
+<li>Horus/Jumper T16:<ol>
+<li>Long-press <code>TELE</code> to access the user interface/views layout</li>
+<li>Select the desired view (or create a new one)</li>
+<li>Make <code>Layout</code> full screen, turn off <code>Top bar</code> and <code>Sliders+Trims</code></li>
+<li>Select <code>Setup widgets</code></li>
+<li>Press <code>Enter</code> till a menu appears and select <code>Select widget</code></li>
+<li>Scroll to the <code>iNav</code> widget and press <code>Enter</code></li>
+<li>Optionally (while still selecting the <code>iNAV</code> script), long-press <code>Enter</code>, select <code>Widget settings</code> where you can enable <code>Restore</code> (to restore your theme's colors) and set your theme's <code>Text</code> color and <code>Warning</code> color</li>
+</ol>
+</li>
+<li>Nirvana NV14:<ol>
+<li>Press the Widgets icon</li>
+<li>Select the desired view</li>
+<li>Change the layout to full screen</li>
+<li>Uncheck all boxes</li>
+<li>Select <code>Setup widgets</code>, tap the screen and select <code>iNAV</code></li>
+<li>Optionally, you can enable <code>Restore</code> (to restore your theme's colors) and set your theme's <code>Text</code> color and <code>Warning</code> color</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Press <code>EXIT</code> or <code>RTN</code> several times to exit (back icon on Nirvana)</li>
+</ol>
+<h3 id="download-options">Download Options</h3>
+<p>When <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest">downloading INAV Lua Telemetry</a>. There may be multiple download options at the bottom of the release.  Following are descriptions of each download option:</p>
+<ul>
+<li><strong>LuaTelemetry-Horus-en.zip</strong> - Horus transmitters with English sound files only</li>
+<li><strong>LuaTelemetry-Horus.zip</strong> - Horus transmitters with sound files for all supported languages</li>
+<li><strong>LuaTelemetry-Taranis-en.zip</strong> - Taranis transmitters with English sound files only</li>
+<li><strong>LuaTelemetry-Taranis.zip</strong> - Taranis transmitters with sound files for all supported languages</li>
+<li><strong>LuaTelemetry.zip</strong> - Taranis and Horus including sound files for all supported languages</li>
+<li><strong>Source code</strong> (zip) - ZIP compressed source code for this release - <em>not for transmitter install</em></li>
+<li><strong>Source code</strong> (tar.gz) - Tarball format source code for this release - <em>not for transmitter install</em></li>
+</ul>
+<p>If you just want to install without thinking about it, download and install the latest <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/releases/latest">LuaTelemetry.zip</a> file which includes everything and will work on supported radios in any available language. The other download options <em>may</em> be provided in order to save a bit of SD card space on the transmitter and to keep the install clean of unneeded files.</p>
+<h4 id="running-lua-telemetry">Running Lua Telemetry</h4>
+<ul>
+<li>Taranis:<ol>
+<li>From the main screen on your transmitter, long-press <code>Page</code> (down d-pad on X-Lite)</li>
+<li>If Lua Telemetry isn't on your first page, short-press <code>Page</code> to the Lua Telemetry screen</li>
+</ol>
+</li>
+<li>Horus/Jumper T16/Nirvava NV14:<ol>
+<li>From the main screen on your transmitter, press <code>PgUp/Dn</code> (swipe left on Nirvana) to the Lua Telemetry view</li>
+</ol>
+</li>
+<li><a href="../Screen-Description">Screen Description</a></li>
+<li><a href="../Configuration-Settings">Configuration Settings</a></li>
+<li><a href="../Tips-&amp;-Common-Problems">Tips &amp; Common Problems</a></li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: INAV Lua Telemetry" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              INAV Lua Telemetry
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Configuration-Settings/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration Settings" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Configuration Settings
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://t.me/luatelemetry" target="_blank" rel="noopener" title="t.me" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
