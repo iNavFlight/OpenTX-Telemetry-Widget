@@ -44,6 +44,7 @@ Please include:
 * The TX type (e.g. Radiomaster TX16S, Horus, Zorro etc.)
 * The type and version of radio firmware (e.g. EdgeTX 2.8.0, OpenTX 2.3.15 etc).
 * The flight controller and INAV version (e.g. MATEKF405, INAV 5.1.0)
+* Details of Other active Lua widgets
 
 Try running the script in the EdgeTX / OpenTX Companion. This will force debug mode and display additional information, in particular module line numbers. Please including this information in any Github issue.
 
