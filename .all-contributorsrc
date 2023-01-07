@@ -1,0 +1,155 @@
+{
+  "projectName": "OpenTX-Telemetry-Widget",
+  "projectOwner": "iNavFlight",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 64,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "teckel12",
+      "name": "Tim Eckel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2592128?v=4",
+      "profile": "https://www.baconorbeer.com/",
+      "contributions": [
+        "question",
+        "code",
+        "data",
+        "design",
+        "doc",
+        "ideas",
+        "maintenance",
+        "research"
+      ]
+    },
+    {
+      "login": "stronnag",
+      "name": "Jonathan Hudson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/158229?v=4",
+      "profile": "http://www.daria.co.uk/",
+      "contributions": [
+        "question",
+        "code",
+        "ideas",
+        "maintenance",
+        "research",
+        "review"
+      ]
+    },
+    {
+      "login": "nm17",
+      "name": "Даниил Николаев (NeverMine)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23419131?v=4",
+      "profile": "https://github.com/nm17",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "ideas",
+        "infra",
+        "maintenance",
+        "tool",
+        "translation"
+      ]
+    },
+    {
+      "login": "fiam",
+      "name": "Alberto García Hierro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41529?v=4",
+      "profile": "https://github.com/fiam",
+      "contributions": [
+        "audio",
+        "bug",
+        "code",
+        "design",
+        "ideas",
+        "platform",
+        "translation"
+      ]
+    },
+    {
+      "login": "MrD-RC",
+      "name": "Darren Lines",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17590174?v=4",
+      "profile": "https://www.mrd-rc.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "t413",
+      "name": "Tim O'Brien",
+      "avatar_url": "https://avatars.githubusercontent.com/u/326829?v=4",
+      "profile": "https://github.com/t413",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "Peschi90",
+      "name": "Peschi90",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42059226?v=4",
+      "profile": "https://github.com/Peschi90",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Louis-Land",
+      "name": "Louis-Land",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42384091?v=4",
+      "profile": "https://github.com/Louis-Land",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "DzikuVx",
+      "name": "Paweł Spychalski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/966811?v=4",
+      "profile": "https://quadmeup.com/",
+      "contributions": [
+        "question",
+        "ideas",
+        "infra",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "FrankPetrilli",
+      "name": "Frank Petrilli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8746034?v=4",
+      "profile": "https://frank.petril.li/",
+      "contributions": [
+        "question",
+        "code"
+      ]
+    },
+    {
+      "login": "eltociear",
+      "name": "Ikko Eltociear Ashimine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22633385?v=4",
+      "profile": "https://bandism.net/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "MRC3742",
+      "name": "MRC3742",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26642502?v=4",
+      "profile": "https://github.com/MRC3742",
+      "contributions": [
+        "code",
+        "research"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "linkToUsage": false
+}
