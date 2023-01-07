@@ -1,44 +1,8 @@
 ## INAV Lua Telemetry Flight Status for Taranis/Horus/Jumper/Nirvana
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ### FrSky SmartPort(S.Port), D-series, F.Port & TBS Crossfire telemetry on Taranis, Horus, Jumper & Nirvana transmitters
 
 - **New documentation:** https://luatelemetry.readthedocs.io/en/latest/
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://www.baconorbeer.com/"><img src="https://avatars.githubusercontent.com/u/2592128?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tim Eckel</b></sub></a><br /><a href="#a11y-teckel12" title="Accessibility">️️️️♿️</a> <a href="#question-teckel12" title="Answering Questions">💬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=teckel12" title="Code">💻</a> <a href="#data-teckel12" title="Data">🔣</a> <a href="#design-teckel12" title="Design">🎨</a> <a href="#maintenance-teckel12" title="Maintenance">🚧</a> <a href="#research-teckel12" title="Research">🔬</a></td>
-    <td align="center"><a href="http://www.daria.co.uk/"><img src="https://avatars.githubusercontent.com/u/158229?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Hudson</b></sub></a><br /><a href="#question-stronnag" title="Answering Questions">💬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=stronnag" title="Code">💻</a> <a href="#ideas-stronnag" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-stronnag" title="Maintenance">🚧</a></td>
-    <td align="center"><a href="https://github.com/nm17"><img src="https://avatars.githubusercontent.com/u/23419131?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Даниил Николаев (NeverMine)</b></sub></a><br /><a href="#question-nm17" title="Answering Questions">💬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues?q=author%3Anm17" title="Bug reports">🐛</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=nm17" title="Code">💻</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=nm17" title="Documentation">📖</a> <a href="#ideas-nm17" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-nm17" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-nm17" title="Maintenance">🚧</a> <a href="#platform-nm17" title="Packaging/porting to new platform">📦</a> <a href="#projectManagement-nm17" title="Project Management">📆</a> <a href="#research-nm17" title="Research">🔬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/pulls?q=is%3Apr+reviewed-by%3Anm17" title="Reviewed Pull Requests">👀</a> <a href="#translation-nm17" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/fiam"><img src="https://avatars.githubusercontent.com/u/41529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alberto García Hierro</b></sub></a><br /><a href="#audio-fiam" title="Audio">🔊</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues?q=author%3Afiam" title="Bug reports">🐛</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=fiam" title="Code">💻</a> <a href="#design-fiam" title="Design">🎨</a> <a href="#ideas-fiam" title="Ideas, Planning, & Feedback">🤔</a> <a href="#platform-fiam" title="Packaging/porting to new platform">📦</a> <a href="#translation-fiam" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://www.mrd-rc.com/"><img src="https://avatars.githubusercontent.com/u/17590174?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Darren Lines</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=MrD-RC" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/t413"><img src="https://avatars.githubusercontent.com/u/326829?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tim O'Brien</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=t413" title="Code">💻</a> <a href="#ideas-t413" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/Peschi90"><img src="https://avatars.githubusercontent.com/u/42059226?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Peschi90</b></sub></a><br /><a href="#translation-Peschi90" title="Translation">🌍</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/Louis-Land"><img src="https://avatars.githubusercontent.com/u/42384091?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Louis-Land</b></sub></a><br /><a href="#ideas-Louis-Land" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://quadmeup.com/"><img src="https://avatars.githubusercontent.com/u/966811?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paweł Spychalski</b></sub></a><br /><a href="#question-DzikuVx" title="Answering Questions">💬</a> <a href="#ideas-DzikuVx" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-DzikuVx" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-DzikuVx" title="Maintenance">🚧</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 ## Interface
 
@@ -149,3 +113,33 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.baconorbeer.com/"><img src="https://avatars.githubusercontent.com/u/2592128?v=4?s=64" width="64px;" alt="Tim Eckel"/><br /><sub><b>Tim Eckel</b></sub></a><br /><a href="#question-teckel12" title="Answering Questions">💬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=teckel12" title="Code">💻</a> <a href="#data-teckel12" title="Data">🔣</a> <a href="#design-teckel12" title="Design">🎨</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=teckel12" title="Documentation">📖</a> <a href="#ideas-teckel12" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-teckel12" title="Maintenance">🚧</a> <a href="#research-teckel12" title="Research">🔬</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.daria.co.uk/"><img src="https://avatars.githubusercontent.com/u/158229?v=4?s=64" width="64px;" alt="Jonathan Hudson"/><br /><sub><b>Jonathan Hudson</b></sub></a><br /><a href="#question-stronnag" title="Answering Questions">💬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=stronnag" title="Code">💻</a> <a href="#ideas-stronnag" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-stronnag" title="Maintenance">🚧</a> <a href="#research-stronnag" title="Research">🔬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/pulls?q=is%3Apr+reviewed-by%3Astronnag" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nm17"><img src="https://avatars.githubusercontent.com/u/23419131?v=4?s=64" width="64px;" alt="Даниил Николаев (NeverMine)"/><br /><sub><b>Даниил Николаев (NeverMine)</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues?q=author%3Anm17" title="Bug reports">🐛</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=nm17" title="Code">💻</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=nm17" title="Documentation">📖</a> <a href="#ideas-nm17" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-nm17" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-nm17" title="Maintenance">🚧</a> <a href="#tool-nm17" title="Tools">🔧</a> <a href="#translation-nm17" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/fiam"><img src="https://avatars.githubusercontent.com/u/41529?v=4?s=64" width="64px;" alt="Alberto García Hierro"/><br /><sub><b>Alberto García Hierro</b></sub></a><br /><a href="#audio-fiam" title="Audio">🔊</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues?q=author%3Afiam" title="Bug reports">🐛</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=fiam" title="Code">💻</a> <a href="#design-fiam" title="Design">🎨</a> <a href="#ideas-fiam" title="Ideas, Planning, & Feedback">🤔</a> <a href="#platform-fiam" title="Packaging/porting to new platform">📦</a> <a href="#translation-fiam" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.mrd-rc.com/"><img src="https://avatars.githubusercontent.com/u/17590174?v=4?s=64" width="64px;" alt="Darren Lines"/><br /><sub><b>Darren Lines</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=MrD-RC" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/t413"><img src="https://avatars.githubusercontent.com/u/326829?v=4?s=64" width="64px;" alt="Tim O'Brien"/><br /><sub><b>Tim O'Brien</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=t413" title="Code">💻</a> <a href="#ideas-t413" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Peschi90"><img src="https://avatars.githubusercontent.com/u/42059226?v=4?s=64" width="64px;" alt="Peschi90"/><br /><sub><b>Peschi90</b></sub></a><br /><a href="#translation-Peschi90" title="Translation">🌍</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Louis-Land"><img src="https://avatars.githubusercontent.com/u/42384091?v=4?s=64" width="64px;" alt="Louis-Land"/><br /><sub><b>Louis-Land</b></sub></a><br /><a href="#ideas-Louis-Land" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://quadmeup.com/"><img src="https://avatars.githubusercontent.com/u/966811?v=4?s=64" width="64px;" alt="Paweł Spychalski"/><br /><sub><b>Paweł Spychalski</b></sub></a><br /><a href="#question-DzikuVx" title="Answering Questions">💬</a> <a href="#ideas-DzikuVx" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-DzikuVx" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-DzikuVx" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://frank.petril.li/"><img src="https://avatars.githubusercontent.com/u/8746034?v=4?s=64" width="64px;" alt="Frank Petrilli"/><br /><sub><b>Frank Petrilli</b></sub></a><br /><a href="#question-FrankPetrilli" title="Answering Questions">💬</a> <a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=FrankPetrilli" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://bandism.net/"><img src="https://avatars.githubusercontent.com/u/22633385?v=4?s=64" width="64px;" alt="Ikko Eltociear Ashimine"/><br /><sub><b>Ikko Eltociear Ashimine</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=eltociear" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MRC3742"><img src="https://avatars.githubusercontent.com/u/26642502?v=4?s=64" width="64px;" alt="MRC3742"/><br /><sub><b>MRC3742</b></sub></a><br /><a href="https://github.com/iNavFlight/OpenTX-Telemetry-Widget/commits?author=MRC3742" title="Code">💻</a> <a href="#research-MRC3742" title="Research">🔬</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
