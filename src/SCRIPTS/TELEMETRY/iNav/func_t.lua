@@ -30,11 +30,12 @@ local function title()
 	if data.rxBatt > 0 and data.telem and config[14].v == 1 then
 		text(LCD_W, 1, frmt("%.1fV", data.rxBatt), SMLSIZE + RIGHT + INVERS)
 	elseif data.crsf then
-		if data.elrs == 1 then
-			text(LCD_W, 1, (data.rfmd == 8 and 1000 or data.rfmd == 7 and 500 or data.rfmd == 6 and 250 or data.rfmd == 5 and 200 or data.rfmd == 4 and 150 or data.rfmd == 3 and 100 or data.rfmd == 2 and 50 or data.rfmd == 1 and 25 or "--") .. (SMLCD and "" or "Hz"), SMLSIZE + RIGHT + INVERS)
-		else
-			text(LCD_W, 1, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. (SMLCD and "" or "Hz"), SMLSIZE + RIGHT + INVERS)
-		end
+	   if data.elrs > 0 then
+	      local ermfd = elrs.getElrsRMFD(data.rmfd, data.elrs)
+	      text(LCD_W, 1, ermfd .. (SMLCD and "" or "Hz"), SMLSIZE + RIGHT + INVERS)
+	   else
+	      text(LCD_W, 1, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. (SMLCD and "" or "Hz"), SMLSIZE + RIGHT + INVERS)
+	   end
 	end
 
 	--[[ Show FPS - Should always be 20fps on Taranis

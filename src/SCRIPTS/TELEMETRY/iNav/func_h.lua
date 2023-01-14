@@ -59,12 +59,12 @@ local function title()
 	if data.rxBatt > 0 and config[14].v == 1 then
 	   text(LCD_W, 0, frmt("%.1fV", data.rxBatt), data.set_flags(RIGHT, tmp))
 	elseif data.crsf then
-		--if config[35].v == 1 then
-		if data.elrs == 1 then
-			text(LCD_W, 0, (data.rfmd == 8 and 1000 or data.rfmd == 7 and 500 or data.rfmd == 6 and 250 or data.rfmd == 5 and 200 or data.rfmd == 4 and 150 or data.rfmd == 3 and 100 or data.rfmd == 2 and 50 or data.rfmd == 1 and 25 or "--") .. "Hz", data.set_flags(RIGHT, tmp))
-		else
-	   		text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", data.set_flags(RIGHT,tmp))
-		end
+	   if data.elrs > 0 then
+	      local ermfd = elrs.getElrsRMFD(data.rmfd, data.elrs)
+	      text(LCD_W, 0, ermfd .. "Hz", data.set_flags(RIGHT, tmp))
+	   else
+	      text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", data.set_flags(RIGHT,tmp))
+	   end
 	end
 
 	-- Data on config menu
