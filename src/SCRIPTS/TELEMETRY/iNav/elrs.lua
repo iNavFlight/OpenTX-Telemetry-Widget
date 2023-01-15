@@ -29,6 +29,26 @@ local function fieldGetValue(data, offset, size)
    return result
 end
 
+local function dbg_serialize (fh, o)
+   if type(o) == "number" then
+      io.write(fh, o)
+   elseif type(o) == "string" then
+      io.write(fh, string.format("%q", o))
+   elseif type(o) == "table" then
+      io.write(fh, "{\n")
+      for k,v in pairs(o) do
+	 io.write(fh, "  [")
+	 dbg_serialize(fh, k)
+	 io.write(fh, "] = ")
+	 dbg_serialize(fh, v)
+	 io.write(fh, ",\n")
+      end
+      io.write(fh, "}\n")
+   else
+      print("cannot serialize a " .. type(o))
+   end
+end
+
 local function parseDeviceInfoMessage(data)
    local offset
    local id = data[2]
@@ -36,6 +56,11 @@ local function parseDeviceInfoMessage(data)
    local majId = -1
    devicesName, offset = fieldGetString(data, 3)
    if deviceId == id then
+      local ut = getRtcTime()
+      local s = string.format("/LOGS/E_%d.txt", ut)
+      local fh = io.open(s,"wb")
+      dbg_serialize(fh, data)
+      io.close(fh)
       if ((fieldGetValue(data,offset,4) == 0x454C5253) and (deviceId == 0xEE)) then
 	 majId = data[offset+8] - 0x30
       end
@@ -51,14 +76,6 @@ local function elrs()
       return parseDeviceInfoMessage(data)
    end
    return 0
-end
-
-
-local function getElrsRMFD(index,version)
-   local v2={25,50,100,150,200,250,500,1000}
-   local v3={25,50,100,100,150,200,250,333,500,250,500,500,1000}
-   local rfmode = version == 3 and v3[index] or version == 2 and v2[index]
-   return rfmode or "--"
 end
 
 return elrs

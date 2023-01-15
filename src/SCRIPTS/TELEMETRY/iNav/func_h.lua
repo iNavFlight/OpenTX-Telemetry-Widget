@@ -16,6 +16,14 @@ function data.set_flags(flag, color)
    return rflag
 end
 
+local function getElrsRFMD(index,version)
+   local v2={25,50,100,150,200,250,500,1000}
+   local v3={25,50,100,100,150,200,250,333,500,250,500,500,1000}
+   local rfmdhz = version == 3 and v3[index] or version == 2 and v2[index]
+--   print("DBG: ELRS", index, "version", version, "val", rfmdhz)
+   return  rfmdhz or "--"
+end
+
 local function title()
 	local color = lcd.setColor
 	local tmp = data.TextColor
@@ -60,7 +68,8 @@ local function title()
 	   text(LCD_W, 0, frmt("%.1fV", data.rxBatt), data.set_flags(RIGHT, tmp))
 	elseif data.crsf then
 	   if data.elrs > 0 then
-	      local ermfd = elrs.getElrsRMFD(data.rmfd, data.elrs)
+--	      print("DBG: data.rfmd", data.rfmd, "id", data.rfmd_id)
+	      local ermfd = getElrsRFMD(data.rfmd, data.elrs)
 	      text(LCD_W, 0, ermfd .. "Hz", data.set_flags(RIGHT, tmp))
 	   else
 	      text(LCD_W, 0, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. "Hz", data.set_flags(RIGHT,tmp))

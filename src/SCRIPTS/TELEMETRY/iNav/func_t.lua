@@ -7,6 +7,13 @@ function data.set_flags(flag, color)
    return flag
 end
 
+local function getElrsRFMD(index,version)
+   local v2={25,50,100,150,200,250,500,1000}
+   local v3={25,50,100,100,150,200,250,333,500,250,500,500,1000}
+   local rfmdhz =  version == 3 and v3[index] or version == 2 and v2[index]
+   return  rfmdhz or "--"
+end
+
 local function title()
 	fill(0, 0, LCD_W, 8, FORCE)
 	text(0, 0, model.getInfo().name, INVERS)
@@ -31,7 +38,7 @@ local function title()
 		text(LCD_W, 1, frmt("%.1fV", data.rxBatt), SMLSIZE + RIGHT + INVERS)
 	elseif data.crsf then
 	   if data.elrs > 0 then
-	      local ermfd = elrs.getElrsRMFD(data.rmfd, data.elrs)
+	      local ermfd = getElrsRFM(data.rfmd, data.elrs)
 	      text(LCD_W, 1, ermfd .. (SMLCD and "" or "Hz"), SMLSIZE + RIGHT + INVERS)
 	   else
 	      text(LCD_W, 1, (data.rfmd == 2 and 150 or (data.telem and 50 or "--")) .. (SMLCD and "" or "Hz"), SMLSIZE + RIGHT + INVERS)
