@@ -29,6 +29,15 @@ local function fieldGetValue(data, offset, size)
    return result
 end
 
+--[[
+local function debug_devinfo(data)
+   local ut = getRtcTime()
+   local s = string.format("/LOGS/E_%d.txt", ut)
+   local fh = io.open(s,"wb")
+   dbg_serialize(fh, data)
+   io.close(fh)
+end
+
 local function dbg_serialize (fh, o)
    if type(o) == "number" then
       io.write(fh, o)
@@ -48,6 +57,10 @@ local function dbg_serialize (fh, o)
       print("cannot serialize a " .. type(o))
    end
 end
+--]]
+
+--  See https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues/70#issuecomment-1383190840
+--  For annotation
 
 local function parseDeviceInfoMessage(data)
    local offset
@@ -56,13 +69,9 @@ local function parseDeviceInfoMessage(data)
    local majId = -1
    devicesName, offset = fieldGetString(data, 3)
    if deviceId == id then
-      local ut = getRtcTime()
-      local s = string.format("/LOGS/E_%d.txt", ut)
-      local fh = io.open(s,"wb")
-      dbg_serialize(fh, data)
-      io.close(fh)
+      -- debug_devinfo(data)
       if ((fieldGetValue(data,offset,4) == 0x454C5253) and (deviceId == 0xEE)) then
-	 majId = data[offset+8] - 0x30
+	 majId = data[offset+9]
       end
    end
    return majId
