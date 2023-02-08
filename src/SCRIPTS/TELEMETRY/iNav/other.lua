@@ -9,7 +9,7 @@ if data.fm_id < 0 then
 end
 
 -- Testing Crossfire
---if data.simu then data.fm_id = 1 end
+-- if data.simu then data.fm_id = 1 end
 
 -- Testing Nirvana
 --data.nv = true
@@ -19,6 +19,16 @@ if data.fm_id > -1 then
 	elrs = loadScript(FILE_PATH .. "elrs.luac", env)()
 	collectgarbage()
 end
+
+--[[
+   -- ELRS
+if data.simu then
+   data.fm_id = 1
+   data.rfmd = 5
+   data.crsf = 1
+   data.elrs = 3
+end
+--]]
 
 data.showCurr = data.curr_id > -1
 data.showFuel = data.fuel_id > -1
