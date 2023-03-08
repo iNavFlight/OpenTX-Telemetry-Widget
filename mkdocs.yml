@@ -7,7 +7,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/telegram
-      link: https://t.me/luatelemetry
+      link: https://t.me/inav_luatelemetry
 
 markdown_extensions:
   - pymdownx.superfences
