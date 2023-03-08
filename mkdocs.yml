@@ -7,7 +7,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/telegram
-      link: https://t.me/luatelemetry
+      link: https://t.me/inav_luatelemetry
 
 markdown_extensions:
   - pymdownx.superfences
@@ -19,8 +19,7 @@ nav:
   - "Getting Started": Getting-Started.md
   - "Configuration Settings": Configuration-Settings.md
   - "Screen Description": Screen-Description.md
-  - "Tips & Common Problems": Tips-&-Common-Problems.md
+  - "Tips & Common Problems": Tips-And-Common-Problems.md
   - "Upgrade": Upgrade.md
   - "Multilingual Support": Multilingual-Support.md
-  - "Change Log": Change-Log.md
   - "EdgeTX Compatibility": EdgeTX-Compatibility.md
