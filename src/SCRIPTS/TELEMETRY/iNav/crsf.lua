@@ -20,7 +20,7 @@ config[22].v = 0
 config[23].x = 1
 
 local function crsf(data)
-	if getValue(data.rssi_id) == 0 then
+	if getValue(data.tpwr_id) == 0 then
 		data.rssi = 0
 		data.telem = false
 		return 0
