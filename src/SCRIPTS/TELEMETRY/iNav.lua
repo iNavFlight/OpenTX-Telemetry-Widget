@@ -2,7 +2,7 @@
 -- Docs: https://github.com/iNavFlight/OpenTX-Telemetry-Widget
 
 local zone, options = ...
-local VERSION = "2.2.0+e3"
+local VERSION = "2.2.0+log"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
@@ -34,6 +34,9 @@ collectgarbage()
 data.etx = osname ~= nil and osname == "EdgeTX"
 
 loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or "o") .. ext, env)(config, data, FILE_PATH)
+if data.etx and HORUS then
+   loadScript(FILE_PATH .. "load_ec" .. ext, env)(config, data, FILE_PATH)
+end
 collectgarbage()
 
 --[[ Simulator language testing
