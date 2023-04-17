@@ -6,7 +6,7 @@ on: [pull_request, push]
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
@@ -35,7 +35,7 @@ jobs:
 
   test:
     needs: [build]
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Run
         run: true
