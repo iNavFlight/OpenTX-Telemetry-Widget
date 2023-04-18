@@ -22,3 +22,4 @@ if fh ~= nil then
    data.lang = tmp
    data.voice = tmp
 end
+return
