@@ -79,6 +79,7 @@
 
 ## Special Thanks
 
+* [RadioMaster](https://www.radiomasterrc.com/) - Sponsoring [RadioMaster Boxer](https://www.radiomasterrc.com/collections/boxer-1) support.
 * [Team Black Sheep](https://www.team-blacksheep.com/) - Sponsoring TBS Crossfire telemetry support
 * [FrSky](https://www.frsky-rc.com/) - Sponsoring [FrSky Horus](https://us.banggood.com/custlink/vG3D6Kiprr) transmitter support
 * [Jumper](https://www.jumper.xyz/) - Sponsoring Jumper T16 transmitter support
@@ -142,4 +143,3 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
