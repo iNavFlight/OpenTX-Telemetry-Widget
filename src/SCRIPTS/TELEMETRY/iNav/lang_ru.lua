@@ -34,13 +34,13 @@ local function lang(config2)
 	--config2[8].t  = "RTH Meldung"		-- RTH Feedback
 	--config2[9].t  = "HeadFree Meld."	-- HeadFree Feedback
 	--config2[10].t = "RSSI Meldung"		-- RSSI Feedback
-	config2[11].t = "Предупр. баттареи"		-- Battery Alert
+	config2[11].t = "Предупр. батареи"		-- Battery Alert
 	config2[12].t = "Предупр. высоты"	-- Altitude Alert
 	--config2[13].t = "Timer"		-- Timer
 	config2[14].t = "Rx напряжение"		-- Rx Voltage
 	config2[15].t = "HUD иконка дома"	-- HUD Home Icon
 	--config2[16].t = "GPS"			-- GPS
-	config2[17].t = "Топлива критич."	-- Fuel Critical
+	config2[17].t = "Топливо критич."	-- Fuel Critical
 	config2[18].t = "Мало топлива"	-- Fuel Low
 	config2[19].t = "Tx напряжение"		-- Tx Voltage
 	config2[20].t = "Сенсор скорости"	-- Speed Sensor
