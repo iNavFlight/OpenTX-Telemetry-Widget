@@ -18,9 +18,17 @@ Press the `Menu` button (`Shift` on X-Lite) to display the configuration options
 There are a number of smaller ('budget') radios, often with few buttons and a small screen. The combination of fewer buttons and the small screen makes finding a common button press somewhat problematic; the following are supported (2.0.2 and later):
 
 * Jumper T12 / T-Lite : Menu long press to access the config menu
-* Radiomaster Zorro / TX12 : Roller long press to access the config menu
+* Radiomaster Zorro / TX12 / Boxer: Roller long press to access the config menu
 	* Dismiss the "Reset" menu with "RTN".
     * Access the configuration options via the roller.
+
+In general, for these small budget radios, there is little guarantee (and even less documentation) on how any button may be exposed to Lua. In additional, the OS may intercept the button press before passing it on to Lua:
+
+* If you get the "Reset Telemetry" etc. screen, using the "RTN" button to dismiss the reset screen may then reveal the INAV Lua widget menu
+* You may have to try all the buttons to discover which button provides access to the INAV Lua menu.
+
+Please also note that the developers may not have physical access to your radio model.
+
 
 ### Configuration menu options
 
