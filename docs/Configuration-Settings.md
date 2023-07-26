@@ -17,7 +17,7 @@ Press the `Menu` button (`Shift` on X-Lite) to display the configuration options
 
 There are a number of smaller ('budget') radios, often with few buttons and a small screen. The combination of fewer buttons and the small screen makes finding a common button press somewhat problematic; the following are supported (2.0.2 and later):
 
-* Jumper T12 / T-Lite : Menu long press to access the config menu
+* Jumper T12 : "Menu" long press to access the config menu
 * Radiomaster Zorro / TX12 / Boxer: Roller long press to access the config menu
 	* Dismiss the "Reset" menu with "RTN".
     * Access the configuration options via the roller.
@@ -26,9 +26,9 @@ In general, for these small budget radios, there is little guarantee (and even l
 
 * If you get the "Reset Telemetry" etc. screen, using the "RTN" button to dismiss the reset screen may then reveal the INAV Lua widget menu
 * You may have to try all the buttons to discover which button provides access to the INAV Lua menu.
+* For many of the smaller (budget) radios, the script uses the button event `EVT_VIRTUAL_MENU_LONG` to invoke the menu. If the firmware does not correctly generate this event, no menu will be displayed, and you might consider raising a firmware issue. In particular, if the behaviour of the radio in "Companion" and on the real hardware differs, then the radio in "unsupported".
 
 Please also note that the developers may not have physical access to your radio model.
-
 
 ### Configuration menu options
 
