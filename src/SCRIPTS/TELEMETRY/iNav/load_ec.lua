@@ -4,7 +4,6 @@
 local config, data, FILE_PATH = ...
 
 local log = getDateTime()
-config[34].x = -1
 
 -- From EdgeTX 2.7.1 (at least) we don't need to translate spaces
 local mbase = model.getInfo().name .. "-20"
