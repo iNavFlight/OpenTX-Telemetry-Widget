@@ -16,22 +16,14 @@ if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or str
 end
 local MENU
 
-if tx == "xl" then
-   MENU = EVT_SHIFT_BREAK
-elseif HORUS then
+if HORUS then
    MENU = EVT_SYS_FIRST
-elseif string.sub(r, 0, 3) == "t12" then
-   MENU = EVT_VIRTUAL_MENU_LONG
-elseif string.sub(r,0,5) == "tlite" then
-   MENU = EVT_VIRTUAL_MENU_LONG
-elseif string.sub(r,0,5) == "zorro" then
-   MENU = EVT_VIRTUAL_MENU_LONG
-elseif string.sub(r,0,8) == "commando8" then
-   MENU = EVT_VIRTUAL_MENU_LONG
-elseif string.sub(r,0,6) == "lr3pro" then
-   MENU = EVT_VIRTUAL_MENU_LONG
-else
+elseif tx == "xl" then
+   MENU = EVT_SHIFT_BREAK
+elseif tx == 'x7' then
    MENU = EVT_MENU_BREAK
+else
+   MENU = EVT_VIRTUAL_MENU_LONG
 end
 
 local general = getGeneralSettings()

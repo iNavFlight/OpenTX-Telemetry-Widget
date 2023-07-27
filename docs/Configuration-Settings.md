@@ -15,20 +15,17 @@ Press the `Menu` button (`Shift` on X-Lite) to display the configuration options
 
 ## Other radios
 
-There are a number of smaller ('budget') radios, often with few buttons and a small screen. The combination of fewer buttons and the small screen makes finding a common button press somewhat problematic; the following are supported (2.0.2 and later):
+There are a number of recent smaller ('budget') radios, often with few buttons and a small screen. The paucity of buttons and non-standardisation of their function makes finding a common button press somewhat problematic.
 
-* Jumper T12 : "Menu" long press to access the config menu
-* Radiomaster Zorro / TX12 / Boxer: Roller long press to access the config menu
-	* Dismiss the "Reset" menu with "RTN".
-    * Access the configuration options via the roller.
+By default, the INAV Lua Telemetry widget uses a **long** button press as defined by the firmware button event `EVT_VIRTUAL_MENU_LONG` ("Virtual Menu Button").  `EVT_VIRTUAL_MENU_LONG` is a feature implemented by the firmware developers to make it easy for Lua scripts to access a menu button across diverse hardware designs.
 
-In general, for these small budget radios, there is little guarantee (and even less documentation) on how any button may be exposed to Lua. In additional, the OS may intercept the button press before passing it on to Lua:
+The physical button mapped to the virtual button depends on the radio, but is often the `MDL` button, so a long press on `MDL` _might_  reveal the configuration menu on most recent radios.
 
-* If you get the "Reset Telemetry" etc. screen, using the "RTN" button to dismiss the reset screen may then reveal the INAV Lua widget menu
-* You may have to try all the buttons to discover which button provides access to the INAV Lua menu.
-* For many of the smaller (budget) radios, the script uses the button event `EVT_VIRTUAL_MENU_LONG` to invoke the menu. If the firmware does not correctly generate this event, no menu will be displayed, and you might consider raising a firmware issue. In particular, if the behaviour of the radio in "Companion" and on the real hardware differs, then the radio in "unsupported".
+* There is a test Lua script described in [Discussion #106](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/discussions/106) that can be used in both the Companion / Simulator and on the physical radio to verify the buttons available to Lua (not all buttons are available to Lua which is part of the problem). You may have to experiment (easiest in Companion) to find the `EVT_VIRTUAL_MENU_LONG` button for your radio, in particular for some of more wacky designs (here's looking at you iFlight).
+* If the  button event `EVT_VIRTUAL_MENU_LONG` is not available for your transmitter, then you will not be able to access the configuration menu.
+* If the  button event `EVT_VIRTUAL_MENU_LONG` is available on the Companion but not on the physical radio (or vice-versa), then consider raising an issue with the firmware developer or radio vendor. Due to the (lack of) availability of hardware to the developers, this project can only support radios were the behaviour in the Companion and on the radio is consistent.
 
-Please also note that the developers may not have physical access to your radio model.
+Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12), it is also possible to access the configuration menu via a log press on the roller. The firmware will intercept this press and offer a "Reset Telemetry" menu, which can be dismissed with `RTN`; the configuration menu will then be displayed. On these radios, the configuration options are accessed via the roller.
 
 ### Configuration menu options
 
