@@ -10,6 +10,9 @@ local mbase = model.getInfo().name .. "-20"
 local mblen = string.len(mbase)
 local tempf = {}
 local tempi = 0
+config[34].x = -1
+config[34].l = {}
+
 for fname in  dir("/LOGS") do
    if string.find(fname, mbase, 1, true) == 1 then
       local dstr = string.sub(fname, mblen+1, -5)

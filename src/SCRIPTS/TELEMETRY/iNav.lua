@@ -34,9 +34,6 @@ collectgarbage()
 data.etx = osname ~= nil and osname == "EdgeTX"
 
 loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or "o") .. ext, env)(config, data, FILE_PATH)
-if data.etx and HORUS then
-   loadScript(FILE_PATH .. "load_ec" .. ext, env)(config, data, FILE_PATH)
-end
 collectgarbage()
 
 --[[ Simulator language testing
@@ -497,10 +494,10 @@ function inav.run(event)
 	-- Config menu or views
 	if data.configStatus > 0 then
 		if data.v ~= 9 then
-			view = nil
-			collectgarbage()
-			view = loadScript(FILE_PATH .. "menu" .. ext, env)()
-			data.v = 9
+		   view = nil
+		   collectgarbage()
+		   view = loadScript(FILE_PATH .. "menu" .. ext, env)()
+		   data.v = 9
 		end
 		tmp = config[30].v
 		view(data, config, units, lang, event, gpsDegMin, getTelemetryId, getTelemetryUnit, SMLCD, HORUS, text, rect, fill, frmt, env)
