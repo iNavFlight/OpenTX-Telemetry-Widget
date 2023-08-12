@@ -19,11 +19,12 @@
 
 #### Solution
 
-* Upgrade to the [latest release](../Upgrade) which fixes these issues
+* Upgrade to the [latest release](../Upgrade) which may fix these issues
+* If it doesn't raise a Github issue.
 
 ## Tips
 
-* If you have any issues, first make sure you're using the release version 2.2.2+ of OpenTX. There's some bugs in pre-release and release candidate versions that cause Lua Telemetry to crash
+* If you have any issues, first make sure you're using a supported version of OpenTX / EdgeTX.
 * Preferably use the latest version of your TX firmware (OpenTX or EdgeTX)
 * Between flights (before armed), long-press Enter/dial and select `Reset telemetry` to reset telemetry values
 * If current sensor isn't present or _battery isn't fully charged when plugged in_, fuel gauge will be based on battery voltage
@@ -43,11 +44,11 @@ Please include:
 
 * The TX type (e.g. Radiomaster TX16S, Horus, Zorro etc.)
 * The type and version of radio firmware (e.g. EdgeTX 2.8.0, OpenTX 2.3.15 etc).
-* The flight controller and INAV version (e.g. MATEKF405, INAV 5.1.0)
+* The flight controller and INAV version (e.g. MATEKF405, INAV 6.1.0)
 * Details of Other active Lua widgets
 
 Try running the script in the EdgeTX / OpenTX Companion. This will force debug mode and display additional information, in particular module line numbers. Please including this information in any Github issue.
 
 Please also check that the problem can actually be reproduced in the firmware "Companion" application. If it cannot, it is probable that the maintainer cannot investigate the problem. You should also raise a firmware issue that "Companion" and real hardware exhibit different behaviours.
 
-For issues concerning discovery or display of sensor information, please provide an EdgeTX / OpenTX telemetry log for TXs that provide such a facility.
+For issues concerning discovery or display of sensor information, **please provide an EdgeTX / OpenTX telemetry log for TXs that provide such a facility**.
