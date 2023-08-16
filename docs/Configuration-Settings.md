@@ -17,7 +17,7 @@ Press the `Menu` button (`Shift` on X-Lite) to display the configuration options
 
 There are a number of recent smaller ('budget') radios, often with few buttons and a small screen. The paucity of buttons and non-standardisation of their function makes finding a common button press somewhat problematic.
 
-By default, the INAV Lua Telemetry widget uses a **long** button press as defined by the firmware button event `EVT_VIRTUAL_MENU_LONG` ("Virtual Menu Button").  `EVT_VIRTUAL_MENU_LONG` is a feature implemented by the firmware developers to make it easy for Lua scripts to access a menu button across diverse hardware designs.
+By default, the INAV Lua Telemetry widget uses a **long** button press as defined by the firmware button event `EVT_VIRTUAL_MENU_LONG` ("Virtual Menu Button, Long Press").  `EVT_VIRTUAL_MENU_LONG` is a feature implemented by the firmware developers to make it easy for Lua scripts to access a menu button across diverse hardware designs.
 
 The physical button mapped to the virtual button depends on the radio, but is often the `MDL` button, so a long press on `MDL` _might_  reveal the configuration menu on most recent radios.
 
@@ -103,19 +103,23 @@ Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12), it is als
 ## Playback Telemetry Log Files
 
 !!!warning
-    Telemetry log file playback works really well on Horus transmitters.  However, while it works on my Taranis Q X7, for others it may crash with a "**attempt to call a nil value**" or "**not enough memory**" error.  This means you're using too much memory for other things on your transmitter and it doesn't have enough memory to playback the logs.  Not switching views and not using the pilot view will use less memory, but it's possible you just won't be able to playback log files on a Taranis transmitter if you have too little memory available.
+    Telemetry log file playback works well on colour / large screen transmitters.  On older B&W radios, there may not be sufficient resources.
+.
 
 Log file playback allows you to playback the latest 5 telemetry log files from up to the last 2 weeks on the currently selected model.  You must be _unarmed_ for this to work and if you arm while playing back a log file, the playback will be terminated.
 
+Note also that replay only supports OpenTX file naming semantics; `<MODEL_NAME>-YYYY-MM-DD.csv`. If you wish to replay logs on EdgeTX, you will need to rename the log file appropriately.
+
+
 ### Setup
 
-Before you can playback a telemetry log file you need to make sure you're logging your telemetry.  By default for each telemetry sensor, the **Logs** option is already checked (unless you unchecked it).  However, it still won't log unless you setup a special function.  In the model setup on your transmitter, page to the **SPECIAL FUNCTIONS** page.  In an empty slot, create a special function that's activated from your arm switch (in my case **SF↓**).  It should look something like this:
+Before you can playback a telemetry log file you need to make sure you're logging your telemetry.  By default for each telemetry sensor, the **Logs** option is already checked (unless you unchecked it).  However, it still won't log unless you setup a special function.  In the model setup on your transmitter, page to the **SPECIAL FUNCTIONS** page.  In an empty slot, create a special function that's activated from a switch.  It should look something like this (e.g for switch `SF`):
 
 ```
 SF1	SF↓	SD Logs 	0.2s
 ```
 
-This will log your telemetry 5 times per second automatically every time you arm.  You can set this up on any switch you'd like, but the arm switch is most common.  You can also change the value to 0.1s to log 10 times a second or any other value you wish.  Note that the log playback will be smoother if you select a lower log frequency value.
+This will log your telemetry 5 times per second when the switch is enabled.  You can set this up on any switch you'd like, but the arm switch is common.  You can also change the value to 0.1s to log 10 times a second or any other value you wish.  Note that the log playback will be smoother if you select a lower log frequency value.
 
 ### Playback
 
@@ -123,8 +127,7 @@ To playback a log file, go to the config menu and scroll to the last item.  If t
 
 Standard playback will be at close to normal speed (note the timestamp in the title bar).  When playing back, you can use the right stick (mode 2) to fast forward (stick up), reverse (stick down), pause (hold stick right), or quit (stick left).  The further you move the stick up and down the faster the forward or reverse.  The stick center position is playback at normal speed.  When it gets to the end of the log, it will pause.
 
-As multiple flights from the same day are recorded to the same telemetry log files, the playback will continue to the next flight (note the timestamp in the title for time jumps which will be a new flight).
-
+In OpenTX, multiple flights from the same day are recorded to the same telemetry log files, the playback will continue to the next flight (note the timestamp in the title for time jumps which will be a new flight).
 
 ## Horus/Jumper T16 aircraft symbol options
 

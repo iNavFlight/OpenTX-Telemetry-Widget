@@ -49,6 +49,6 @@ Please include:
 
 Try running the script in the EdgeTX / OpenTX Companion. This will force debug mode and display additional information, in particular module line numbers. Please including this information in any Github issue.
 
-Please also check that the problem can actually be reproduced in the firmware "Companion" application. If it cannot, it is probable that the maintainer cannot investigate the problem. You should also raise a firmware issue that "Companion" and real hardware exhibit different behaviours.
+Please also check that the problem can actually be reproduced in the firmware "Companion" application. If it cannot, it is probable that the maintainer cannot investigate the problem. You should consider raising a firmware issue if "Companion" and real hardware exhibit different behaviours.
 
 For issues concerning discovery or display of sensor information, **please provide an EdgeTX / OpenTX telemetry log for TXs that provide such a facility**.

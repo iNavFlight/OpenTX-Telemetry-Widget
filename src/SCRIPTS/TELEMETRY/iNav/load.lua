@@ -26,7 +26,8 @@ end
 local log = getDateTime()
 
 config[34].x = -1
-local path = "/LOGS/" .. string.gsub(model.getInfo().name, " ", "_") .. "-20"
+local mbase = data.etx and model.getInfo().name or string.gsub(model.getInfo().name, " ", "_")
+local path = "/LOGS/" .. mbase .. "-20"
 for days = 1, 15 do
    local logDate = string.sub(log.year, 3) .. "-" .. string.sub("0" .. log.mon, -2) .. "-" .. string.sub("0" .. log.day, -2)
    local fh = io.open(path .. logDate .. ".csv")
