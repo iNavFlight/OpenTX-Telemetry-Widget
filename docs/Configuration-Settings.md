@@ -1,31 +1,40 @@
-## Taranis
 
-Press the `Menu` button (`Shift` on X-Lite) to display the configuration options menu:
+## Configuration Menu
+
+### Legacy Radios (Taranis etc.)
+
+Long press the `Menu` button to display the configuration options menu:
 
 * Use the dial or +/- buttons to cycle through the menu or select the desired setting
 * Press Enter/dial to select and deselect a menu option
 * Press `Exit` or `RTN` to deselect a menu option or escape the configuration menu
 
-## Horus/Jumper T16
+### "Horus" (Horus, Jumper T16, RM TX16S, Nirvana) - "Colour" / large screen radios
 
 * Must be unarmed to access the config menu when running as a widget
 * Use the following (mode 2) stick controls to navigate the config menu:
 
 ![sample](https://raw.githubusercontent.com/iNavFlight/LuaTelemetry/master/assets/iNavConfigHorus.png "Horus config menu")
 
-## Other radios
+### Other radios
 
-There are a number of recent smaller ('budget') radios, often with few buttons and a small screen. The paucity of buttons and non-standardisation of their function makes finding a common button press somewhat problematic.
+The following applies generically to all non-Colour / Large Screen radios:
+
+In particular, there are a number of recent smaller ('budget') radios, often with few buttons and a small screen. The paucity of buttons and non-standardisation of their function makes finding a common button somewhat problematic.
 
 By default, the INAV Lua Telemetry widget uses a **long** button press as defined by the firmware button event `EVT_VIRTUAL_MENU_LONG` ("Virtual Menu Button, Long Press").  `EVT_VIRTUAL_MENU_LONG` is a feature implemented by the firmware developers to make it easy for Lua scripts to access a menu button across diverse hardware designs.
 
-The physical button mapped to the virtual button depends on the radio, but is often the `MDL` button, so a long press on `MDL` _might_  reveal the configuration menu on most recent radios.
+The physical button mapped to the virtual button depends on the radio, but is often the `MDL` (Model) button, so a long press on `MDL` / Model _might_  just reveal the configuration menu on most recent radios.
 
-* There is a test Lua script described in [Discussion #106](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/discussions/106) that can be used in both the Companion / Simulator and on the physical radio to verify the buttons available to Lua (not all buttons are available to Lua which is part of the problem). You may have to experiment (easiest in Companion) to find the `EVT_VIRTUAL_MENU_LONG` button for your radio, in particular for some of more wacky designs (here's looking at you iFlight).
+### Button Test Tool
+
+* There is a "Button Test" Lua script `INAVButtons.lua` available from the TX Tools menu (or `SCRIPTS/TOOLS` that can be used in both the Companion / Simulator and on the physical radio to verify the buttons available to Lua (not all buttons are available to Lua which is part of the problem). You may have to experiment (easiest in Companion) to find the `EVT_VIRTUAL_MENU_LONG` button for your radio, in particular for some of more wacky designs (here's looking at you iFlight).
 * If the  button event `EVT_VIRTUAL_MENU_LONG` is not available for your transmitter, then you will not be able to access the configuration menu.
-* If the  button event `EVT_VIRTUAL_MENU_LONG` is available on the Companion but not on the physical radio (or vice-versa), then consider raising an issue with the firmware developer or radio vendor. Due to the (lack of) availability of hardware to the developers, this project can only support radios were the behaviour in the Companion and on the radio is consistent.
+* If the  button event `EVT_VIRTUAL_MENU_LONG` is available on the Companion but not on the physical radio (or vice-versa), then consider raising an issue with the firmware developer or radio vendor. Due to the (lack of) availability of all hardware to the maintainer, this project can only support radios where the behaviour in the Companion and on the radio is consistent.
 
-Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12), it is also possible to access the configuration menu via a log press on the roller. The firmware will intercept this press and offer a "Reset Telemetry" menu, which can be dismissed with `RTN`; the configuration menu will then be displayed. On these radios, the configuration options are accessed via the roller.
+Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12) with a roller:
+* The configuration menu is accessed via the `EVT_VIRTUAL_MENU_LONG` button press
+* The configuration options are accessed via the roller.
 
 ### Configuration menu options
 
@@ -69,13 +78,13 @@ Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12), it is als
   * **GPS** - GPS coordinates as decimal or degrees/minutes format (default: Decimal)
   * **Playback Log** - Playback telemetry log files (latest 5 logs from the last 2 weeks) **[[help](../Configuration-Settings/#playback-telemetry-log-files)]**
 
-## Suggested Battery Settings
-### Voltage and Current Calibration
+### Suggested Battery Settings
+#### Voltage and Current Calibration
 
 1. Using a multimeter, calibrate the voltage with the "Voltage Scale" in INAV configurator
 1. If you have a current sensor, make sure you [calibrate it](https://www.youtube.com/watch?v=AWjblvHgjjI)
 
-### In INAV Configurator
+#### In INAV Configurator
 
 * Voltage source to use for alarms and telemetry: **Raw**
 * Number of cells: **0** (0=auto, set if you always use the same cell count)
@@ -92,7 +101,7 @@ Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12), it is als
 * `set smartport_fuel_unit = percent`
 * `set report_cell_voltage = OFF` (if set to `ON` Lua Telemetry can't show total battery voltage)
 
-### In Lua Telemetry
+#### In Lua Telemetry
 
 * Cell Low: **3.5V** (match "Warning cell voltage" in INAV)
 * Cell Critical: **3.4V** (match "Minimum cell voltage" in INAV)
@@ -108,8 +117,7 @@ Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12), it is als
 
 Log file playback allows you to playback the latest 5 telemetry log files from up to the last 2 weeks on the currently selected model.  You must be _unarmed_ for this to work and if you arm while playing back a log file, the playback will be terminated.
 
-Note also that replay only supports OpenTX file naming semantics; `<MODEL_NAME>-YYYY-MM-DD.csv`. If you wish to replay logs on EdgeTX, you will need to rename the log file appropriately.
-
+Note also that replay only supports OpenTX file naming semantics; `<MODEL_NAME>-YYYY-MM-DD.csv`. If you wish to replay logs on EdgeTX, you will need to rename the log file appropriately (i.e. remove the time component).
 
 ### Setup
 
