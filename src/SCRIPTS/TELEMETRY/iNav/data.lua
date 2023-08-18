@@ -10,18 +10,10 @@ local function getTelemetryUnit(n)
    return (field and field.unit <= 10) and field.unit or 0
 end
 
-local tx = string.sub(r, 0, 2)
-if HORUS or string.sub(r, 0, 3) == "x9e" or string.sub(r, 0, 4) == "x9li" or string.sub(r, 0, 6) == "x9d+20" then
-	tx = "x7"
-end
 local MENU
 
 if HORUS then
    MENU = EVT_SYS_FIRST
-elseif tx == "xl" then
-   MENU = EVT_SHIFT_BREAK
-elseif tx == 'x7' then
-   MENU = EVT_MENU_BREAK
 else
    MENU = EVT_VIRTUAL_MENU_LONG
 end

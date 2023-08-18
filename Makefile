@@ -3,6 +3,7 @@
 SRC_ROOT := src
 TELEMETRY := $(SRC_ROOT)/SCRIPTS/TELEMETRY
 WIDGETS := $(SRC_ROOT)/WIDGETS
+TOOLS := $(SRC_ROOT)/SCRIPTS/TOOLS
 
 SRC := $(wildcard $(WIDGETS)/*.lua)
 SRC += $(wildcard $(WIDGETS)/iNav/*.lua)
@@ -11,6 +12,7 @@ SRC += $(wildcard $(TELEMETRY)/iNav/*.lua)
 SRC += $(wildcard $(TELEMETRY)/iNav/*/*.wav)
 SRC += $(wildcard $(TELEMETRY)/iNav/pics/*.*)
 SRC += $(wildcard $(TELEMETRY)/iNav/cfg/*.*)
+SRC += $(wildcard $(TOOLS)/*.lua)
 
 DIST := dist
 VERSION := $(shell grep VERSION $(TELEMETRY)/iNav.lua | head -n 1 | cut -d\" -f 2)
