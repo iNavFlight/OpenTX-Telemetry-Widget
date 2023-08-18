@@ -14,12 +14,12 @@ local ALWAYS = false
 local function report(event)
    local txt=""
    local matched = true
-   if event == EVT_MENU_BREAK then txt = "EVT_MENU_BREAK"
+   if event == EVT_EXIT_BREAK then txt = "EVT_EXIT_BREAK"
+   elseif event == EVT_MENU_BREAK then txt = "EVT_MENU_BREAK"
    elseif event == EVT_PAGE_BREAK then txt = "EVT_PAGE_BREAK"
    elseif event == EVT_PAGE_LONG then txt = "EVT_PAGE_LONG"
    elseif event == EVT_ENTER_BREAK then txt = "EVT_ENTER_BREAK"
    elseif event == EVT_ENTER_LONG then txt = "EVT_ENTER_LONG"
-   elseif event == EVT_EXIT_BREAK then txt = "EVT_EXIT_BREAK"
    elseif event == EVT_PLUS_BREAK then txt = "EVT_PLUS_BREAK"
    elseif event == EVT_MINUS_BREAK then txt = "EVT_MINUS_BREAK"
    elseif event == EVT_PLUS_FIRST then txt = "EVT_PLUS_FIRST"
@@ -93,7 +93,7 @@ local function init()
 	 local w
 	 w,lh = lcd.sizeText("EVT", sz)
       else
-	 lh = 21 --regardless of what the docs state
+	 lh = 21 --regardless
       end
    else
       sz = SMLSIZE

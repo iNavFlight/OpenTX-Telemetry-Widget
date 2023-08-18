@@ -3,7 +3,7 @@
 
 ### Legacy Radios (Taranis etc.)
 
-Long press the `Menu` button to display the configuration options menu:
+**Long press** the `Menu` button to display the configuration options menu:
 
 * Use the dial or +/- buttons to cycle through the menu or select the desired setting
 * Press Enter/dial to select and deselect a menu option
@@ -18,22 +18,33 @@ Long press the `Menu` button to display the configuration options menu:
 
 ### Other radios
 
-The following applies generically to all non-Colour / Large Screen radios:
+The following applies generically to all non-Colour (B&W) / small screen radios:
 
-In particular, there are a number of recent smaller ('budget') radios, often with few buttons and a small screen. The paucity of buttons and non-standardisation of their function makes finding a common button somewhat problematic.
+In particular, there are a number of recent smaller ('budget') radios, often with few discrete buttons and a small screen. The paucity of discrete buttons and non-standardisation of their function makes finding a common button press somewhat problematic.
 
-By default, the INAV Lua Telemetry widget uses a **long** button press as defined by the firmware button event `EVT_VIRTUAL_MENU_LONG` ("Virtual Menu Button, Long Press").  `EVT_VIRTUAL_MENU_LONG` is a feature implemented by the firmware developers to make it easy for Lua scripts to access a menu button across diverse hardware designs.
+The INAV Lua Telemetry widget uses a **long button press** as defined by the firmware button event `EVT_VIRTUAL_MENU_LONG` ("Virtual Menu Button, Long Press").  `EVT_VIRTUAL_MENU_LONG` is a feature implemented by the firmware developers to make it easy for Lua scripts to access a menu button across diverse hardware designs.
 
-The physical button mapped to the virtual button depends on the radio, but is often the `MDL` (Model) button, so a long press on `MDL` / Model _might_  just reveal the configuration menu on most recent radios.
+The physical button mapped to the virtual button depends on the radio, but is often the `MDL` (Model) button, so a **long press on `MDL` / Model** will display the configuration menu the non-colour radios.
+
+In order to facilitate identifying the MDL / Model button on radios where the vendor documentation is unclear, a Button Test Tool is provided.
 
 ### Button Test Tool
 
 * There is a "Button Test" Lua script `INAVButtons.lua` available from the TX Tools menu (or `SCRIPTS/TOOLS` that can be used in both the Companion / Simulator and on the physical radio to verify the buttons available to Lua (not all buttons are available to Lua which is part of the problem). You may have to experiment (easiest in Companion) to find the `EVT_VIRTUAL_MENU_LONG` button for your radio, in particular for some of more wacky designs (here's looking at you iFlight).
 * If the  button event `EVT_VIRTUAL_MENU_LONG` is not available for your transmitter, then you will not be able to access the configuration menu.
 * If the  button event `EVT_VIRTUAL_MENU_LONG` is available on the Companion but not on the physical radio (or vice-versa), then consider raising an issue with the firmware developer or radio vendor. Due to the (lack of) availability of all hardware to the maintainer, this project can only support radios where the behaviour in the Companion and on the radio is consistent.
+* The test tool is closed by a **long press** on the `RTN` button.
+
+#### INAVButtons initial screen
+
+![button0](../assets/buttons_0.png)
+
+#### INAVButtons Usage
+
+![button1](../assets/buttons_1.png)
 
 Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12) with a roller:
-* The configuration menu is accessed via the `EVT_VIRTUAL_MENU_LONG` button press
+* The configuration menu is accessed via the `EVT_VIRTUAL_MENU_LONG` button press (not by the roller, which was intercepted by the OS)
 * The configuration options are accessed via the roller.
 
 ### Configuration menu options
