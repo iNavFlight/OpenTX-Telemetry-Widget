@@ -20,13 +20,18 @@ config[22].v = 0
 config[23].x = 1
 
 local function crsf(data)
-   if getValue(data.rssi_id) == 0 or getValue(data.rssi_id) == nil then
+   local vtest
+   vtest =  getValue(data.rssi_id)
+   if vtest == nil or vtest == 0  then
       --[[ Also check for RSSI2, in case RSSI2 is active with RSSI1 being inactive
 	 (Sometimes happens with True Diversity ELRS receivers on startup) ]]
       local rssi2 = getTelemetryId("2RSS")
-      if getValue(rssi2) == 0 or getValue(rssi2) == nil then
-	 if getValue(data.tpwr_id) == 0 then
+      vtest = getValue(rssi2)
+      if  vtest == nil or vtest == 0  then
+	 vtest = getValue(data.tpwr_id)
+	 if vtest == nil or vtest == 0 then
 	    data.rssi = 0
+	    data.tpwr = 0
 	    data.telem = false
 	    return 0
 	 end
