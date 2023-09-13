@@ -33,6 +33,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	local sin = math.sin
 	local cos = math.cos
 	local OYELLOW = data.RGB(255, 220, 16) -- common across ETX/OTX
+	local DEGSYM = data.etx and "°" or "@"
 
 	function intersect(s1, e1, s2, e2)
 		local d = (s1.x - e1.x) * (s2.y - e2.y) - (s1.y - e1.y) * (s2.x - e2.x)
@@ -245,7 +246,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			end
 		end
 		if not data.showMax then
-		   text(X_CNTR - 60, Y_CNTR - 10, frmt("%.0f", upsideDown and -tmp or tmp) .. "\64", data.set_flags(SMLSIZE + RIGHT, data.TextColor))
+		   text(X_CNTR - 60, Y_CNTR - 10, frmt("%.0f", upsideDown and -tmp or tmp) .. DEGSYM, data.set_flags(SMLSIZE + RIGHT, data.TextColor))
 		end
 	end
 
@@ -338,7 +339,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 
 	-- Heading
 	if data.showHead then
-	   text(X_CNTR + 20, bot2, floor(data.heading + 0.5) % 360 .. "\64", data.set_flags(SMLSIZE + RIGHT, telemCol))
+	   text(X_CNTR + 20, bot2, floor(data.heading + 0.5) % 360 .. DEGSYM, data.set_flags(SMLSIZE + RIGHT, telemCol))
 	end
 
 	-- Roll scale
@@ -566,7 +567,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		   text(tmp, TOP + 18, dir[0], data.set_flags(CENTERED + SMLSIZE, data.TextColor))
 		   text(X3 - 4, 421, dir[2], data.set_flags(SMLSIZE + RIGHT, data.TextColor))
 		   text(X2 + 10, 421, dir[6], data.set_flags(SMLSIZE, data.TextColor))
-		   text(tmp + 4, BOTTOM - 15, floor(data.heading + 0.5) % 360 .. "\64", data.set_flags(CENTERED + SMLSIZE, telemCol))
+		   text(tmp + 4, BOTTOM - 15, floor(data.heading + 0.5) % 360 .. DEGSYM, data.set_flags(CENTERED + SMLSIZE, telemCol))
 		end
 		local x1, y1, x2, y2, x3, y3 = calcDir(r1, r2, r3, tmp, 429, 25)
 		if data.headingHold then
