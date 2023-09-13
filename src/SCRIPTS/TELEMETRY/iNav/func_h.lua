@@ -1,6 +1,7 @@
 local config, data, modes, dir, SMLCD, FILE_PATH, text, line, rect, fill, frmt, opts = ...
 
 local OYELLOW = data.RGB(255, 220, 16) -- common across ETX/OTX
+local DEGSYM = data.etx and "°" or "@"
 
 data.TextColor = opts.Text
 data.WarningColor = opts.Warn
@@ -102,7 +103,7 @@ end
 local function gpsDegMin(c, lat)
 	local gpsD = math.floor(math.abs(c))
 	local gpsM = math.floor((math.abs(c) - gpsD) * 60)
-	return frmt(data.nv and "%d\64%d'%04.1f\"" or "%d\64%d'%05.2f\"", gpsD, gpsM, ((math.abs(c) - gpsD) * 60 - gpsM) * 60) .. (lat and (c >= 0 and dir[0] or dir[4]) or (c >= 0 and dir[2] or dir[6]))
+	return frmt(data.nv and "%d"..DEGSYM.."%d'%04.1f\"" or "%d"..DEGSYM.."%d'%05.2f\"", gpsD, gpsM, ((math.abs(c) - gpsD) * 60 - gpsM) * 60) .. (lat and (c >= 0 and dir[0] or dir[4]) or (c >= 0 and dir[2] or dir[6]))
 end
 
 local function hdopGraph(x, y)
