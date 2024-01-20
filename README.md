@@ -38,7 +38,6 @@
 * Supported receivers: FrSky (compatible) telemetry receivers (X, R9 and D series) and Crossfire receivers.
 * Supported transmitters: FrSky Taranis and Horus transmitters, Jumper T12, T16, FLYSKY Nirvana NV14, Radiomaster TX16S, TX12, Zorro, Boxer (at least).
 * Note other transmitters may work, but are not considered "supported".
-* Compatible with Betaflight using FrSky X or R9 series receivers (with reduced functionality) and TBS Crossfire support with Betaflight v4.0.0+
 * Launch/pilot-based model orientation and location indicators (great for lost orientation/losing sight of your model)
 * Compass-based direction indicator (with magnetometer sensor on multirotor or fixed-wing with GPS)
 * Pilot (glass cockpit) view which includes attitude indicator as well as pilot-familiar layout of additional data
@@ -49,19 +48,20 @@
 * Display and voice alerts for flight modes and flight mode modifiers (altitude hold, heading hold, home reset, etc.)
 * Voice notifications for % battery remaining (based on current), voltage low/critical, high altitude, lost GPS, ready to arm, armed, disarmed, etc.
 * GPS info: Satellites locked, GPS accuracy (HDOP), GPS altitude, GPS coordinates. Also logs the last GPS location (reviewed from the config menu)
-* Playback previous flights via telemetry log files, including fast forward, rewind, and pause features
 * Display of current/maximum: Altitude, Distance, Speed and Current
 * Display of current/minimum: Battery voltage, RSSI strength
 * Title display of model name, flight timer, transmitter voltage and receiver voltage
 * Menu configuration options can be changed from inside the script and can be unique to each model
 * Speed and distance values are displayed in metric or imperial based on transmitter's telemetry settings
-* Voice files, modes and config menu in English, German, French or Spanish (more languages to follow)
+* Voice files, modes and config menu in English, German, French or Spanish.
+* OpenTX: Playback previous flights via telemetry log files, including fast forward, rewind, and pause features
+* May work with other (non-INAV) firmware; this is not a supported use case.
 
 ## Requirements
 
 Supported environments are given below, older versions may also work but are unsupported.
 
-* [INAV v6.0+](https://github.com/iNavFlight/inav/releases) running on your flight controller.Also compatible with Betaflight v4.0.0+ (with reduced functionality)
+* [INAV v6.0+](https://github.com/iNavFlight/inav/releases) running on your flight controller.
 * [OpenTX v2.3.14+](http://www.open-tx.org/) running on Taranis Q X7/Q X7S, X9D/X9D+, X9E, X9 Lite, X-Lite/X-Lite Pro, Horus X10/X10S or X12S
 * [EdgeTX v2.8.0+](https://edgetx.org/) running on a [supported radio](https://github.com/EdgeTX/edgetx.github.io/wiki/Frequently-Asked-Questions).
 * FrSky X, R9 or D series telemetry receiver: X4RSB, X8R, XSR, R-XSR, XSR-M, XSR-E, RX4R, RX6R, R9, R9 Slim, R9 Slim+, R9 Mini, R9 MM, D8R-II plus, D8R-XP, D4R-II, etc. or any Crossfire receiver: Micro, Nano, Diversity, ELRS etc.
@@ -77,8 +77,7 @@ Supported environments are given below, older versions may also work but are uns
 
 * Crossfire is not fully supported with OpenTX, due to a long-standing OpenTX issue; EdgeTX is recommended for use with Crossfire (and generally).
 * Some telemetry is missing from Crossfire: HDOP, GPS altitude and some secondary flight mode notifications like heading hold
-* Betaflight v4.0.0+ mostly works, except for some GPS and flight mode information which is missing from Betaflight
-* Use the OSD to control VTx band, frequency and power (except for on 2019 series Taranis transmitters, Betaflight's lua script can't run at the same time as INAV Lua Telemetry due to limited transmitter memory)
+* Other Lua scripts may not run at the same time as INAV Lua Telemetry due to limited transmitter resources)
 
 ## Special Thanks
 
