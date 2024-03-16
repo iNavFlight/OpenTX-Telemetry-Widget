@@ -112,7 +112,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 				fill((x2 + x3) * 0.5 - 1, (y2 + y3) * 0.5 - 1, 3, 3, SOLID)
 			end
 		else
-			line(x2, y2, x3, y3, SMLCD and DOTTED or SOLID, FORCE + (SMLCD and 0 or GREY_DEFAULT))
+			line(x2, y2, x3, y3, SMLCD and DOTTED or SOLID, FORCE + ((SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT))
 		end
 		line(x1, y1, x2, y2, SOLID, FORCE)
 		line(x1, y1, x3, y3, SOLID, FORCE)
@@ -122,7 +122,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	if config[7].v % 2 == 1 then
 		line(RIGHT_POS, 8, RIGHT_POS, 63, SOLID, FORCE)
 		line(RIGHT_POS + (SMLCD and 4 or 6), 8, RIGHT_POS + (SMLCD and 4 or 6), 63, SOLID, FORCE)
-		line(RIGHT_POS + 1, 35, RIGHT_POS + (SMLCD and 3 or 5), 35, SMLCD and DOTTED or SOLID, SMLCD and 0 or GREY_DEFAULT)
+		line(RIGHT_POS + 1, 35, RIGHT_POS + (SMLCD and 3 or 5), 35, SMLCD and DOTTED or SOLID, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 		if data.armed then
 			tmp = math.log(1 + math.min(math.abs(0.6 * (data.vspeed_unit == 6 and data.vspeed * 0.3048 or data.vspeed)), 10)) * (data.vspeed < 0 and -1 or 1)
 			local y1 = 36 - (tmp * 11)
@@ -146,9 +146,9 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if data.crsf == false then
 			text(LCD_W + 1, config[22].v == 0 and 32 or 22, "HDOP", RIGHT + SMLSIZE)
 		end
-		hdopGraph(LCD_W - 12, config[22].v == 0 and (data.crsf and 37 or 24) or 31, MIDSIZE, SMLCD)
+		hdopGraph(LCD_W - 12, config[22].v == 0 and (data.crsf and 37 or 24) or 31, MIDSIZE, (SMLCD or config[35].v == 1))
 	else
-		hdopGraph(LCD_W - 39, data.crsf and 24 or 10, MIDSIZE, SMLCD)
+		hdopGraph(LCD_W - 39, data.crsf and 24 or 10, MIDSIZE, (SMLCD or config[35].v == 1))
 		if data.crsf == false then
 			text(LCD_W - (config[22].v == 0 and 24 or 25), config[22].v == 0 and 18 or 20, "HDOP", RIGHT + SMLSIZE)
 		end

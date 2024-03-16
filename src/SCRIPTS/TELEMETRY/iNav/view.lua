@@ -16,7 +16,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if data.headingHold then
 			fill((x2 + x3) * 0.5 - 1.5, (y2 + y3) * 0.5 - 1.5, 4, 4, SOLID)
 		else
-			line(x2, y2, x3, y3, SMLCD and DOTTED or SOLID, FORCE + (SMLCD and 0 or GREY_DEFAULT))
+			line(x2, y2, x3, y3, SMLCD and DOTTED or SOLID, FORCE + ((SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT))
 		end
 	end
 
@@ -55,7 +55,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	else
 		text(tmp, 17, math.floor(data.gpsAlt + 0.5) .. units[data.gpsAlt_unit], gpsFlags)
 	end
-	hdopGraph(RIGHT_POS - 30, data.crsf and 17 or 9, SMLSIZE, SMLCD)
+	hdopGraph(RIGHT_POS - 30, data.crsf and 17 or 9, SMLSIZE, (SMLCD or config[35].v == 1))
 	icons.gps(RIGHT_POS - 17, data.crsf and 17 or 9)
 	text(RIGHT_POS - (data.telem and 0 or 1), data.crsf and 17 or 9, data.satellites % 100, SMLSIZE + RIGHT + telemFlag)
 
@@ -85,7 +85,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 				local rad1 = math.rad(bearing)
 				local x1 = math.floor(math.sin(rad1) * 10 + 0.5) + X_CNTR_2
 				local y1 = 19 - math.floor(math.cos(rad1) * 10 + 0.5)
-				line(X_CNTR_2, 19, x1, y1, SMLCD and DOTTED or SOLID, FORCE + (SMLCD and 0 or GREY_DEFAULT))
+				line(X_CNTR_2, 19, x1, y1, SMLCD and DOTTED or SOLID, FORCE + ((SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT))
 				fill(x1 - 1, y1 - 1, 3, 3, ERASE)
 				fill(x1 - 1, y1 - 1, 3, 3, SOLID)
 			end
@@ -130,7 +130,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		tmp = math.max(math.min(math.ceil(data.altitude / config[6].v * 46), 46), 0)
 		fill(l + 1, 56 - tmp, w - 2, tmp, INVERS)
 		tmp = 56 - math.max(math.min(math.ceil(data.altitudeMax / config[6].v * 46), 46), 0)
-		line(l + 1, tmp, l + w - 2, tmp, SOLID, GREY_DEFAULT)
+		line(l + 1, tmp, l + w - 2, tmp, SOLID, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 		text(l + 1, 58, config[7].v % 2 == 1 and "A" or "Alt", SMLSIZE)
 	end
 
