@@ -36,6 +36,7 @@ local config = {
 	{ o = 30, c = 1, v = 0 }, -- Orientation - 32
 	{ o = 26, c = 1, v = 0 }, -- Roll Scale - 33
 	{ o = 34, c = 1, v = 0, l = {[0] = "?"}, x = -1 }, -- Review Log Date - 34
+	{ o = 35, c = 1, v = 0 }, -- Force Monochrome - 35
 }
 
 for i = 1, #config do
