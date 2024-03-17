@@ -2,7 +2,7 @@
 -- Docs: https://github.com/iNavFlight/OpenTX-Telemetry-Widget
 
 local zone, options = ...
-local VERSION = "2.2.3"
+local VERSION = "2.2.4"
 local FILE_PATH = "/SCRIPTS/TELEMETRY/iNav/"
 local SMLCD = LCD_W < 212
 local HORUS = LCD_W >= 480 or LCD_H >= 480
@@ -410,7 +410,7 @@ function inav.background()
 		-- Initialize variables on flight reset (uses timer3)
 		tmp = model.getTimer(2)
 		if tmp.value == 0 then
-		   loadScript(FILE_PATH .. "load_" .. (data.etx and "e" or  "o") .. ext, env)(config, data, FILE_PATH)
+		   loadScript(FILE_PATH .. "load" .. ext, env)(config, data, FILE_PATH)
 			loadScript(FILE_PATH .. "reset" .. ext, env)(data)
 			tmp.value = 3600
 			model.setTimer(2, tmp)
