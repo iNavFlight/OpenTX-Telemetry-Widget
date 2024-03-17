@@ -88,6 +88,7 @@ Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12) with a rol
   * **GPS Warning** - GPS accuracy (HDOP) to trigger warning (default: > 3.5 HDOP [at least 1 bar])
   * **GPS** - GPS coordinates as decimal or degrees/minutes format (default: Decimal)
   * **Playback Log** - Playback telemetry log files (latest 5 logs from the last 2 weeks) **[[help](../Configuration-Settings/#playback-telemetry-log-files)]**
+  * **Greyscale Gfx** - Turn on/off the use of greyscale display graphics (only for monochrome displays)
 
 ### Suggested Battery Settings
 #### Voltage and Current Calibration
