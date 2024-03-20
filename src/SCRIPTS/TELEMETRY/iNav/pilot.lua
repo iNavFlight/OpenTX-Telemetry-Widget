@@ -25,7 +25,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			local yd = math.cos(roll1) * r
 			local x1, y1, x2, y2 = x - xd, y + yd, x + xd, y - yd
 			if (y1 > 15 or y2 > 15) and (y1 < 56 or y2 < 56) then
-				line(x1, y1, x2, y2, SMLCD and DOTTED or (adj % 10 == 0 and SOLID or DOTTED), SMLCD and 0 or (adj > 0 and GREY_DEFAULT or 0))
+				line(x1, y1, x2, y2, SMLCD and DOTTED or (adj % 10 == 0 and SOLID or DOTTED), (SMLCD or config[35].v == 1) and 0 or (adj > 0 and GREY_DEFAULT or 0))
 				if not SMLCD and adj % 10 == 0 and adj ~= 0 and y1 > 15 and y1 < 56 then
 					text(x1 - 2, y1 - 3, math.abs(adj), SMLSIZE + RIGHT)
 				end
@@ -42,12 +42,12 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			for x = LEFT_POS + 1, RIGHT_POS - 1 do
 				local yy = y + 0.5
 				if (not upsideDown and yy < 64) or (upsideDown and yy > 7) then
-					line(x, math.min(math.max(yy, 8), 63), x, upsideDown and 8 or 63, SOLID, SMLCD and 0 or GREY_DEFAULT)
+					line(x, math.min(math.max(yy, 8), 63), x, upsideDown and 8 or 63, SOLID, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 				end
 				y = y + a
 			end
 		elseif (y1 > 15 or y2 > 15) and (y1 < 56 or y2 < 56) then
-			line(x1, y1, x2, y2, SMLCD and DOTTED or (adj % 10 == 0 and SOLID or DOTTED), SMLCD and 0 or (adj > 0 and GREY_DEFAULT or 0))
+			line(x1, y1, x2, y2, SMLCD and DOTTED or (adj % 10 == 0 and SOLID or DOTTED), (SMLCD or config[35].v == 1) and 0 or (adj > 0 and GREY_DEFAULT or 0))
 			if not SMLCD and adj % 10 == 0 and adj ~= 0 and y1 > 15 and y1 < 56 then
 				text(x1 - 2, y1 - 3, math.abs(adj), SMLSIZE + RIGHT)
 			end
@@ -81,7 +81,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if data.headingHold then
 			fill((x2 + x3) * 0.5 - 1, (y2 + y3) * 0.5 - 1, 3, 3, SOLID)
 		else
-			line(x2, y2, x3, y3, SMLCD and DOTTED or SOLID, FORCE + (SMLCD and 0 or GREY_DEFAULT))
+			line(x2, y2, x3, y3, SMLCD and DOTTED or SOLID, FORCE + ((SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT))
 		end
 		line(x1, y1, x2, y2, SOLID, FORCE)
 		line(x1, y1, x3, y3, SOLID, FORCE)
@@ -198,7 +198,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	for x = LEFT_POS + 1, RIGHT_POS - 1 do
 		local yy = y + 0.5
 		if (not upsideDown and yy < 64) or (upsideDown and yy > 7) then
-			line(x, math.min(math.max(yy, 8), 63), x, upsideDown and 8 or 63, SOLID, SMLCD and 0 or GREY_DEFAULT)
+			line(x, math.min(math.max(yy, 8), 63), x, upsideDown and 8 or 63, SOLID, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 		end
 		y = y + a
 	end
@@ -210,7 +210,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if (not upsideDown and yy < 64) or (upsideDown and yy > 7) then
 			local t = upsideDown and 8 or math.min(math.max(yy, 8), 63)
 			local h = upsideDown and math.min(math.max(yy, 8), 64) - t or 65 - t
-			fill(x, t, width, h, GREY_DEFAULT)
+			fill(x, t, width, h, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 		end
 		y = y + a * width
 	end
@@ -225,7 +225,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 					lastx = x
 					break
 				end
-				fill(x, 8, width, h, GREY_DEFAULT)
+				fill(x, 8, width, h, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 			end
 		else
 			if y < 64 then
@@ -234,13 +234,13 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 					lastx = x
 					break
 				end
-				fill(x, t, width, 65 - t, GREY_DEFAULT)
+				fill(x, t, width, 65 - t, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 			end
 		end
 		y = y + a * width
 	end
 	if lastx then
-		fill(lastx, 8, RIGHT_POS - lastx, 57, GREY_DEFAULT)
+		fill(lastx, 8, RIGHT_POS - lastx, 57, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 	end
 	]]
 	local inside = SMLCD and 6 or 13
@@ -289,7 +289,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	if config[7].v % 2 == 1 then
 		line(RIGHT_POS, 8, RIGHT_POS, 63, SOLID, FORCE)
 		line(RIGHT_POS + (SMLCD and 4 or 6), 8, RIGHT_POS + (SMLCD and 4 or 6), 63, SOLID, FORCE)
-		line(RIGHT_POS + 1, 35, RIGHT_POS + (SMLCD and 3 or 5), 35, SMLCD and DOTTED or SOLID, SMLCD and 0 or GREY_DEFAULT)
+		line(RIGHT_POS + 1, 35, RIGHT_POS + (SMLCD and 3 or 5), 35, SMLCD and DOTTED or SOLID, (SMLCD or config[35].v == 1) and 0 or GREY_DEFAULT)
 		if data.armed then
 			tmp = math.log(1 + math.min(math.abs(0.6 * (data.vspeed_unit == 6 and data.vspeed * 0.3048 or data.vspeed)), 10)) * (data.vspeed < 0 and -1 or 1)
 			local y1 = 36 - (tmp * 11)
@@ -313,9 +313,9 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if data.crsf == false then
 			text(LCD_W + 1, config[22].v == 0 and 32 or 22, "HDOP", RIGHT + SMLSIZE)
 		end
-		hdopGraph(LCD_W - 12, config[22].v == 0 and (data.crsf and 37 or 24) or 31, MIDSIZE, SMLCD)
+		hdopGraph(LCD_W - 12, config[22].v == 0 and (data.crsf and 37 or 24) or 31, MIDSIZE, (SMLCD or config[35].v == 1))
 	else
-		hdopGraph(LCD_W - 39, data.crsf and 24 or 10, MIDSIZE, SMLCD)
+		hdopGraph(LCD_W - 39, data.crsf and 24 or 10, MIDSIZE, (SMLCD or config[35].v == 1))
 		if data.crsf == false then
 			text(LCD_W - (config[22].v == 0 and 24 or 25), config[22].v == 0 and 18 or 20, "HDOP", RIGHT + SMLSIZE)
 		end
