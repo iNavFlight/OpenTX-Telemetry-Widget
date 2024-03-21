@@ -13,6 +13,8 @@ if fh ~= nil then
    end
    io.close(fh)
 end
+fh = nil
+collectgarbage()
 
 -- Look for language override
 fh = io.open(FILE_PATH .. "cfg/lang.dat")
@@ -22,6 +24,8 @@ if fh ~= nil then
    data.lang = tmp
    data.voice = tmp
 end
+fh = nil
+collectgarbage()
 
 local log = getDateTime()
 
@@ -33,18 +37,20 @@ for days = 1, 15 do
    local fh = io.open(path .. logDate .. ".csv")
    if fh ~= nil then
       io.close(fh)
+      fh = nil
+      collectgarbage()
       config[34].x = config[34].x + 1
       config[34].l[config[34].x] = logDate
-      collectgarbage()
       if config[34].x == 5 then break end
    end
+   
    log.day = log.day - 1
    if log.day == 0 then
       log.day = 31
       log.mon = log.mon - 1
       if log.mon == 0 then
-	 log.mon = 12
-	 log.year = log.year - 1
+	   log.mon = 12
+	   log.year = log.year - 1
       end
    end
 end
