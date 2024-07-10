@@ -22,3 +22,6 @@ luac.out
 # Local copy of lua
 3rdparty/lua-5.2.4/src/lua
 3rdparty/lua-5.2.4/src/luac
+
+# MacOS files
+.DS_Store
