@@ -1,4 +1,4 @@
-### Currently supported ([language submissions encouraged!](Multilingual-Support/#adding-new-language))
+### Currently supported ([language submissions encouraged!](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/blob/master/docs/Multilingual-Support.md#adding-new-language))
 
   - [ ] Czech (cz)
   - [ ] Dutch (nl)
@@ -28,7 +28,7 @@ Lua Telemetry uses the OpenTX settings for multilingual support.  If language vo
 ### Adding new language
 To add support for one of the above languages, follow these steps:
 
-1. Language voice files need to be created.  Here's is a [list of the 32 voice files required](https://github.com/iNavFlight/LuaTelemetry/tree/development/dist/SCRIPTS/TELEMETRY/iNav/en)
-1. A `lang_XX.lua` language translation file needs to be created.  Here's an example of the German translation file: [lang_de.lua](https://github.com/iNavFlight/LuaTelemetry/development/src/iNav/lang_de.lua) (note the maximum character length comments)
+1. Language voice files need to be created.  Here's is a [list of the 32 voice files required](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/tree/master/src/SCRIPTS/TELEMETRY/iNav/en)
+1. A `lang_XX.lua` language translation file needs to be created.  Here's an example of the German translation file: [lang_de.lua](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/blob/master/src/SCRIPTS/TELEMETRY/iNav/lang_de.lua) (note the maximum character length comments)
 
-The voice and translation files can be submitted in a PR or you can [create a feature request issue](https://github.com/iNavFlight/LuaTelemetry/issues/new/choose) and attach the files and I'll take care of it.  Either way, be prepared to possibly do some tweaking if the translation lengths are too long.
+The voice and translation files can be submitted in a PR or you can [create a feature request issue](https://github.com/iNavFlight/OpenTX-Telemetry-Widget/issues/new/choose) and attach the files and I'll take care of it.  Either way, be prepared to possibly do some tweaking if the translation lengths are too long.
