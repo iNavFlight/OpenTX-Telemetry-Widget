@@ -24,7 +24,11 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		if data.showMax and d > 0 then
 			vc = vm
 			text(0, y, string.sub(txt, 1, 3), SMLSIZE)
-			text(15, y, d == 1 and "\192" or "\193", SMLSIZE)
+			if d == 1 then
+				icons.up(15, y)
+			else
+				icons.down(15, y)
+			end
 		else
 			text(0, y, txt, SMLSIZE)
 		end

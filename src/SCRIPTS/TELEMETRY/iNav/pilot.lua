@@ -129,8 +129,8 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			icons.home(home, tmp)
 		end
 	elseif data.showMax then
-		text(LEFT_POS + 21, 33, "\192", SMLSIZE)
-		text(RIGHT_POS - 22, 33, "\192", SMLSIZE + RIGHT)
+		icons.up(LEFT_POS + 21, 32)
+		icons.up(RIGHT_POS - 28, 32)
 	end
 
 	-- Heading part 1

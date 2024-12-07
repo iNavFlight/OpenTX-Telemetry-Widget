@@ -93,4 +93,24 @@ function icons.home(x, y)
 	lcd.drawPoint(x + 3, y + 4)
 end
 
+function icons.up(x, y)
+	lcd.drawPoint(x + 2, y + 0)
+	lcd.drawPoint(x + 1, y + 1)
+	lcd.drawPoint(x + 2, y + 1)
+	lcd.drawPoint(x + 3, y + 1)
+	lcd.drawPoint(x + 0, y + 2)
+	lcd.drawPoint(x + 4, y + 2)
+	line(x + 2, y + 3, x + 2, y + 6, SOLID, 0)
+end
+
+function icons.down(x, y)
+	line(x + 2, y, x + 2, y + 3, SOLID, 0)
+	lcd.drawPoint(x + 0, y + 4)
+	lcd.drawPoint(x + 4, y + 4)
+	lcd.drawPoint(x + 1, y + 5)
+	lcd.drawPoint(x + 2, y + 5)
+	lcd.drawPoint(x + 3, y + 5)
+	lcd.drawPoint(x + 2, y + 6)
+end
+
 return title, gpsDegMin, hdopGraph, icons, rect
