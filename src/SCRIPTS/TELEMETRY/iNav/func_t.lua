@@ -56,8 +56,9 @@ local function title()
 end
 
 local function gpsDegMin(c, lat)
-	local gpsD = math.floor(math.abs(c))
-	return gpsD .. frmt("\64%05.2f", (math.abs(c) - gpsD) * 60) .. (lat and (c >= 0 and dir[0] or dir[4]) or (c >= 0 and dir[2] or dir[6]))
+   local DEGSYM = data.etx and "°" or "@"
+   local gpsD = math.floor(math.abs(c))
+   return gpsD .. frmt(DEGSYM .. "%05.2f", (math.abs(c) - gpsD) * 60) .. (lat and (c >= 0 and dir[0] or dir[4]) or (c >= 0 and dir[2] or dir[6]))
 end
 
 local function hdopGraph(x, y, s, SMLCD)
