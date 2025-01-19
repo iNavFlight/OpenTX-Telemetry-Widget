@@ -8,6 +8,9 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	local FLASH = 3 -- legacy value
 	local gpsFlags = SMLSIZE + RIGHT + ((not data.telem or not data.gpsFix) and FLASH or 0)
 	local tmp, pitch, roll, roll1, upsideDown
+	local DEGSYM = data.etx and "°" or "@"
+	local SHOWMAX = data.etx and CHAR_UP or "\192"
+	local SHOWMIN = data.etx and CHAR_DOWN or "\193"
 
 	local function pitchLadder(r, adj)
 		--[[ Caged mode
@@ -109,7 +112,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		end
 		if not data.showMax then
 			tmp2 = tmp >= 0 and (tmp < 1 and 0 or math.floor(tmp + 0.5)) or (tmp > -1 and 0 or math.ceil(tmp - 0.5))
-			text(X_CNTR - (SMLCD and 14 or 24), 33, math.abs(tmp2) .. (SMLCD and "" or "\64"), SMLSIZE + RIGHT)
+			text(X_CNTR - (SMLCD and 14 or 24), 33, math.abs(tmp2) .. (SMLCD and "" or DEGSYM), SMLSIZE + RIGHT)
 		end
 	end
 
@@ -129,8 +132,8 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			icons.home(home, tmp)
 		end
 	elseif data.showMax then
-		text(LEFT_POS + 21, 33, "\192", SMLSIZE)
-		text(RIGHT_POS - 22, 33, "\192", SMLSIZE + RIGHT)
+	   text(LEFT_POS + 21, 33, SHOWMAX, SMLSIZE)
+	   text(RIGHT_POS - 22, 33, SHOWMAX, SMLSIZE + RIGHT)
 	end
 
 	-- Heading part 1
@@ -262,7 +265,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		line(X_CNTR - 9, 56, X_CNTR + 10, 56, SOLID, ERASE)
 		line(X_CNTR - 10, 56, X_CNTR - 10, 63, SOLID, ERASE)
 		text(X_CNTR - 9, 57, "      ", SMLSIZE + telemFlag)
-		text(X_CNTR + 11, 57, math.floor(data.heading + 0.5) % 360 .. "\64", SMLSIZE + RIGHT + telemFlag)
+		text(X_CNTR + 11, 57, math.floor(data.heading + 0.5) % 360 .. DEGSYM, SMLSIZE + RIGHT + telemFlag)
 		if not SMLCD then
 			lcd.drawRectangle(X_CNTR - 11, 55, 23, 10, FORCE)
 		end
