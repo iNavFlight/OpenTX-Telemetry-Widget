@@ -25,7 +25,8 @@ Don't be too concerned about the length of these instructions. The first two sec
     1. If you `set frsky_pitch_roll = ON` on INAV v2.0.0+ (which I suggest) you can optionally change the following for clarification:
         * Telemetry sensor `0430` (or `0008` with D-series receivers) can be changed to `Ptch`
         * Telemetry sensor `0440` (or `0020` with D-series receivers) can be changed to `Roll`
-    1. **Don't** change `Tmp1` or `Tmp2` from Celsius to Fahrenheit! They're not temps (used for flight modes and GPS info)
+    1. Prior to INAV 8, **don't** change `Tmp1` or `Tmp2` from Celsius to Fahrenheit! They're not temps (used for flight modes and GNSS info)
+	1. For INAV 8 and later, the default is to use sensor IDs `0470` and `0480` for flight mode and GNSS data respectively. For convenience, the names `Mode` (for `0470`) and `GNSS` (for `0480`) can be set in the transmitter.
     1. If you don't have a current sensor, you can optionally delete or rename the `Fuel` sensor so it doesn't show in Lua Telemetry
 
 #### Install/Setup Lua Telemetry on Transmitter
