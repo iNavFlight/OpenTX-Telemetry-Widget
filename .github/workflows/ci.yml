@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get -y install zip build-essential
       - name: Setup environment
@@ -28,7 +28,7 @@ jobs:
       - name: Build dist
         run: make dist
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2-preview
+        uses: actions/upload-artifact@v4-preview
         with:
           name: ${{ env.BUILD_NAME }}.zip
           path: ./dist/*.zip
