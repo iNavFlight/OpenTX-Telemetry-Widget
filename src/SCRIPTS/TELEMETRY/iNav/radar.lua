@@ -62,7 +62,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	end
 	-- Min/Max
 	if not data.showDir and data.showMax then
-		text(RIGHT_POS, 9, "\192", SMLSIZE + RIGHT)
+		icons.up(RIGHT_POS - 6, 9)
 	end
 
 	-- Radar
