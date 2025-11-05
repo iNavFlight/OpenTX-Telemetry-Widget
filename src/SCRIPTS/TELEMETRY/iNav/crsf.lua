@@ -113,7 +113,19 @@ local function crsf(data)
 		elseif data.fm == "WP" then
 			data.mode = 2015
 		elseif data.fm == "RTH" then
-			data.mode = 1615
+			data.mode = 1215
+		elseif data.fm == "LAND" then
+			data.mode = 100015
+		elseif data.fm == "GEO" then
+			data.mode = 400015
+		elseif data.fm == "TURT" then
+			data.mode = 200005
+		elseif data.fm == "WRTH" then
+			data.mode = 10000215
+		elseif data.fm == "LOTR" then
+			data.mode = 800215
+		elseif data.fm == "ANGH" then
+			data.mode = 2000005
 		elseif data.fm == "!FS!" then
 			data.mode = 40004
 		end

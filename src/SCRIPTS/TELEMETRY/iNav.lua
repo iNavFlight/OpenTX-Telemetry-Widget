@@ -210,39 +210,55 @@ function inav.background()
 		data.headFree = false
 		data.headingHold = false
 		data.altHold = false
-		local modeA = data.mode * 0.0001
-		local modeB = data.mode * 0.001 % 10
-		local modeC = data.mode * 0.01 % 10
-		local modeD = data.mode * 0.1 % 10
-		local modeE = data.mode % 10
-		if bit32.band(modeD, 2) == 2 then
+		local modeA = data.mode * 0.000001
+		local modeB = data.mode * 0.00001
+		local modeC = data.mode * 0.0001
+		local modeD = data.mode * 0.001 % 10
+		local modeE = data.mode * 0.01 % 10
+		local modeF = data.mode * 0.1 % 10
+		local modeG = data.mode % 10
+		if bit32.band(modeF, 2) == 2 then
 			data.modeId = 2 -- Horizon
-		elseif bit32.band(modeD, 1) == 1 then
+		elseif bit32.band(modeF, 1) == 1 then
 			data.modeId = 3 -- Angle
 		else
 			data.modeId = 4 -- Acro
 		end
-		data.headFree = bit32.band(modeB, 4) == 4
-		data.headingHold = bit32.band(modeC, 1) == 1
-		if bit32.band(modeE, 4) == 4 then
+		data.headFree = bit32.band(modeD, 4) == 4
+		data.headingHold = bit32.band(modeE, 1) == 1
+		if bit32.band(modeG, 4) == 4 then
 			data.armed = true
-			data.altHold = (bit32.band(modeC, 2) == 2 or bit32.band(modeC, 4) == 4)
+			data.altHold = (bit32.band(modeE, 2) == 2 or bit32.band(modeE, 4) == 4)
 			homeReset = data.satellites >= 4000
-			data.modeId = bit32.band(modeC, 4) == 4 and 7 or data.modeId -- Pos hold
+			data.modeId = bit32.band(modeE, 4) == 4 and 7 or data.modeId -- Pos hold
 		else
 			preArmMode = data.modeId
-			data.modeId = (bit32.band(modeE, 2) == 2 or modeE == 0) and (data.throttle > -920 and 12 or 5) or 6 -- Not OK to arm(5) / Throttle warning(12) / Ready to fly(6)
+			data.modeId = (bit32.band(modeG, 2) == 2 or modeG == 0) and (data.throttle > -920 and 12 or 5) or 6 -- Not OK to arm(5) / Throttle warning(12) / Ready to fly(6)
 		end
-		if bit32.band(modeA, 4) == 4 then
+		if bit32.band(modeC, 4) == 4 then
 			data.modeId = 11 -- Failsafe
-		elseif bit32.band(modeB, 1) == 1 then
+		elseif bit32.band(modeD, 1) == 1 then
 			data.modeId = 10 -- RTH
-		elseif bit32.band(modeD, 4) == 4 then
+		elseif bit32.band(modeF, 4) == 4 then
 			data.modeId = 9 -- Manual
-		elseif bit32.band(modeB, 2) == 2 then
+		elseif bit32.band(modeD, 2) == 2 then
 			data.modeId = 8 -- Waypoint
-		elseif bit32.band(modeB, 8) == 8 then
+		elseif bit32.band(modeD, 8) == 8 and bit32.band(modeE, 2) == 2 then
 			data.modeId = 13 -- Cruise
+		elseif bit32.band(modeD, 8) == 8 then
+			data.modeId = 20 -- Course Hold
+		elseif bit32.band(modeA, 1) == 1 then
+			data.modeId = 19 -- WRTH
+		elseif bit32.band(modeA, 2) == 2 then
+			data.modeId = 14 -- Angle Hold
+		elseif bit32.band(modeB, 1) == 1 then
+			data.modeId = 15 -- Auto land
+		elseif bit32.band(modeB, 2) == 2 then
+			data.modeId = 17 -- Turtle mode
+		elseif bit32.band(modeB, 4) == 4 then
+			data.modeId = 16 -- Geofence navigation
+		elseif bit32.band(modeB, 8) == 8 then
+			data.modeId = 18 -- Loiter
 		end
 	end
 
