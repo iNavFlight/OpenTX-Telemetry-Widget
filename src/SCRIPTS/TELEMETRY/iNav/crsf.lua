@@ -121,7 +121,7 @@ local function crsf(data)
 		elseif data.fm == "TURT" then
 			data.mode = 200005
 		elseif data.fm == "WRTH" then
-			data.mode = 10000215
+			data.mode = 1000215
 		elseif data.fm == "LOTR" then
 			data.mode = 800215
 		elseif data.fm == "ANGH" then

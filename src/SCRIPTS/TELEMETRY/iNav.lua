@@ -210,9 +210,9 @@ function inav.background()
 		data.headFree = false
 		data.headingHold = false
 		data.altHold = false
-		local modeA = data.mode * 0.000001
-		local modeB = data.mode * 0.00001
-		local modeC = data.mode * 0.0001
+		local modeA = data.mode * 0.000001 % 10
+		local modeB = data.mode * 0.00001 % 10
+		local modeC = data.mode * 0.0001 % 10
 		local modeD = data.mode * 0.001 % 10
 		local modeE = data.mode * 0.01 % 10
 		local modeF = data.mode * 0.1 % 10
