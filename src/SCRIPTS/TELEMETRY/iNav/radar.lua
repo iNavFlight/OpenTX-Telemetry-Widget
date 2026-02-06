@@ -7,6 +7,13 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	local X_CNTR = (RIGHT_POS + LEFT_POS) * 0.5 - 1
 	local gpsFlags = SMLSIZE + RIGHT + ((not data.telem or not data.gpsFix) and FLASH or 0)
 	local tmp, pitch
+	local DEGSYM = data.etx and "°" or "@"
+	local SHOWMAX = data.etx and CHAR_UP or "\192"
+	local SHOWMIN = data.etx and CHAR_DOWN or "\193"
+
+	-- May not be right ....
+	local SHOWLEFT = data.etx and CHAR_LEFT or "\194"
+	local SHOWRIGHT = data.etx and CHAR_RIGHT or "\195"
 
 	-- Startup message
 	if data.startup == 2 then
@@ -51,18 +58,18 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		end
 		-- Pitch
 		if data.startup == 0 then
-			text(LEFT_POS + 15, 17, pitch .. (math.abs(pitch) < 10 and "\64" or ""), SMLSIZE + RIGHT + telemFlag)
+			text(LEFT_POS + 15, 17, pitch .. (math.abs(pitch) < 10 and DEGSYM or ""), SMLSIZE + RIGHT + telemFlag)
 			line(LEFT_POS + 1, 17, LEFT_POS + 1, 24, SOLID, ERASE)
 		else
 			text(LEFT_POS + 2, 17, "Ptch", SMLSIZE)
 		end
 	elseif data.showDir or data.headingRef == -1 then
 		-- Heading
-		text(X_CNTR + 14 - (data.heading < 100 and 3 or 0) - (data.heading < 10 and 3 or 0), 57, math.floor(data.heading + 0.5) % 360 .. "\64", SMLSIZE + RIGHT + telemFlag)
+		text(X_CNTR + 14 - (data.heading < 100 and 3 or 0) - (data.heading < 10 and 3 or 0), 57, math.floor(data.heading + 0.5) % 360 .. DEGSYM, SMLSIZE + RIGHT + telemFlag)
 	end
 	-- Min/Max
 	if not data.showDir and data.showMax then
-		text(RIGHT_POS, 9, "\192", SMLSIZE + RIGHT)
+		text(RIGHT_POS, 9, SHOWMAX, SMLSIZE + RIGHT)
 	end
 
 	-- Radar
@@ -204,8 +211,8 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 		text(LEFT_POS - tmp2, 37, tmp < 1000 and math.floor(tmp + 0.5) or frmt("%.1f", tmp / (data.dist_unit == 9 and 1000 or 5280)), MIDSIZE + RIGHT + telemFlag)
 		--Pitch
 		line(LEFT_DIV, 50, LEFT_POS, 50, SOLID, FORCE)
-		text(LEFT_DIV + 5, 54, pitch > 0 and "\194" or (pitch == 0 and "->" or "\195"), SMLSIZE)
-		text(LEFT_POS, 53, "\64", SMLSIZE + RIGHT + telemFlag)
+		text(LEFT_DIV + 5, 54, pitch > 0 and SHOWLEFT or (pitch == 0 and "->" or SHOWRIGHT), SMLSIZE)
+		text(LEFT_POS, 53, DEGSYM, SMLSIZE + RIGHT + telemFlag)
 		text(LEFT_POS - 4, 52, pitch, MIDSIZE + RIGHT + telemFlag)
 	end
 end
