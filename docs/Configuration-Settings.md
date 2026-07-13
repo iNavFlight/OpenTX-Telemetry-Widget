@@ -101,6 +101,7 @@ Note also that on some of the smaller B&W radios (Boxer, Zorro, TX12) with a rol
   * **GPS** - GPS coordinates as decimal or degrees/minutes format (default: Decimal)
   * **Playback Log** - Playback telemetry log files (latest 5 logs from the last 2 weeks) **[[help](../Configuration-Settings/#playback-telemetry-log-files)]**
   * **Greyscale Gfx** - Turn on/off the use of greyscale display graphics (only for monochrome displays)
+  * **CRSF Fuel Delay** - Set the delay before CRSF telemetry values are used for fuel calc, after the FC is initialised 
 
 ### Suggested Battery Settings
 #### Voltage and Current Calibration

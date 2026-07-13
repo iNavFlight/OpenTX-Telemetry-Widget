@@ -46,6 +46,7 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 		{ t = "Playback Log",     l = config[34].l }, -- 34
 		{ t = "Greyscale Gfx",    l = {[0] = "On", "Off"} }, -- 35
 		{ t = "Horizon Mode",     l = {[0] = "Standard", "Fixed"} }, -- 36
+		{ t = "CRSF Fuel Delay",  m = 0, i = 0.5, a = "s" }, -- 37
 	}
 
 	-- Import language changes
@@ -81,6 +82,8 @@ local function view(data, config, units, lang, event, gpsDegMin, getTelemetryId,
 	config2[24].p = data.crsf and 1 or (config[7].v < 2 and 1 or nil)
 	config2[27].p = (not data.crsf or config[23].v > 0) and 1 or nil
 	config2[35].p = HORUS and 1 or nil
+	config2[36].p = not data.crsf and 1 or nil
+
 	if config2[17].p == nil then
 		config2[17].p = (not data.showCurr or config[23].v ~= 0) and 1 or nil
 		config2[18].p = config2[17].p

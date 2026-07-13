@@ -38,6 +38,7 @@ local config = {
 	{ o = 34, c = 1, v = 0, l = {[0] = "?"}, x = -1 }, -- Review Log Date - 34
 	{ o = 35, c = 1, v = 0 }, -- Greyscale toggle - 35
 	{ o = 36, c = 1, v = 0 }, -- Horizon Mode - 36
+	{ o = 37, c = 2, v = 2.0, d = true, x = 5.0 }, -- CRSF Fuel Delay - 37
 }
 
 for i = 1, #config do

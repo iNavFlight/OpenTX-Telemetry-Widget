@@ -13,6 +13,7 @@ data.fpv_id = getTelemetryId("Hdg")
 data.tpwr = 0
 data.rfmd = "--"
 data.fuelRaw = 0
+
 config[9].v = 0
 config[14].v = 0
 config[21].v = 2.5
@@ -52,16 +53,33 @@ local function crsf(data)
 	data.heading = math.deg(getValue(data.hdg_id))
 	if data.fpv_id > -1 then data.fpv = getValue(data.fpv_id) * 10 end
 	]]
+
 	data.fuelRaw = data.fuel
 	if data.showFuel and config[23].v == 0 then
-		if data.fuelEst == -1 and data.cell > 0 then
-			if data.fuel < 25 and config[29].v - data.cell >= 0.2 then
-				data.fuelEst = math.max(math.min(1 - (data.cell - config[2].v + 0.1) / (config[29].v - config[2].v), 1), 0) * config[27].v
-			else
-				data.fuelEst = 0
+		if config[37].v == 0 and data.voltStab == false then data.voltStab = true end
+		if data.voltStab then
+			if data.fuelEst == -1 and data.cell > 0 then
+				if data.fuel < 25 and config[29].v - data.cell >= 0.2 then
+					data.fuelEst = math.max(math.min(1 - (data.cell - config[2].v + 0.1) / (config[29].v - config[2].v), 1), 0) * config[27].v				
+				else
+					data.fuelEst = 0
+				end
+			end
+			data.fuel = math.max(math.min(math.floor((1 - (data.fuel + data.fuelEst) / config[27].v) * 100 + 0.5), 100), 0)
+		else
+			data.fuel = -1 -- fuel set to -1 for obvious feedback that fuel is not yet calculated
+			if data.cell_prev ~= data.cell then
+				if data.cell > data.cell_prev then
+					data.voltTimer = getTime()
+				end
+				data.cell_prev = data.cell
+			end
+			if data.voltTimer > 0 and ( data.voltTimer and (getTime() - data.voltTimer) >= (config[37].v * 100) ) then
+				-- if no voltage increase in the set time, the pack voltage reading is taken as stabilised. 
+				data.voltStab = true
+				data.voltTimer = (getTime() - data.voltTimer)
 			end
 		end
-		data.fuel = math.max(math.min(math.floor((1 - (data.fuel + data.fuelEst) / config[27].v) * 100 + 0.5), 100), 0)
 	end
 	data.fm = getValue(data.fm_id)
 	data.modePrev = data.mode
