@@ -12,6 +12,7 @@ data.hdg_id = getTelemetryId("Yaw")
 data.fpv_id = getTelemetryId("Hdg")
 data.tpwr = 0
 data.rfmd = "--"
+data.batt_percent_id = getTelemetryId("Bat")
 data.fuelRaw = 0
 config[9].v = 0
 config[14].v = 0
@@ -54,14 +55,18 @@ local function crsf(data)
 	]]
 	data.fuelRaw = data.fuel
 	if data.showFuel and config[23].v == 0 then
-		if data.fuelEst == -1 and data.cell > 0 then
-			if data.fuel < 25 and config[29].v - data.cell >= 0.2 then
-				data.fuelEst = math.max(math.min(1 - (data.cell - config[2].v + 0.1) / (config[29].v - config[2].v), 1), 0) * config[27].v
-			else
-				data.fuelEst = 0
+		if data.batt_percent_id > -1 then
+			data.fuel = getValue(data.batt_percent_id)
+		else
+			if data.fuelEst == -1 and data.cell > 0 then
+				if data.fuel < 25 and config[29].v - data.cell >= 0.2 then
+					data.fuelEst = math.max(math.min(1 - (data.cell - config[2].v + 0.1) / (config[29].v - config[2].v), 1), 0) * config[27].v
+				else
+					data.fuelEst = 0
+				end
 			end
+			data.fuel = math.max(math.min(math.floor((1 - (data.fuel + data.fuelEst) / config[27].v) * 100 + 0.5), 100), 0)
 		end
-		data.fuel = math.max(math.min(math.floor((1 - (data.fuel + data.fuelEst) / config[27].v) * 100 + 0.5), 100), 0)
 	end
 	data.fm = getValue(data.fm_id)
 	data.modePrev = data.mode
