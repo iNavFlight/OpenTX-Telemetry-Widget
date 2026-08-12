@@ -25,6 +25,10 @@ Start reading the Lua Telemetry code and you'll get the hang of it:
 
 Please be sure to test your changes before creating a pull request. While your changes will be tested by others, it's appreciated when changes work on the first try.
 
+## Releasing
+
+If you're cutting a release, see [RELEASING.md](RELEASING.md) for the build/tag/publish process.
+
 Thanks,
 
 [Tim Eckel](https://github.com/teckel12), Señor Lua Telemetry Coder
